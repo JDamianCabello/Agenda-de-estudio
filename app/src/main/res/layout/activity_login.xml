@@ -18,14 +18,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:text="SIGN IN"
+            android:text="@string/login_tittle"
             android:textColor="#FFFFFF"
             android:textSize="20sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:text="Lorem ipsum dolor sit amet."
+            android:text="@string/login_subtittle"
             android:textColor="#FFFFFF"
             android:textSize="16sp"/>
 
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/login_edittext_top"
-            android:hint="Username"
+            android:hint="@string/login_userHint"
             android:inputType="textPersonName"
             android:padding="15dp" />
 
@@ -56,18 +56,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/login_edittext_bottom"
-            android:hint="Password"
+            android:hint="@string/login_passwordHint"
             android:inputType="textPassword"
             android:padding="15dp" />
 
 
         <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/login_button"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="@string/login_signInButtonText"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="17sp"/>
+
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:background="@drawable/login_button"
             android:foreground="?android:attr/selectableItemBackground"
-            android:text="SIGN IN"
+            android:layout_marginTop="3dp"
+            android:text="@string/login_noRegisterButtonText"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="17sp"/>
@@ -78,8 +89,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:padding="10dp"
-            android:text="Don't Have an Account?  Sign Up"
-            android:textAllCaps="true"
+            android:text="@string/login_registerText"
+            android:textAllCaps="false"
             android:textSize="13dp"
             android:textStyle="bold"
             android:textColor="@color/colorPrimaryDark"
