@@ -1,19 +1,24 @@
 <resources>
-    <string name="app_name">Agenda de estudio</string>
+    <string name="app_name">Focus</string>
 
-<!--    LoginActivity strings-->
-    <string name="login_registerText">¿Aún no tienes cuenta? Registrate</string>
-    <string name="login_passwordHint">Contraseña</string>
-    <string name="login_userHint">Usuario</string>
-    <string name="login_signInButtonText">Entrar</string>
-    <string name="login_tittle">¡Bienvenido!</string>
-    <string name="login_subtittle">Empieza a organizar tu forma de estudio</string>
-    <string name="login_noRegisterButtonText">Entrar como invitado</string>
+    <!--    LoginActivity strings-->
+    <string name="login_registerText">You don\'t have an account yet? Sign up</string>
+    <string name="login_passwordHint">Password</string>
+    <string name="login_emailHint">E-mail</string>
+    <string name="login_signInButtonText">Sign in</string>
+    <string name="login_tittle">¡Welcome!</string>
+    <string name="login_subtittle">Start organizing your study form</string>
+    <string name="login_noRegisterButtonText">Enter as a guest</string>
 
-<!--    RegisterActivity strings-->
-    <string name="register_goBackText">Volver atrás</string>
-    <string name="register_tittle">¡Hola!</string>
-    <string name="register_subtittle">Bienvenido a la familia de</string>
+    <!--    RegisterActivity strings-->
+    <string name="register_goBackText">Go back</string>
+    <string name="register_tittle">Hello!</string>
+    <string name="register_subtittle">Welcome to the family of</string>
+    <string name="register_userHint">Username</string>
+    <string name="register_emailHint">E-mail</string>
+    <string name="register_passwordHint">Password</string>
+    <string name="register_confirmPasswordHint">Confirm password</string>
+    <string name="register_buttonSignInText">Sign in</string>
 
 
 </resources>

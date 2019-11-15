@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Agenda de estudio</string>
+    <string name="app_name">Focus</string>
+
+    <!--    LoginActivity strings-->
+    <string name="login_registerText">¿Aún no tienes cuenta? Registrate</string>
+    <string name="login_passwordHint">Contraseña</string>
+    <string name="login_emailHint">E-mail</string>
+    <string name="login_signInButtonText">Entrar</string>
+    <string name="login_tittle">¡Bienvenido!</string>
+    <string name="login_subtittle">Empieza a organizar tu forma de estudio</string>
+    <string name="login_noRegisterButtonText">Entrar como invitado</string>
+
+    <!--    RegisterActivity strings-->
+    <string name="register_goBackText">Volver atrás</string>
+    <string name="register_tittle">¡Hola!</string>
+    <string name="register_subtittle">Bienvenido a la familia de</string>
+
+
 </resources>

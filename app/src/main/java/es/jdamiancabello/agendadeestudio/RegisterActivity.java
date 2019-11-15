@@ -16,14 +16,14 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        TextView signIn_text = findViewById(R.id.signIn_text);
-        signIn_text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                Animatoo.animateSwipeRight(RegisterActivity.this);
-                finish();
-            }
-        });
+//        TextView signIn_text = findViewById(R.id.signIn_text);
+//        signIn_text.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+//                Animatoo.animateSlideRight(RegisterActivity.this);
+//                finish();
+//            }
+//        });
     }
 }
