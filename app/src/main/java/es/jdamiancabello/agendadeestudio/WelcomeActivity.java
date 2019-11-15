@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 public class WelcomeActivity extends AppCompatActivity {
     private Button btLogin;
+    private TextView tvRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,5 +26,17 @@ public class WelcomeActivity extends AppCompatActivity {
                 Animatoo.animateSlideLeft(WelcomeActivity.this);
             }
         });
+
+        tvRegister = findViewById(R.id.tvRegisterWelcome);
+        tvRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(WelcomeActivity.this, RegisterActivity.class));
+                Animatoo.animateSlideDown(WelcomeActivity.this);
+
+            }
+        });
+
+
     }
 }
