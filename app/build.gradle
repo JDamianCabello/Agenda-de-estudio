@@ -30,4 +30,7 @@ dependencies {
     //animacion de transicciones
     implementation 'com.github.mohammadatif:Animatoo:master'
     implementation 'com.google.android.material:material:1.0.0'
+
+    //About me
+    implementation 'com.github.jrvansuita:MaterialAbout:+'
 }

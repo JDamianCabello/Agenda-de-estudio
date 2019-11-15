@@ -13,6 +13,7 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 public class LoginActivity extends AppCompatActivity {
     private ImageView ivBack;
     private TextView tvRegister;
+    private TextView tvHelp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +36,15 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
                 Animatoo.animateSlideDown(LoginActivity.this);
 
+            }
+        });
+
+        tvHelp = findViewById(R.id.tvHelp);
+        tvHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, AboutMe.class));
+                Animatoo.animateSlideRight(LoginActivity.this);
             }
         });
     }
