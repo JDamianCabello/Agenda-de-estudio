@@ -31,8 +31,8 @@ public class WelcomeActivity extends AppCompatActivity {
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(WelcomeActivity.this, RegisterActivity.class));
-                Animatoo.animateSlideDown(WelcomeActivity.this);
+                startActivity(new Intent(WelcomeActivity.this, RegisterActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                Animatoo.animateSlideUp(WelcomeActivity.this);
 
             }
         });

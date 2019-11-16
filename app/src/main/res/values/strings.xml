@@ -19,6 +19,7 @@
     <string name="register_passwordHint">Password</string>
     <string name="register_confirmPasswordHint">Confirm password</string>
     <string name="register_buttonSignInText">Sign in</string>
+    <string name="register_buttonCreateUser">Create user</string>
 
 
 </resources>

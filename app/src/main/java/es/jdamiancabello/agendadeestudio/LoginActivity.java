@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+                startActivity(new Intent(LoginActivity.this, WelcomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                 Animatoo.animateSlideRight(LoginActivity.this);
 
             }
@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                 Animatoo.animateSlideDown(LoginActivity.this);
 
             }
@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         tvHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, AboutMe.class));
+                startActivity(new Intent(LoginActivity.this, AboutMe.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                 Animatoo.animateSlideRight(LoginActivity.this);
             }
         });

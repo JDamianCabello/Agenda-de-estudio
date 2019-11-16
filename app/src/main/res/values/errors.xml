@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="errUserEmpty">User is empty, must be between 6 and 20 characters</string>
+    <string name="errPassword">Password must contains almost an upper case, lower case and number. And the lenght must be between 8 and 20 characters</string>
+    <string name="errEmail">Email is empty or not valid</string>
+</resources>

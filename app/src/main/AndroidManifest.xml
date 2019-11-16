@@ -24,7 +24,7 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:launchMode="singleTask"
+            android:theme="@style/welcome"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".LoginActivity"

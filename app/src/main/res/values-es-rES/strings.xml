@@ -15,6 +15,16 @@
     <string name="register_goBackText">Volver atrás</string>
     <string name="register_tittle">¡Hola!</string>
     <string name="register_subtittle">Bienvenido a la familia de</string>
+    <string name="register_userHint">Usuario</string>
+    <string name="register_emailHint">E-mail</string>
+    <string name="register_passwordHint">Contraseña</string>
+    <string name="register_confirmPasswordHint">Confirmar contraseña</string>
+    <string name="register_buttonSignInText">Entrar</string>
+    <string name="register_buttonCreateUser">Crear usuario</string>
 
+
+    <string name="errUserEmpty">User is empty, must be between 6 and 20 characters</string>
+    <string name="errPassword">Password must contains almost an upper case, lower case and number. And the lenght must be between 8 and 20 characters</string>
+    <string name="errEmail">Email is empty or not valid</string>
 
 </resources>
