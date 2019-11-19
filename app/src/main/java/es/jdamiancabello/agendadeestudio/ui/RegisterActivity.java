@@ -37,6 +37,8 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout register_tilConfirmPassword;
     private TextInputLayout register_tilEmail;
 
+    public final static String TAG = "REGISTERFRAGMENT";
+
     public RegisterActivity() {
     }
 
@@ -67,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
         ivRegisterBackArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this, WelcomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                startActivity(new Intent(RegisterActivity.this, WelcomeFragment.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                 Animatoo.animateSlideUp(RegisterActivity.this);
             }
         });
@@ -89,12 +91,13 @@ public class RegisterActivity extends AppCompatActivity {
             //1.-Se guarda el usuario en la base de datos
             if(!UserRepository.getInstance().userAdd(register_tiedUser.getText().toString(),register_tiedEmail.getText().toString(),register_tiedPassword.getText().toString())) {
                 Toast.makeText(RegisterActivity.this, "Ese email ya está en uso", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(RegisterActivity.this, "Usuario creado con éxito", Toast.LENGTH_SHORT).show();
                 //-Se pasa a RegisterActivity
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                startActivity(new Intent(RegisterActivity.this, LoginFragment.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                 Animatoo.animateFade(RegisterActivity.this);
             }
-            else
-                Toast.makeText(RegisterActivity.this,"Usuario creado con éxito",Toast.LENGTH_SHORT).show();
         }
     }
 

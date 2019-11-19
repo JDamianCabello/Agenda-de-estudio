@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Focus</string>
 
-    <!--    LoginActivity strings-->
+    <!--    LoginFragment strings-->
     <string name="login_registerText">¿Aún no tienes cuenta? Registrate</string>
     <string name="login_passwordHint">Contraseña</string>
     <string name="login_emailHint">E-mail</string>
