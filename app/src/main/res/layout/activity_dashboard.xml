@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DashboardActivity"
+    android:layout_marginBottom="0dp">
+
+
+
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingTop="25dp">
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_calendar"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/imahggeButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_calendar"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_book"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"/>
+    </TableRow>
+
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp">
+        <ImageButton
+            android:id="@+id/imageButtonh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_timer"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/imageButton7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_settings"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:background="@drawable/main_bar_background">
+
+        <ImageButton
+            android:id="@+id/imageButtonm"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_account"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/imageButtonfm"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_refresh"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/imageBufgttonfm"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_logout"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"/>
+
+
+
+    </TableRow>
+
+</TableLayout>

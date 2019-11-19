@@ -33,4 +33,5 @@ dependencies {
 
     //About me
     implementation 'com.github.jrvansuita:MaterialAbout:+'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
 }
