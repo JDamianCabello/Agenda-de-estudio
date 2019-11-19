@@ -1,4 +1,4 @@
-package es.jdamiancabello.agendadeestudio;
+package es.jdamiancabello.agendadeestudio.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,14 +8,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.android.material.textfield.TextInputEditText;
+
+import es.jdamiancabello.agendadeestudio.R;
+import es.jdamiancabello.agendadeestudio.data.repository.UserRepository;
 
 public class LoginActivity extends AppCompatActivity {
     private ImageView ivBack;
     private TextView tvRegister;
     private TextView tvHelp;
     private Button register_btLogin;
+    private TextInputEditText tiedEmail;
+    private TextInputEditText tiedPassword;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,10 +64,17 @@ public class LoginActivity extends AppCompatActivity {
         register_btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
-                Animatoo.animateSlideRight(LoginActivity.this);
-                finish();
+                if(UserRepository.getInstance().UserLogin(tiedEmail.getText().toString(),tiedPassword.getText().toString())) {
+                    startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+                    Animatoo.animateSlideRight(LoginActivity.this);
+                    finish();
+                }
+                else
+                    Toast.makeText(LoginActivity.this,"No existe el usuario",Toast.LENGTH_SHORT).show();
             }
         });
+
+        tiedEmail = findViewById(R.id.login_tiedEmail);
+        tiedPassword = findViewById(R.id.login_tiedPassword);
     }
 }

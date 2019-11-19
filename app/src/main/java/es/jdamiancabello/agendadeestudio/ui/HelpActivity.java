@@ -1,14 +1,16 @@
-package es.jdamiancabello.agendadeestudio;
+package es.jdamiancabello.agendadeestudio.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class DashboardActivity extends AppCompatActivity {
+import es.jdamiancabello.agendadeestudio.R;
+
+public class HelpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+        setContentView(R.layout.activity_help);
     }
 }

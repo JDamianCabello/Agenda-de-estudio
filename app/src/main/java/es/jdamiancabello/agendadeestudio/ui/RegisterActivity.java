@@ -1,4 +1,4 @@
-package es.jdamiancabello.agendadeestudio;
+package es.jdamiancabello.agendadeestudio.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,10 +11,15 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import es.jdamiancabello.agendadeestudio.data.repository.UserRepository;
+import es.jdamiancabello.agendadeestudio.utils.CommonUtils;
+import es.jdamiancabello.agendadeestudio.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -31,7 +36,6 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout register_tilPassword;
     private TextInputLayout register_tilConfirmPassword;
     private TextInputLayout register_tilEmail;
-
 
     public RegisterActivity() {
     }
@@ -83,11 +87,14 @@ public class RegisterActivity extends AppCompatActivity {
     private void validate() {
         if (validateUser(register_tiedUser.getText().toString()) & validatePassword(register_tiedPassword.getText().toString()) & validateEmail(register_tiedEmail.getText().toString())) {
             //1.-Se guarda el usuario en la base de datos
-
-            //2.-Envio correo de confirmación al usuario
-
-            //3.-Se pasa a LoginActivity
-            finish();
+            if(!UserRepository.getInstance().userAdd(register_tiedUser.getText().toString(),register_tiedEmail.getText().toString(),register_tiedPassword.getText().toString())) {
+                Toast.makeText(RegisterActivity.this, "Ese email ya está en uso", Toast.LENGTH_SHORT).show();
+                //-Se pasa a RegisterActivity
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                Animatoo.animateFade(RegisterActivity.this);
+            }
+            else
+                Toast.makeText(RegisterActivity.this,"Usuario creado con éxito",Toast.LENGTH_SHORT).show();
         }
     }
 

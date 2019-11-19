@@ -1,4 +1,4 @@
-package es.jdamiancabello.agendadeestudio;
+package es.jdamiancabello.agendadeestudio.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+
+import es.jdamiancabello.agendadeestudio.R;
 
 public class WelcomeActivity extends AppCompatActivity {
     private Button btLogin;

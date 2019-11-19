@@ -1,4 +1,4 @@
-package es.jdamiancabello.agendadeestudio;
+package es.jdamiancabello.agendadeestudio.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import com.vansuita.materialabout.builder.AboutBuilder;
 import com.vansuita.materialabout.views.AboutView;
+
+import es.jdamiancabello.agendadeestudio.R;
 
 public class AboutMe extends AppCompatActivity {
 

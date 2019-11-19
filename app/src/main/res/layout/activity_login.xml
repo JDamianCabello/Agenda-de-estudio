@@ -32,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ivBack" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/login_tilEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -45,14 +45,16 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/login_tiedEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/login_emailHint"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:text="test@test.test" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
+        android:id="@+id/login_tilPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -60,22 +62,24 @@
         android:layout_marginTop="8dp"
         android:textColorHint="@color/colorPrimaryDark"
         app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:layout_constraintEnd_toEndOf="@+id/login_tilEmail"
+        app:layout_constraintStart_toStartOf="@+id/login_tilEmail"
+        app:layout_constraintTop_toBottomOf="@+id/login_tilEmail"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/login_tiedPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/login_passwordHint"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:text="test" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/register_btLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="162dp"
+        android:layout_height="53dp"
         android:layout_gravity="left"
         android:layout_marginStart="60dp"
         android:layout_marginTop="16dp"
@@ -89,7 +93,7 @@
         android:textSize="22sp"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/login_tilPassword" />
 
     <TextView
         android:id="@+id/tvHelp"
