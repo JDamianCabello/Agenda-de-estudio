@@ -1,13 +1,19 @@
 package es.jdamiancabello.agendadeestudio.ui;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,7 +27,7 @@ import es.jdamiancabello.agendadeestudio.data.repository.UserRepository;
 import es.jdamiancabello.agendadeestudio.utils.CommonUtils;
 import es.jdamiancabello.agendadeestudio.R;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterFragment extends Fragment {
 
     private ImageView ivRegisterBackArrow;
 
@@ -39,24 +45,33 @@ public class RegisterActivity extends AppCompatActivity {
 
     public final static String TAG = "REGISTERFRAGMENT";
 
-    public RegisterActivity() {
+    private Fragment loginFragment;
+
+    public static Fragment newInstance() {
+        return new RegisterFragment();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.activity_register,container,false);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        register_tilUser = findViewById(R.id.register_tilUser);
-        register_tilPassword = findViewById(R.id.register_tilPassword);
-        register_tilEmail = findViewById(R.id.register_tilEmail);
-        register_tilConfirmPassword = findViewById(R.id.register_tilRepeatPassword);
+        register_tilUser = view.findViewById(R.id.register_tilUser);
+        register_tilPassword = view.findViewById(R.id.register_tilPassword);
+        register_tilEmail = view.findViewById(R.id.register_tilEmail);
+        register_tilConfirmPassword = view.findViewById(R.id.register_tilRepeatPassword);
 
 
-        register_tiedUser = findViewById(R.id.register_tiedUser);
-        register_tiedPassword = findViewById(R.id.register_tiedPassword);
-        register_tiedEmail = findViewById(R.id.register_tiedEmail);
-        register_tiedRepeatPassword = findViewById(R.id.register_tiedConfirmPassword);
+        register_tiedUser = view.findViewById(R.id.register_tiedUser);
+        register_tiedPassword = view.findViewById(R.id.register_tiedPassword);
+        register_tiedEmail = view.findViewById(R.id.register_tiedEmail);
+        register_tiedRepeatPassword = view.findViewById(R.id.register_tiedConfirmPassword);
 
 
         register_tiedUser.addTextChangedListener(new SignUpWatcher(register_tiedUser));
@@ -65,17 +80,19 @@ public class RegisterActivity extends AppCompatActivity {
         register_tiedRepeatPassword.addTextChangedListener(new SignUpWatcher(register_tiedRepeatPassword));
 
 
-        ivRegisterBackArrow = findViewById(R.id.ivRegisterBackArrow);
+        ivRegisterBackArrow = view.findViewById(R.id.ivRegisterBackArrow);
         ivRegisterBackArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this, WelcomeFragment.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-                Animatoo.animateSlideUp(RegisterActivity.this);
+                loginFragment = LoginFragment.newInstance();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.addToBackStack(LoginFragment.TAG);
+                fragmentTransaction.commit();
             }
         });
 
 
-        btnRegitsterUser = findViewById(R.id.btnRegitsterUser);
+        btnRegitsterUser = view.findViewById(R.id.btnRegitsterUser);
         btnRegitsterUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +100,8 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+
+
     /*
         Método que comprueba la valided de todos los campos de TextImputLayout
          */
@@ -90,13 +109,15 @@ public class RegisterActivity extends AppCompatActivity {
         if (validateUser(register_tiedUser.getText().toString()) & validatePassword(register_tiedPassword.getText().toString()) & validateEmail(register_tiedEmail.getText().toString())) {
             //1.-Se guarda el usuario en la base de datos
             if(!UserRepository.getInstance().userAdd(register_tiedUser.getText().toString(),register_tiedEmail.getText().toString(),register_tiedPassword.getText().toString())) {
-                Toast.makeText(RegisterActivity.this, "Ese email ya está en uso", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Ese email ya está en uso", Toast.LENGTH_SHORT).show();
             }
             else {
-                Toast.makeText(RegisterActivity.this, "Usuario creado con éxito", Toast.LENGTH_SHORT).show();
-                //-Se pasa a RegisterActivity
-                startActivity(new Intent(RegisterActivity.this, LoginFragment.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-                Animatoo.animateFade(RegisterActivity.this);
+                Toast.makeText(getContext(), "Usuario creado con éxito", Toast.LENGTH_SHORT).show();
+                //-Se pasa a RegisterFragment
+                loginFragment = LoginFragment.newInstance();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.addToBackStack(LoginFragment.TAG);
+                fragmentTransaction.commit();
             }
         }
     }
@@ -115,7 +136,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         else {
             register_tilUser.setError(getString(R.string.errUserEmpty));
-            displaySoftKeyboard(register_tilUser);
+            showSoftKeyboard(register_tilUser);
             return false;
         }
     }
@@ -123,14 +144,10 @@ public class RegisterActivity extends AppCompatActivity {
     /**
      * Este método abre el teclado en caso de que una vista (TextInputEditText) tenga el foco
      */
-    private void displaySoftKeyboard(View view){
-        if(view.requestFocus()){
-            //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-            ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(view,0);
-        }
-    }
-
-    private void requestFocus(TextInputLayout textInputLayout) {
+    private void showSoftKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(FragmentActivity.INPUT_METHOD_SERVICE);
+        view.requestFocus();
+        inputMethodManager.showSoftInput(view, 0);
     }
 
     /**
@@ -147,7 +164,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         if( !CommonUtils.patterPassword(psw)) {
             register_tilPassword.setError(getString(R.string.errPassword));
-            displaySoftKeyboard(register_tilPassword);
+            showSoftKeyboard(register_tilPassword);
             return false;
         }
         else{
@@ -169,7 +186,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         else{
             register_tilEmail.setError(getString(R.string.errEmail));
-            displaySoftKeyboard(register_tilEmail);
+            showSoftKeyboard(register_tilEmail);
             return false;
         }
     }

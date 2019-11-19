@@ -3,8 +3,9 @@ package es.jdamiancabello.agendadeestudio.ui;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.material.textfield.TextInputEditText;
 
 import es.jdamiancabello.agendadeestudio.R;
@@ -27,8 +27,11 @@ public class LoginFragment extends Fragment {
     private Button register_btLogin;
     private TextInputEditText tiedEmail;
     private TextInputEditText tiedPassword;
-    public final static String TAG = "LOGINFRAGMENT";
-
+    public final static String TAG = "LoginFragment";
+    private Fragment registerFragment;
+    private Fragment welcomeFragment;
+    private Fragment dashboardFragment;
+    private Fragment aboutMeFragment;
 
 
     public static LoginFragment newInstance() {
@@ -39,7 +42,7 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.activity_register,container,false);
+        return inflater.inflate(R.layout.activity_login,container,false);
     }
 
     @Override
@@ -50,7 +53,11 @@ public class LoginFragment extends Fragment {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(LoginFragment.this, WelcomeFragment.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                welcomeFragment = WelcomeFragment.newInstance();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.addToBackStack(LoginFragment.TAG);
+                fragmentTransaction.replace(android.R.id.content,welcomeFragment,WelcomeFragment.TAG);
+                fragmentTransaction.commit();
             }
         });
 
@@ -58,7 +65,10 @@ public class LoginFragment extends Fragment {
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(LoginFragment.this, RegisterActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                registerFragment = RegisterFragment.newInstance();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(android.R.id.content,registerFragment,RegisterFragment.TAG);
+                fragmentTransaction.commit();
 
             }
         });
@@ -67,17 +77,23 @@ public class LoginFragment extends Fragment {
         tvHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent(LoginFragment.this, AboutMe.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                aboutMeFragment = AboutMeFragment.newInstance();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(android.R.id.content,aboutMeFragment,AboutMeFragment.TAG);
+                fragmentTransaction.commit();
             }
         });
 
 
-        register_btLogin = view.findViewById(R.id.register_btLogin);
+        register_btLogin = view.findViewById(R.id.registerBtLogin);
         register_btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(UserRepository.getInstance().UserLogin(tiedEmail.getText().toString(),tiedPassword.getText().toString())) {
-                    //startActivity(new Intent(LoginFragment.this, DashboardActivity.class));
+                    dashboardFragment = DashboardFragment.newInstance();
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(android.R.id.content,dashboardFragment,DashboardFragment.TAG);
+                    fragmentTransaction.commit();
                 }
                 else
                     Toast.makeText(getContext(),"No existe el usuario",Toast.LENGTH_SHORT).show();

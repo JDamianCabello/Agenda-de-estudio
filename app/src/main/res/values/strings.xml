@@ -10,7 +10,7 @@
     <string name="login_subtittle">Start organizing your study form</string>
     <string name="login_noRegisterButtonText">Enter as a guest</string>
 
-    <!--    RegisterActivity strings-->
+    <!--    RegisterFragment strings-->
     <string name="register_goBackText">Go back</string>
     <string name="register_tittle">Hello!</string>
     <string name="register_subtittle">Welcome to the family of</string>

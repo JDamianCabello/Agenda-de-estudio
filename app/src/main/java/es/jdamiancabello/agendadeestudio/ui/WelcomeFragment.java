@@ -49,7 +49,7 @@ public class WelcomeFragment extends Fragment {
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(WelcomeFragment.this, RegisterActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                //startActivity(new Intent(WelcomeFragment.this, RegisterFragment.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
             }
         });
     }

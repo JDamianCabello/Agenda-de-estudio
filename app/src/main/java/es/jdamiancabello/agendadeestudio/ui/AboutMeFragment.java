@@ -1,9 +1,12 @@
 package es.jdamiancabello.agendadeestudio.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.vansuita.materialabout.builder.AboutBuilder;
@@ -11,15 +14,19 @@ import com.vansuita.materialabout.views.AboutView;
 
 import es.jdamiancabello.agendadeestudio.R;
 
-public class AboutMe extends AppCompatActivity {
+public class AboutMeFragment extends Fragment {
 
+    public static final String TAG = "AboutMeFragment";
+
+    public static Fragment newInstance() {
+        return new AboutMeFragment();
+    }
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_me);
-
-        AboutView view = AboutBuilder.with(this)
-                .setPhoto(R.mipmap.profile_picture)
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        AboutView aboutView = AboutBuilder.with(getContext())
+                .setPhoto(android.R.mipmap.sym_def_app_icon)
                 .setCover(R.mipmap.profile_cover)
                 .setName("Damián Cabello")
                 .setSubTitle("Mobile Developer")
@@ -29,7 +36,6 @@ public class AboutMe extends AppCompatActivity {
                 .addGooglePlayStoreLink("")
                 .addGitHubLink("jdamiancabello/agenda-de-estudio")
                 .addFacebookLink("jdamiancabello")
-                .addHelpAction(new Intent(AboutMe.this,HelpActivity.class))
                 .addWebsiteLink("www.stackoverflow.com")
                 .addFiveStarsAction()
                 .setVersionNameAsAppSubTitle()
@@ -38,7 +44,8 @@ public class AboutMe extends AppCompatActivity {
                 .setLinksAnimated(true)
                 .setShowAsCard(true)
                 .build();
-
-        addContentView(view, new AboutView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
+        return aboutView;
     }
+
+
 }
