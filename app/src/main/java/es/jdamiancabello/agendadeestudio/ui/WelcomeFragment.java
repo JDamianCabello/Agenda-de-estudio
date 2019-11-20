@@ -41,6 +41,7 @@ public class WelcomeFragment extends Fragment {
                 loginFragment = LoginFragment.newInstance();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(android.R.id.content,loginFragment,LoginFragment.TAG);
+                fragmentTransaction.addToBackStack("WelcomeToLogin");
                 fragmentTransaction.commit();
             }
         });
@@ -49,7 +50,11 @@ public class WelcomeFragment extends Fragment {
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(WelcomeFragment.this, RegisterFragment.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                registerFragment = RegisterFragment.newInstance();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(android.R.id.content,registerFragment,RegisterFragment.TAG);
+                fragmentTransaction.addToBackStack("WelcomeToRegister");
+                fragmentTransaction.commit();
             }
         });
     }

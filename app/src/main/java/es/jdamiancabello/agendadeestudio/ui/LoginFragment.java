@@ -29,7 +29,6 @@ public class LoginFragment extends Fragment {
     private TextInputEditText tiedPassword;
     public final static String TAG = "LoginFragment";
     private Fragment registerFragment;
-    private Fragment welcomeFragment;
     private Fragment dashboardFragment;
     private Fragment aboutMeFragment;
 
@@ -53,11 +52,7 @@ public class LoginFragment extends Fragment {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                welcomeFragment = WelcomeFragment.newInstance();
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.addToBackStack(LoginFragment.TAG);
-                fragmentTransaction.replace(android.R.id.content,welcomeFragment,WelcomeFragment.TAG);
-                fragmentTransaction.commit();
+                getFragmentManager().popBackStack();
             }
         });
 
@@ -68,6 +63,7 @@ public class LoginFragment extends Fragment {
                 registerFragment = RegisterFragment.newInstance();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(android.R.id.content,registerFragment,RegisterFragment.TAG);
+                fragmentTransaction.addToBackStack("LoginToRegister");
                 fragmentTransaction.commit();
 
             }
@@ -80,6 +76,7 @@ public class LoginFragment extends Fragment {
                 aboutMeFragment = AboutMeFragment.newInstance();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(android.R.id.content,aboutMeFragment,AboutMeFragment.TAG);
+                fragmentTransaction.addToBackStack("WelcomeToAboutMe");
                 fragmentTransaction.commit();
             }
         });
