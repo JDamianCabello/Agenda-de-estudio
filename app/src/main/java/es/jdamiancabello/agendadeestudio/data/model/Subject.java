@@ -1,8 +1,11 @@
 package es.jdamiancabello.agendadeestudio.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Subject {
+public class Subject implements Parcelable {
 
 
     private static final AtomicInteger count = new AtomicInteger(0);
@@ -10,6 +13,36 @@ public class Subject {
     private String name;
     private int idUser;
     private Enum<state> stateEnum;
+
+    protected Subject(Parcel in) {
+        idSubject = in.readInt();
+        name = in.readString();
+        idUser = in.readInt();
+    }
+
+    public static final Creator<Subject> CREATOR = new Creator<Subject>() {
+        @Override
+        public Subject createFromParcel(Parcel in) {
+            return new Subject(in);
+        }
+
+        @Override
+        public Subject[] newArray(int size) {
+            return new Subject[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(idSubject);
+        parcel.writeString(name);
+        parcel.writeInt(idUser);
+    }
 
     public enum  state{
         Dominado,A_repasar,Ignorado

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ public class LoginFragment extends Fragment {
     private Fragment registerFragment;
     private Fragment dashboardFragment;
     private Fragment aboutMeFragment;
+    private onLoginListener activityListener;
 
 
     public static LoginFragment newInstance() {
@@ -60,12 +62,7 @@ public class LoginFragment extends Fragment {
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registerFragment = RegisterFragment.newInstance();
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(android.R.id.content,registerFragment,RegisterFragment.TAG);
-                fragmentTransaction.addToBackStack("LoginToRegister");
-                fragmentTransaction.commit();
-
+                activityListener.showRegister();
             }
         });
 
@@ -73,31 +70,40 @@ public class LoginFragment extends Fragment {
         tvHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                aboutMeFragment = AboutMeFragment.newInstance();
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(android.R.id.content,aboutMeFragment,AboutMeFragment.TAG);
-                fragmentTransaction.addToBackStack("WelcomeToAboutMe");
-                fragmentTransaction.commit();
+                activityListener.showHelp();
             }
         });
 
+
+        tiedEmail = view.findViewById(R.id.login_tiedEmail);
+        tiedPassword = view.findViewById(R.id.login_tiedPassword);
 
         register_btLogin = view.findViewById(R.id.registerBtLogin);
         register_btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(UserRepository.getInstance().UserLogin(tiedEmail.getText().toString(),tiedPassword.getText().toString())) {
-                    dashboardFragment = DashboardFragment.newInstance();
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(android.R.id.content,dashboardFragment,DashboardFragment.TAG);
-                    fragmentTransaction.commit();
-                }
-                else
-                    Toast.makeText(getContext(),"No existe el usuario",Toast.LENGTH_SHORT).show();
+                activityListener.checkUser(tiedEmail.getText().toString(),tiedPassword.getText().toString());
             }
         });
+    }
 
-        tiedEmail = view.findViewById(R.id.login_tiedEmail);
-        tiedPassword = view.findViewById(R.id.login_tiedPassword);
+
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        activityListener = (onLoginListener)context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        activityListener = null;
+    }
+
+    interface onLoginListener{
+        void showHelp();
+        void checkUser(String user, String password);
+        void showRegister();
     }
 }
