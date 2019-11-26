@@ -2,10 +2,12 @@ package es.jdamiancabello.agendadeestudio.ui;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.adapter.SubjectAdapter;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
+import es.jdamiancabello.agendadeestudio.data.repository.SubjectRepository;
 
 public class SubjectListFragment extends Fragment {
     public final static String TAG = "SubjectListFragment";
@@ -45,12 +48,19 @@ public class SubjectListFragment extends Fragment {
             public void onEditSubjectListener(Subject subject) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("subject",subject);
-                listListener.addSubject(bundle);
+//                listListener.addSubject(bundle);
+                Toast.makeText(getContext(),"Has pulsado en: "+subject.getName().toString(),Toast.LENGTH_LONG).show();
             }
 
             @Override
-            public void onDeleteSubjectListener(Subject subject) {
-                new AlertDialog.Builder(getContext()).setTitle("").setMessage("").setPositiveButton(android.R.string.yes,null).setNegativeButton(android.R.string.no,null);
+            public void onDeleteSubjectListener(final Subject subject) {
+                new AlertDialog.Builder(getContext()).setTitle("ELIMINAR").setMessage("¿Seguro que desea elmininar " + subject.getName() + "?").setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SubjectRepository.getInstance().remove(subject);
+                        adapter.notifyDataSetChanged();
+                    }
+                }).setNegativeButton(android.R.string.no,null).show();
             }
         };
         adapter = new SubjectAdapter();

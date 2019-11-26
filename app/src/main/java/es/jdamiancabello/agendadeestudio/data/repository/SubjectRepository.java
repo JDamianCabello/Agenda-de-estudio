@@ -33,4 +33,8 @@ public class SubjectRepository {
     public List<Subject> getSubjectList() {
         return subjectList;
     }
+
+    public boolean remove(Subject subject){
+        return subjectList.remove(subject);
+    }
 }

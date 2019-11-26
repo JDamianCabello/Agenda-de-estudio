@@ -75,7 +75,6 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.Dependen
 
     public interface onManegeSubjectListener {
         void onEditSubjectListener(Subject subject);
-
         void onDeleteSubjectListener(Subject subject);
     }
 }
