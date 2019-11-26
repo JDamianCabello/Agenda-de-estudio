@@ -49,7 +49,7 @@ public class SubjectListFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("subject",subject);
 //                listListener.addSubject(bundle);
-                Toast.makeText(getContext(),"Has pulsado en: "+subject.getName().toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"Has pulsado en: "+subject.getName(),Toast.LENGTH_LONG).show();
             }
 
             @Override
