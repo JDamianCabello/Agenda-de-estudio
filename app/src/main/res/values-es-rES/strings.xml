@@ -27,4 +27,11 @@
     <string name="errPassword">Password must contains almost an upper case, lower case and number. And the lenght must be between 8 and 20 characters</string>
     <string name="errEmail">Email is empty or not valid</string>
 
+
+    <!--    Undo event button-->
+    <string name="undoDelete">Evento eliminado.</string>
+    <string name="undo">Restaurar</string>
+
+
+    <string name="studyOrganicerList_NoEvents">Don\'t have events to show</string>
 </resources>

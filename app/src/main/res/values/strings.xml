@@ -22,4 +22,10 @@
     <string name="register_buttonCreateUser">Create user</string>
 
 
+<!--    Undo event button-->
+    <string name="undoDelete">Event deleted.</string>
+    <string name="undo">Undo</string>
+
+
+    <string name="studyOrganicerList_NoEvents">Don\'t have events to show</string>
 </resources>

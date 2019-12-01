@@ -3,6 +3,8 @@ package es.jdamiancabello.agendadeestudio.data.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Subject implements Parcelable {
@@ -79,4 +81,9 @@ public class Subject implements Parcelable {
         this.stateEnum = stateEnum;
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -8,15 +8,18 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import es.jdamiancabello.agendadeestudio.R;
+import es.jdamiancabello.agendadeestudio.data.model.StudyOrganicer;
 import es.jdamiancabello.agendadeestudio.data.repository.UserRepository;
+import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerView;
 
-public class FragmentActivity extends AppCompatActivity implements SubjectListFragment.onSubjectListListener, DashboardFragment.onDashboardListener,LoginFragment.onLoginListener{
+public class FragmentActivity extends AppCompatActivity implements SubjectListFragment.onSubjectListListener, DashboardFragment.onDashboardListener,LoginFragment.onLoginListener, StudyOrganicerView.SectorListViewListener {
 
     private Fragment welcomeFragment;
     private Fragment subjectList;
     private Fragment aboutMeFragment;
     private Fragment registerFragment;
     private Fragment dashboardFragment;
+    private Fragment eventListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,15 @@ public class FragmentActivity extends AppCompatActivity implements SubjectListFr
     }
 
     @Override
+    public void showEventsList() {
+        eventListFragment = StudyOrganicerView.newInstance(null);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(android.R.id.content,eventListFragment,StudyOrganicerView.TAG);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    @Override
     public void showHelp() {
         aboutMeFragment = AboutMeFragment.newInstance();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -74,6 +86,15 @@ public class FragmentActivity extends AppCompatActivity implements SubjectListFr
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(android.R.id.content,registerFragment,RegisterFragment.TAG);
         fragmentTransaction.addToBackStack("LoginToRegister");
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void sectorAddEditFragmentShow(StudyOrganicer studyOrganicer) {
+        eventListFragment = StudyOrganicerView.newInstance(null);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(android.R.id.content,eventListFragment,StudyOrganicerView.TAG);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 }

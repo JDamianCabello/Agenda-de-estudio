@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="exampleSubjectArray">
+        <item>Ejemplo asignatura 1</item>
+        <item>Ejemplo asignatura 2</item>
+        <item>Ejemplo asignatura 3</item>
+        <item>Ejemplo asignatura 4</item>
+        <item>Ejemplo asignatura 5</item>
+    </string-array>
+</resources>
