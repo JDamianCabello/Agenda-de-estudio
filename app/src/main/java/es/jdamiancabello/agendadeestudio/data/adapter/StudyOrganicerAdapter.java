@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import es.jdamiancabello.agendadeestudio.R;
@@ -31,9 +33,9 @@ public class StudyOrganicerAdapter extends RecyclerView.Adapter<StudyOrganicerAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.organicerDateTime.setText(studyOrganicerList.get(position).getDuration());
-        holder.organicerDuration.setText(studyOrganicerList.get(position).getDuration());
-        holder.organicerTitle.setText(studyOrganicerList.get(position).getEventTitle());
+        holder.organicerDateTime.setText(studyOrganicerList.get(position).getDateTime());
+        holder.organicerDuration.setText(Integer.toString(studyOrganicerList.get(position).getDuration()));
+        holder.organicerTitle.setText(studyOrganicerList.get(position).getEventTitle().replace('_',' '));
         holder.organicerSubtitle.setText(studyOrganicerList.get(position).getSubject().toString());
         holder.organicerTimeQuantifier.setText(studyOrganicerList.get(position).getDurationQuantifier());
 
@@ -63,6 +65,10 @@ public class StudyOrganicerAdapter extends RecyclerView.Adapter<StudyOrganicerAd
 
     public void add(StudyOrganicer studyOrganicer) {
         this.studyOrganicerList.add(studyOrganicer);
+    }
+
+    public void Sort(Comparator<StudyOrganicer> comparator){
+        Collections.sort(studyOrganicerList, comparator) ;
     }
 
     public interface OnManageStudyOrganicerListener{

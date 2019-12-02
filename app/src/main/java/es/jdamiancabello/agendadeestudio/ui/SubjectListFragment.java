@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.adapter.SubjectAdapter;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
@@ -24,6 +26,7 @@ public class SubjectListFragment extends Fragment {
     public final static String TAG = "SubjectListFragment";
 
     private onSubjectListListener listListener;
+    private FloatingActionButton fabAdd;
     private RecyclerView recyclerView;
     private SubjectAdapter.onManegeSubjectListener adapterListener;
     private SubjectAdapter adapter;
@@ -63,6 +66,15 @@ public class SubjectListFragment extends Fragment {
                 }).setNegativeButton(android.R.string.no,null).show();
             }
         };
+        fabAdd= view.findViewById(R.id.fbAddSubject);
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"No se permiten añadir más asignaturas",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         adapter = new SubjectAdapter();
         adapter.setOnManageSubjectListener(adapterListener);
         recyclerView.setAdapter(adapter);

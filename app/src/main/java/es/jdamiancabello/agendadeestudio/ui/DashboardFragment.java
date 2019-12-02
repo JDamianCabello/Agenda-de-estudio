@@ -15,7 +15,7 @@ import es.jdamiancabello.agendadeestudio.R;
 
 public class DashboardFragment extends Fragment {
     public static final String TAG = "DashboardFragment";
-    private ImageButton ibSubjectList, ibEventsList;
+    private ImageButton ibSubjectList, ibEventsList, ibSettings, ibChrono,ibSchedule;
     private onDashboardListener activityListener;
 
     public static Fragment newInstance() {
@@ -32,7 +32,8 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ibSubjectList = view.findViewById(R.id.Dashboard_ibSubject);
+
+        ibSubjectList = view.findViewById(R.id.Dashboard_ibSubjectList);
         ibSubjectList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,11 +41,35 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        ibEventsList = view.findViewById(R.id.Dashboard_ibEventList);
+        ibEventsList = view.findViewById(R.id.Dashboard_ibEventsList);
         ibEventsList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 activityListener.showEventsList();
+            }
+        });
+
+        ibSettings = view.findViewById(R.id.Dashboard_ibSettings);
+        ibSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityListener.ShowSettingsView();
+            }
+        });
+
+        ibChrono = view.findViewById(R.id.Dashboard_ibChrono);
+        ibChrono.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityListener.ShowChronoView();
+            }
+        });
+
+        ibSchedule = view.findViewById(R.id.Dashboard_ibSchedule);
+        ibEventsList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityListener.ShowScheduleView();
             }
         });
     }
@@ -64,6 +89,9 @@ public class DashboardFragment extends Fragment {
     interface onDashboardListener{
         void showSubjectsList();
         void showEventsList();
+        void ShowChronoView();
+        void ShowSettingsView();
+        void ShowScheduleView();
     }
 
 

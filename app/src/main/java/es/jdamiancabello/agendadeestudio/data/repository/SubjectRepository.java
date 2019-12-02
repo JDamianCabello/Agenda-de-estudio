@@ -28,6 +28,11 @@ public class SubjectRepository {
         subjectList.add(new Subject("C#",Subject.state.Dominado));
         subjectList.add(new Subject("Mysql",Subject.state.Dominado));
         subjectList.add(new Subject("Sistemas",Subject.state.Ignorado));
+        subjectList.add(new Subject("Procesos",Subject.state.Dominado));
+        subjectList.add(new Subject("Fol",Subject.state.A_repasar));
+        subjectList.add(new Subject("Java",Subject.state.Dominado));
+        subjectList.add(new Subject("HTML",Subject.state.Ignorado));
+        subjectList.add(new Subject("CSS",Subject.state.Ignorado));
     }
 
     public List<Subject> getSubjectList() {
@@ -36,5 +41,14 @@ public class SubjectRepository {
 
     public boolean remove(Subject subject){
         return subjectList.remove(subject);
+    }
+
+    public int getPosition(Subject subject) {
+
+        for (int j = 0; j < subjectList.size(); j++) {
+            if (subjectList.get(j).getName().equals(subject.getName()))
+                return j;
+        }
+        return -1;
     }
 }

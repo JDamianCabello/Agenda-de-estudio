@@ -94,6 +94,8 @@ public class StudyOrganicerView extends Fragment implements StudyOrganicerListCo
         adapter.setOnManageStudyOrganicerListener(adapterOnManageStudyOrganicerListener);
         rvStudyOrganicer.setAdapter(adapter);
         rvStudyOrganicer.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
     }
 
     @Override
@@ -146,6 +148,7 @@ public class StudyOrganicerView extends Fragment implements StudyOrganicerListCo
     public void refresh(ArrayList<StudyOrganicer> studyOrganicerArrayList) {
         adapter.clear();
         adapter.addAll(studyOrganicerArrayList);
+        adapter.Sort(new StudyOrganicer.IdSort());
         adapter.notifyDataSetChanged();
     }
 
@@ -177,6 +180,7 @@ public class StudyOrganicerView extends Fragment implements StudyOrganicerListCo
     @Override
     public void onSucessUndo(StudyOrganicer studyOrganicer) {
         adapter.add(studyOrganicer);
+        adapter.Sort(new StudyOrganicer.IdSort());
         adapter.notifyDataSetChanged();
         Toast.makeText(getContext(),"Se ha restaurado el evento eliminado",Toast.LENGTH_SHORT).show();
     }

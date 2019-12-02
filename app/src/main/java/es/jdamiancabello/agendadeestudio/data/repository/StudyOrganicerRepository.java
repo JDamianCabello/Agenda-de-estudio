@@ -1,5 +1,7 @@
 package es.jdamiancabello.agendadeestudio.data.repository;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,33 +19,33 @@ public class StudyOrganicerRepository {
 
     private void initialice() {
 
-        studyOrganicerList.add(new StudyOrganicer("01 - Diciembre - 2019   15:00",5,"Horas",(new Subject("DEINT",Subject.state.A_repasar))));
-        studyOrganicerList.add(new StudyOrganicer("02 - Diciembre - 2019   08:00",50,"Minutos",(new Subject("Unity",Subject.state.A_repasar))));
+        studyOrganicerList.add(new StudyOrganicer("01 - Diciembre - 2019   15:00", 5, "Horas", (new Subject("DEINT", Subject.state.A_repasar))));
+        studyOrganicerList.add(new StudyOrganicer("02 - Diciembre - 2019   08:00", 50, "Minutos", (new Subject("Unity", Subject.state.A_repasar))));
     }
 
     static {
         studyOrganicerRepository = new StudyOrganicerRepository();
     }
 
-    public static StudyOrganicerRepository getInstance(){
+    public static StudyOrganicerRepository getInstance() {
         return studyOrganicerRepository;
     }
 
-    public List<StudyOrganicer> getSectorList(){
+    public List<StudyOrganicer> getSectorList() {
         return studyOrganicerList;
     }
 
-    public boolean deleteSector(StudyOrganicer studyOrganicer){
+    public boolean deleteSector(StudyOrganicer studyOrganicer) {
         return studyOrganicerList.remove(studyOrganicer);
     }
 
-    public boolean addDependency(StudyOrganicer sector) {
-        return studyOrganicerList.add(sector);
+    public boolean addDependency(StudyOrganicer studyOrganicer) {
+        return studyOrganicerList.add(studyOrganicer);
     }
 
     public boolean modifyStudyOrganicer(StudyOrganicer newStudyOrganicer) {
         for (StudyOrganicer it : studyOrganicerList) {
-            if (it.getDateTime().equals(newStudyOrganicer.getDateTime()) & it.getSubject().equals(newStudyOrganicer.getSubject())) {
+            if (it.equals(newStudyOrganicer)) {
                 it.setDateTime(newStudyOrganicer.getDateTime());
                 it.setDuration(newStudyOrganicer.getDuration());
                 it.setSubject(newStudyOrganicer.getSubject());

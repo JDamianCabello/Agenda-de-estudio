@@ -7,4 +7,8 @@
         <item>Ejemplo asignatura 4</item>
         <item>Ejemplo asignatura 5</item>
     </string-array>
+    <string-array name="quantifier">
+        <item>Minutes</item>
+        <item>Hours</item>
+    </string-array>
 </resources>
