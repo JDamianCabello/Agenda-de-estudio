@@ -64,9 +64,8 @@ public class DashboardFragment extends Fragment {
                 activityListener.ShowChronoView();
             }
         });
-
         ibSchedule = view.findViewById(R.id.Dashboard_ibSchedule);
-        ibEventsList.setOnClickListener(new View.OnClickListener() {
+        ibSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 activityListener.ShowScheduleView();
