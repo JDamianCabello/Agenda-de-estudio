@@ -146,4 +146,16 @@ public class FragmentActivity extends AppCompatActivity implements SubjectListFr
     public void onSaveStudyOrganicerManageView() {
         onBackPressed();
     }
+
+    @Override
+    public void onSnackBarActionCreateSubject() {
+        eventListFragment = StudyOrganicerView.newInstance(null);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(android.R.id.content,eventListFragment,StudyOrganicerView.TAG);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+
+        studyOrganicerPresenter = new StudyOrganicerPresenter((StudyOrganicerListContract.View) eventListFragment);
+        ((StudyOrganicerListContract.View) eventListFragment).setPresenter(studyOrganicerPresenter);
+    }
 }

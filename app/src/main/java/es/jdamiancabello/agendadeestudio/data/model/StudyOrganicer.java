@@ -17,6 +17,10 @@ public class StudyOrganicer implements Parcelable {
     private Subject subject;
     private String eventTitle;
 
+    public StudyOrganicer() {
+
+    }
+
     public StudyOrganicer(String dateTime, int duration, String durationQuantifier, Subject subject) {
         this.idStudyOrganicer = count.incrementAndGet();
         this.dateTime = dateTime;
@@ -46,6 +50,8 @@ public class StudyOrganicer implements Parcelable {
             return new StudyOrganicer[size];
         }
     };
+
+
 
     public int getIdStudyOrganicer() {
         return idStudyOrganicer;

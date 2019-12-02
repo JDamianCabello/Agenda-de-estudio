@@ -1,5 +1,6 @@
 package es.jdamiancabello.agendadeestudio.ui.studyorganicer;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -15,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -55,6 +57,7 @@ public class StudyOrganicerManageView extends Fragment implements StudyOrganicer
         return inflater.inflate(R.layout.fragment_study_organicer_manage_view, container, false);
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -71,7 +74,16 @@ public class StudyOrganicerManageView extends Fragment implements StudyOrganicer
 
         fbSave = view.findViewById(R.id.fabSectorManageSave);
 
-        
+        if(spinnerSubjets.getAdapter().getCount() == 0) {
+            fbSave.setVisibility(View.GONE);
+            Snackbar.make(view,"No existen asignaturas de las que crear eventos",Snackbar.LENGTH_INDEFINITE).setActionTextColor(getResources().getColor(R.color.colorPrimaryDark))
+                    .setAction("Crea una", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(getContext(),"No se pueden crear asignaturas en esta demo",Toast.LENGTH_LONG).show();
+                        }
+                    }).show();
+        }
 
         if (getArguments() != null){
             studyOrganicer = getArguments().getParcelable("event");
@@ -106,12 +118,24 @@ public class StudyOrganicerManageView extends Fragment implements StudyOrganicer
 
 
     private StudyOrganicer createSector(int oldId) {
-        StudyOrganicer studyOrganicer = new StudyOrganicer(
-                tiledStudyOrgnanicerManagerDateTime.getText().toString(),
-                Integer.parseInt(tiledStudyOrgnanicerManagerDuration.getText().toString()),
-                spinnerQuantifier.getSelectedItem().toString(),
-                (Subject)spinnerSubjets.getSelectedItem()
-        );
+        StudyOrganicer studyOrganicer = new StudyOrganicer();
+
+        try {
+            studyOrganicer.setDateTime(tiledStudyOrgnanicerManagerDateTime.getText().toString());
+        }catch (NullPointerException e){
+            presenter.nullDateTime();
+        }
+
+
+        try {
+            studyOrganicer.setDuration(Integer.parseInt(tiledStudyOrgnanicerManagerDuration.getText().toString()));
+        }catch (NumberFormatException e){
+            presenter.numberFormatException();
+        }
+
+        studyOrganicer.setDurationQuantifier(spinnerQuantifier.getSelectedItem().toString());
+        studyOrganicer.setSubject((Subject) spinnerSubjets.getSelectedItem());
+
         if(oldId != -1)
             studyOrganicer.setIdStudyOrganicer(oldId);
         return studyOrganicer;
@@ -163,12 +187,13 @@ public class StudyOrganicerManageView extends Fragment implements StudyOrganicer
 
     public interface OnSaveStudyOrganicerManageView {
         void onSaveStudyOrganicerManageView();
+        void onSnackBarActionCreateSubject();
     }
 
     
     @Override
     public void onDurationEmpty(String error) {
-
+        tilStudyOrgnanicerManagerDuration.setError(error);
     }
 
     @Override
@@ -178,17 +203,13 @@ public class StudyOrganicerManageView extends Fragment implements StudyOrganicer
 
     @Override
     public void onTimeEmpty(String error) {
-
+        tilStudyOrgnanicerManagerDateTime.setError(error);
     }
 
-    @Override
-    public void onTimeQuantifier(String error) {
-
-    }
 
     @Override
     public void onClearErrorDurationEmpty() {
-
+        tilStudyOrgnanicerManagerDuration.setError(null);
     }
 
     @Override
@@ -198,11 +219,7 @@ public class StudyOrganicerManageView extends Fragment implements StudyOrganicer
 
     @Override
     public void onClearErroronTimeEmpty() {
-
-    }
-
-    @Override
-    public void onClearErrorTimeQuantifier() {
+        tilStudyOrgnanicerManagerDateTime.setError(null);
 
     }
 

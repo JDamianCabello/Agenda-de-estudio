@@ -29,9 +29,6 @@ public class LoginFragment extends Fragment {
     private TextInputEditText tiedEmail;
     private TextInputEditText tiedPassword;
     public final static String TAG = "LoginFragment";
-    private Fragment registerFragment;
-    private Fragment dashboardFragment;
-    private Fragment aboutMeFragment;
     private onLoginListener activityListener;
 
 

@@ -14,13 +14,13 @@ public interface StudyOrganicerManageContract {
         void onDurationEmpty(String error);
         void onDurationNumber(String error);
         void onTimeEmpty(String error);
-        void onTimeQuantifier(String error);
+
 
 
         void onClearErrorDurationEmpty();
         void onClearErrorDurationNumber();
         void onClearErroronTimeEmpty();
-        void onClearErrorTimeQuantifier();
+
     }
 
     interface Presenter{
@@ -28,5 +28,8 @@ public interface StudyOrganicerManageContract {
         void onAddStudyOrganicer(StudyOrganicer studyOrganicer);
         void onModifyStudyOrganicer(StudyOrganicer studyOrganicer);
         int getPosition(Subject subject);
+        void numberFormatException();
+
+        void nullDateTime();
     }
 }
