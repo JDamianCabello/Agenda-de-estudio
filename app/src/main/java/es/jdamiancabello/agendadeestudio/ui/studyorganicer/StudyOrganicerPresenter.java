@@ -18,9 +18,9 @@ public class StudyOrganicerPresenter implements StudyOrganicerListContract.Prese
     @Override
     public void delete(StudyOrganicer studyOrganicer) {
         //1. Realizar la operacion en el repo y comprobar el resultado
-        if(StudyOrganicerRepository.getInstance().deleteSector(studyOrganicer)) {
+        if(StudyOrganicerRepository.getInstance().deleteStudyOrganicer(studyOrganicer)) {
             //1.2 Comprobar si no hay datos
-            if(StudyOrganicerRepository.getInstance().getSectorList().isEmpty())
+            if(StudyOrganicerRepository.getInstance().getStudyOrganicerList().isEmpty())
                 viewSectorListContract.noStudyOrganicers();
             else
             {
@@ -60,7 +60,7 @@ public class StudyOrganicerPresenter implements StudyOrganicerListContract.Prese
                     e.printStackTrace();
                 }
 
-                return StudyOrganicerRepository.getInstance().getSectorList();
+                return StudyOrganicerRepository.getInstance().getStudyOrganicerList();
             }
         }.execute();
     }

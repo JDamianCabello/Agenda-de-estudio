@@ -51,4 +51,12 @@ public class SubjectRepository {
         }
         return -1;
     }
+
+    public boolean addSubject(Subject subject) {
+        return subjectList.add(subject);
+    }
+
+    public boolean delete(Subject subject) {
+        return subjectList.remove(subject);
+    }
 }

@@ -1,4 +1,4 @@
-package es.jdamiancabello.agendadeestudio.ui;
+package es.jdamiancabello.agendadeestudio.ui.aboutme;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

@@ -1,4 +1,4 @@
-package es.jdamiancabello.agendadeestudio.ui;
+package es.jdamiancabello.agendadeestudio.ui.subjets;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -17,12 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.adapter.SubjectAdapter;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.repository.SubjectRepository;
 
-public class SubjectListFragment extends Fragment {
+public class SubjectListFragment extends Fragment implements SubjectListContract.View{
     public final static String TAG = "SubjectListFragment";
 
     private onSubjectListListener listListener;
@@ -30,6 +32,7 @@ public class SubjectListFragment extends Fragment {
     private RecyclerView recyclerView;
     private SubjectAdapter.onManegeSubjectListener adapterListener;
     private SubjectAdapter adapter;
+    private View load;
 
     public static SubjectListFragment newInstance() {
         return new SubjectListFragment();
@@ -94,7 +97,52 @@ public class SubjectListFragment extends Fragment {
         listListener = null;
     }
 
-    interface onSubjectListListener{
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void noSubjets() {
+
+    }
+
+    @Override
+    public void refresh(ArrayList<Subject> subjectArrayList) {
+
+    }
+
+    @Override
+    public void onSuccessDeleted() {
+
+    }
+
+    @Override
+    public void onSucessUndo(Subject subject) {
+
+    }
+
+    @Override
+    public void onSucess() {
+
+    }
+
+    @Override
+    public void setPresenter(SubjectListContract.Presenter presenter) {
+
+    }
+
+    @Override
+    public void showGenericError(String s) {
+
+    }
+
+    public interface onSubjectListListener{
         void addSubject(Bundle subject);
     }
 }

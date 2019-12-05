@@ -31,11 +31,11 @@ public class StudyOrganicerRepository {
         return studyOrganicerRepository;
     }
 
-    public List<StudyOrganicer> getSectorList() {
+    public List<StudyOrganicer> getStudyOrganicerList() {
         return studyOrganicerList;
     }
 
-    public boolean deleteSector(StudyOrganicer studyOrganicer) {
+    public boolean deleteStudyOrganicer(StudyOrganicer studyOrganicer) {
         return studyOrganicerList.remove(studyOrganicer);
     }
 

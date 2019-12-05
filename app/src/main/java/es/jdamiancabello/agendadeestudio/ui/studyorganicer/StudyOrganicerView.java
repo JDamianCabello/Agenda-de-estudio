@@ -35,6 +35,7 @@ public class StudyOrganicerView extends Fragment implements StudyOrganicerListCo
     private FloatingActionButton fabButton;
     private ProgressBar progressBar;
     private SectorListViewListener viewListener;
+    private View loadData;
 
     private StudyOrganicerAdapter adapter;
     private StudyOrganicerAdapter.OnManageStudyOrganicerListener adapterOnManageStudyOrganicerListener;
@@ -60,7 +61,7 @@ public class StudyOrganicerView extends Fragment implements StudyOrganicerListCo
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvStudyOrganicer = view.findViewById(R.id.studyOrganicerList_rv);
-        progressBar = view.findViewById(R.id.studyOrganicerList_ProgressBar);
+        loadData = view.findViewById(R.id.studyorganicerlist_dataloading);
 
         fabButton = view.findViewById(R.id.studyOrganicerList_fab);
         fabButton.setOnClickListener(new View.OnClickListener() {
@@ -129,12 +130,12 @@ public class StudyOrganicerView extends Fragment implements StudyOrganicerListCo
 
     @Override
     public void showProgress() {
-        progressBar.setVisibility(View.VISIBLE);
+        loadData.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-        progressBar.setVisibility(View.GONE);
+        loadData.setVisibility(View.GONE);
     }
 
     @Override

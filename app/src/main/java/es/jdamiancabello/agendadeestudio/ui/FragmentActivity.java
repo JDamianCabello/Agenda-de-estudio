@@ -8,15 +8,16 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import es.jdamiancabello.agendadeestudio.R;
-import es.jdamiancabello.agendadeestudio.data.adapter.StudyOrganicerAdapter;
 import es.jdamiancabello.agendadeestudio.data.model.StudyOrganicer;
 import es.jdamiancabello.agendadeestudio.data.repository.UserRepository;
+import es.jdamiancabello.agendadeestudio.ui.aboutme.AboutMeFragment;
 import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerListContract;
 import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerManageContract;
 import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerManagePresenter;
 import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerManageView;
 import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerPresenter;
 import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerView;
+import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListFragment;
 
 public class FragmentActivity extends AppCompatActivity implements SubjectListFragment.onSubjectListListener, DashboardFragment.onDashboardListener,LoginFragment.onLoginListener, StudyOrganicerView.SectorListViewListener, StudyOrganicerManageView.OnSaveStudyOrganicerManageView {
 
