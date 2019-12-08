@@ -32,4 +32,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="loadingData">Loading data, please wait...</string>
+    <string name="subjectlist_deleteditem">has been deleted</string>
+    <string name="subjectlist_undotext">Restore the subject</string>
+    <string name="subjectlist_undobuttontext">UNDO</string>
+    <string name="subjectlist_restoreditem">has been successfully restored</string>
 </resources>

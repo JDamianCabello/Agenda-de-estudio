@@ -18,21 +18,14 @@ public class SubjectListPresenter implements SubjectListContract.Presenter {
     @Override
     public void delete(Subject subject) {
         //1. Realizar la operacion en el repo y comprobar el resultado
-        if(SubjectRepository.getInstance().delete(subject)) {
-            //1.2 Comprobar si no hay datos
-            if(SubjectRepository.getInstance().getSubjectList().isEmpty())
-                view.noSubjets();
-            else
-            {
-                //Aqui se muestra el toask de si hay datos (o la imagen)
-            }
-            view.onSuccessDeleted();
+        if (SubjectRepository.getInstance().delete(subject)) {
+            view.onSuccessDeleted(subject);
         }
     }
 
     @Override
     public void load() {
-        new AsyncTask<Void,Void, List<Subject>>(){
+        new AsyncTask<Void, Void, List<Subject>>() {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -42,10 +35,9 @@ public class SubjectListPresenter implements SubjectListContract.Presenter {
             @Override
             protected void onPostExecute(List<Subject> subjectList) {
                 super.onPostExecute(subjectList);
-                if(subjectList.isEmpty()){
+                if (subjectList.isEmpty()) {
                     view.noSubjets();
-                }
-                else{
+                } else {
                     view.refresh((ArrayList<Subject>) subjectList);
                 }
                 view.hideProgress();
@@ -53,9 +45,9 @@ public class SubjectListPresenter implements SubjectListContract.Presenter {
 
             @Override
             protected List<Subject> doInBackground(Void... voids) {
-                try{
+                try {
                     Thread.sleep(3000);
-                }catch (InterruptedException e){
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
@@ -66,8 +58,12 @@ public class SubjectListPresenter implements SubjectListContract.Presenter {
 
     @Override
     public void undo(Subject subject) {
-        if (SubjectRepository.getInstance().addSubject(subject)) {
+        view.onUndo(subject);
+    }
+
+    @Override
+    public void onSucessUndo(Subject subject) {
+        if(SubjectRepository.getInstance().addSubject(subject))
             view.onSucessUndo(subject);
-        }
     }
 }

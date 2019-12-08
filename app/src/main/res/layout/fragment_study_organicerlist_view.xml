@@ -10,7 +10,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/studyOrganicerList_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_gravity="center"/>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -26,5 +27,5 @@
         android:id="@+id/studyorganicerlist_dataloading"
         layout="@layout/loading_data"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

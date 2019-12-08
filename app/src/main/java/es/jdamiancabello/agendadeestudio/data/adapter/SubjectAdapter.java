@@ -18,8 +18,9 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.Dependen
     private ArrayList<Subject> list;
     private onManegeSubjectListener listener;
 
-    public SubjectAdapter() {
-        list = (ArrayList<Subject>) SubjectRepository.getInstance().getSubjectList();
+    public SubjectAdapter(SubjectAdapter.onManegeSubjectListener listener) {
+        list = new ArrayList<>();
+        this.listener = listener;
     }
 
     @NonNull
@@ -44,6 +45,22 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.Dependen
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public void clear() {
+        list.clear();
+    }
+
+    public void addAll(ArrayList<Subject> subjectArrayList) {
+        list.addAll(subjectArrayList);
+    }
+
+    public void removeSubject(Subject subject) {
+        list.remove(subject);
+    }
+
+    public void addSubject(Subject subject) {
+        list.add(subject);
     }
 
 

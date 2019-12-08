@@ -7,8 +7,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import java.util.EventListener;
+
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.model.StudyOrganicer;
+import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.repository.UserRepository;
 import es.jdamiancabello.agendadeestudio.ui.aboutme.AboutMeFragment;
 import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerListContract;
@@ -17,12 +20,18 @@ import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerManageP
 import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerManageView;
 import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerPresenter;
 import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerView;
+import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListContract;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListFragment;
+import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListPresenter;
 
 public class FragmentActivity extends AppCompatActivity implements SubjectListFragment.onSubjectListListener, DashboardFragment.onDashboardListener,LoginFragment.onLoginListener, StudyOrganicerView.SectorListViewListener, StudyOrganicerManageView.OnSaveStudyOrganicerManageView {
 
     private Fragment welcomeFragment;
+
     private Fragment subjectList;
+    private SubjectListPresenter subjectListPresenter;
+
+
     private Fragment aboutMeFragment;
     private Fragment registerFragment;
     private Fragment dashboardFragment;
@@ -43,31 +52,34 @@ public class FragmentActivity extends AppCompatActivity implements SubjectListFr
     }
 
     @Override
-    public void addSubject(Bundle subject) {
-        onBackPressed();
-    }
-
-    @Override
     public void showSubjectsList() {
         subjectList = getSupportFragmentManager().findFragmentByTag(SubjectListFragment.TAG);
-        if (subjectList==null)
-            subjectList= SubjectListFragment.newInstance();
+        if (subjectList==null) {
+            subjectList = SubjectListFragment.newInstance();
 
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(android.R.id.content,subjectList,SubjectListFragment.TAG);
-        fragmentTransaction.addToBackStack(DashboardFragment.TAG);
-        fragmentTransaction.commit();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(android.R.id.content, subjectList, SubjectListFragment.TAG);
+            fragmentTransaction.addToBackStack(DashboardFragment.TAG);
+            fragmentTransaction.commit();
+        }
 
+        subjectListPresenter = new SubjectListPresenter((SubjectListContract.View) subjectList);
+        ((SubjectListContract.View) subjectList).setPresenter(subjectListPresenter);
     }
 
     @Override
     public void showEventsList() {
-        eventListFragment = StudyOrganicerView.newInstance(null);
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(android.R.id.content,eventListFragment,StudyOrganicerView.TAG);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+
+        eventListFragment = getSupportFragmentManager().findFragmentByTag(StudyOrganicerView.TAG);
+
+        if(eventListFragment == null) {
+            eventListFragment = StudyOrganicerView.newInstance(null);
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(android.R.id.content, eventListFragment, StudyOrganicerView.TAG);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
 
         studyOrganicerPresenter = new StudyOrganicerPresenter((StudyOrganicerListContract.View) eventListFragment);
         ((StudyOrganicerListContract.View) eventListFragment).setPresenter(studyOrganicerPresenter);
@@ -158,5 +170,10 @@ public class FragmentActivity extends AppCompatActivity implements SubjectListFr
 
         studyOrganicerPresenter = new StudyOrganicerPresenter((StudyOrganicerListContract.View) eventListFragment);
         ((StudyOrganicerListContract.View) eventListFragment).setPresenter(studyOrganicerPresenter);
+    }
+
+    @Override
+    public void addSubject(Subject subject) {
+
     }
 }
