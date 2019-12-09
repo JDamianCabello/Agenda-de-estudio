@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Subject implements Parcelable {
@@ -85,5 +86,13 @@ public class Subject implements Parcelable {
     @Override
     public String toString() {
         return name;
+    }
+
+    public static class SortByName implements Comparator<Subject> {
+
+        @Override
+        public int compare(Subject o1, Subject o2) {
+            return o1.getName().compareToIgnoreCase(o2.getName());
+        }
     }
 }

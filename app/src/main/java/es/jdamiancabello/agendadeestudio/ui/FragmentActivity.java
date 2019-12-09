@@ -7,13 +7,16 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import java.util.EventListener;
-
 import es.jdamiancabello.agendadeestudio.R;
+import es.jdamiancabello.agendadeestudio.data.model.Note;
 import es.jdamiancabello.agendadeestudio.data.model.StudyOrganicer;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
-import es.jdamiancabello.agendadeestudio.data.repository.UserRepository;
 import es.jdamiancabello.agendadeestudio.ui.aboutme.AboutMeFragment;
+import es.jdamiancabello.agendadeestudio.ui.login.LoginContract;
+import es.jdamiancabello.agendadeestudio.ui.login.LoginFragment;
+import es.jdamiancabello.agendadeestudio.ui.login.LoginPresenter;
+import es.jdamiancabello.agendadeestudio.ui.notes.NoteListPresenter;
+import es.jdamiancabello.agendadeestudio.ui.notes.NotesListFragment;
 import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerListContract;
 import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerManageContract;
 import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerManagePresenter;
@@ -23,8 +26,16 @@ import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerView;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListContract;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListFragment;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListPresenter;
+import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomeFragment;
 
-public class FragmentActivity extends AppCompatActivity implements SubjectListFragment.onSubjectListListener, DashboardFragment.onDashboardListener,LoginFragment.onLoginListener, StudyOrganicerView.SectorListViewListener, StudyOrganicerManageView.OnSaveStudyOrganicerManageView {
+public class FragmentActivity extends AppCompatActivity implements
+        SubjectListFragment.onSubjectListListener,
+        DashboardFragment.onDashboardListener,
+        LoginFragment.onLoginListener,
+        StudyOrganicerView.SectorListViewListener,
+        StudyOrganicerManageView.OnSaveStudyOrganicerManageView,
+        WelcomeFragment.OnWelcomeListener,
+        NotesListFragment.OnFragmentInteractionListener{
 
     private Fragment welcomeFragment;
 
@@ -33,7 +44,11 @@ public class FragmentActivity extends AppCompatActivity implements SubjectListFr
 
 
     private Fragment aboutMeFragment;
+    private Fragment loginFragment;
+
     private Fragment registerFragment;
+    private LoginPresenter loginPresenter;
+
     private Fragment dashboardFragment;
     private Fragment eventListFragment;
     private Fragment eventManageFragment;
@@ -41,13 +56,16 @@ public class FragmentActivity extends AppCompatActivity implements SubjectListFr
     private StudyOrganicerPresenter studyOrganicerPresenter;
     private StudyOrganicerManagePresenter studyOrganicerManagePresenter;
 
+    private NotesListFragment notesListFragment;
+    private NoteListPresenter noteListPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
         welcomeFragment = WelcomeFragment.newInstance();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(android.R.id.content,welcomeFragment,LoginFragment.TAG);
+        fragmentTransaction.add(android.R.id.content,welcomeFragment,WelcomeFragment.TAG);
         fragmentTransaction.commit();
     }
 
@@ -101,6 +119,22 @@ public class FragmentActivity extends AppCompatActivity implements SubjectListFr
     }
 
     @Override
+    public void showNoteView() {
+        notesListFragment = (NotesListFragment) getSupportFragmentManager().findFragmentByTag(NotesListFragment.TAG);
+
+        if(notesListFragment == null){
+            notesListFragment = NotesListFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(android.R.id.content,notesListFragment,NotesListFragment.TAG)
+                    .addToBackStack(null).commit();
+        }
+
+        noteListPresenter = new NoteListPresenter(notesListFragment);
+        notesListFragment.setPresenter(noteListPresenter);
+
+    }
+
+    @Override
     public void showHelp() {
         aboutMeFragment = AboutMeFragment.newInstance();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -110,15 +144,11 @@ public class FragmentActivity extends AppCompatActivity implements SubjectListFr
     }
 
     @Override
-    public void checkUser(String user, String password) {
-        if(UserRepository.getInstance().UserLogin(user,password)) {
-            dashboardFragment = DashboardFragment.newInstance();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(android.R.id.content,dashboardFragment,DashboardFragment.TAG);
-            fragmentTransaction.commit();
-        }
-        else
-            Toast.makeText(this,"No existe el usuario",Toast.LENGTH_SHORT).show();
+    public void onSuccesLogin() {
+        dashboardFragment = DashboardFragment.newInstance();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(android.R.id.content,dashboardFragment,DashboardFragment.TAG);
+        fragmentTransaction.commit();
     }
 
 
@@ -174,6 +204,32 @@ public class FragmentActivity extends AppCompatActivity implements SubjectListFr
 
     @Override
     public void addSubject(Subject subject) {
+
+    }
+
+    @Override
+    public void onGoLogin() {
+        loginFragment = LoginFragment.newInstance();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(android.R.id.content,loginFragment,LoginFragment.TAG);
+        fragmentTransaction.addToBackStack("WelcomeToLogin");
+        fragmentTransaction.commit();
+
+        loginPresenter = new LoginPresenter((LoginContract.View) loginFragment);
+        ((LoginContract.View) loginFragment).setPresenter(loginPresenter);
+    }
+
+    @Override
+    public void onGoRegister() {
+        registerFragment = RegisterFragment.newInstance();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(android.R.id.content,registerFragment,RegisterFragment.TAG);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onAddorModifyNote(Note note) {
 
     }
 }

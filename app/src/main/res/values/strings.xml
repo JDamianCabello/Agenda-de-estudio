@@ -4,7 +4,7 @@
     <!--    LoginFragment strings-->
     <string name="login_registerText">You don\'t have an account yet? Sign up</string>
     <string name="login_passwordHint">Password</string>
-    <string name="login_emailHint">E-mail</string>
+    <string name="login_emailHint">Username or E-mail</string>
     <string name="login_signInButtonText">Sign in</string>
     <string name="login_tittle">¡Welcome!</string>
     <string name="login_subtittle">Start organizing your study form</string>
@@ -36,4 +36,5 @@
     <string name="subjectlist_undotext">Restore the subject</string>
     <string name="subjectlist_undobuttontext">UNDO</string>
     <string name="subjectlist_restoreditem">has been successfully restored</string>
+    <string name="login_wrongLoginText">email or password entered is incorrect . please check</string>
 </resources>

@@ -35,7 +35,8 @@ public class UserRepository {
 
     public boolean UserLogin(String email, String password){
         for (int i = 0; i < userList.size(); i++) {
-            if(userList.get(i).getEmail().equals(email) && userList.get(i).getPassword().equals(password))
+            if(userList.get(i).getEmail().equals(email) && userList.get(i).getPassword().equals(password)
+                    || userList.get(i).getUserName().equals(email) && userList.get(i).getPassword().equals(password))
                 return true;
         }
         return false;

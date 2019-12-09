@@ -9,10 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
-import es.jdamiancabello.agendadeestudio.data.repository.SubjectRepository;
 
 public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.DependencyViewHolder> {
     private ArrayList<Subject> list;
@@ -34,7 +35,6 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.Dependen
     public void onBindViewHolder(@NonNull DependencyViewHolder holder, int position) {
         holder.tvSubjectName.setText(list.get(position).getName());
         holder.tvSubjectState.setText(list.get(position).getStateEnum().toString());
-
         holder.bind(list.get(position), listener);
     }
 
@@ -61,6 +61,10 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.Dependen
 
     public void addSubject(Subject subject) {
         list.add(subject);
+    }
+
+    public void sortByName(Comparator comparator) {
+        Collections.sort(list,comparator);
     }
 
 

@@ -1,9 +1,8 @@
-package es.jdamiancabello.agendadeestudio.ui;
+package es.jdamiancabello.agendadeestudio.ui.login;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 
 import android.content.Context;
@@ -14,14 +13,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import es.jdamiancabello.agendadeestudio.R;
-import es.jdamiancabello.agendadeestudio.data.repository.UserRepository;
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements LoginContract.View{
     private ImageView ivBack;
     private TextView tvRegister;
     private TextView tvHelp;
@@ -30,6 +28,7 @@ public class LoginFragment extends Fragment {
     private TextInputEditText tiedPassword;
     public final static String TAG = "LoginFragment";
     private onLoginListener activityListener;
+    private LoginContract.Presenter presenter;
 
 
     public static LoginFragment newInstance() {
@@ -79,7 +78,7 @@ public class LoginFragment extends Fragment {
         register_btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activityListener.checkUser(tiedEmail.getText().toString(),tiedPassword.getText().toString());
+                presenter.loginUser(tiedEmail.getText().toString(),tiedPassword.getText().toString());
             }
         });
     }
@@ -98,9 +97,29 @@ public class LoginFragment extends Fragment {
         activityListener = null;
     }
 
-    interface onLoginListener{
+    @Override
+    public void showWrongLogin() {
+        Snackbar.make(getView(),R.string.login_wrongLoginText,Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSucess() {
+        activityListener.onSuccesLogin();
+    }
+
+    @Override
+    public void setPresenter(LoginContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void showGenericError(String s) {
+
+    }
+
+    public interface onLoginListener{
         void showHelp();
-        void checkUser(String user, String password);
+        void onSuccesLogin();
         void showRegister();
     }
 }

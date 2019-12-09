@@ -4,7 +4,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -48,6 +51,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_subjectlist,container,false);
     }
 
@@ -87,8 +91,25 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
+
+        registerForContextMenu(recyclerView);
     }
 
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        getActivity().getMenuInflater().inflate(R.menu.context_menu_listorder,menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.contextmenu_orderName:
+                adapter.sortByName(new Subject.SortByName());
+                break;
+        }
+        adapter.notifyDataSetChanged();
+        return super.onContextItemSelected(item);
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {

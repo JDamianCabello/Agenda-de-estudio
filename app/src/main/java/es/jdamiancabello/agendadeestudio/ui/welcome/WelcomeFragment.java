@@ -1,11 +1,10 @@
-package es.jdamiancabello.agendadeestudio.ui;
+package es.jdamiancabello.agendadeestudio.ui.welcome;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,16 +18,20 @@ import es.jdamiancabello.agendadeestudio.R;
 public class WelcomeFragment extends Fragment {
     private Button btLogin;
     private TextView tvRegister;
-    private Fragment loginFragment;
-    private Fragment registerFragment;
+
     public final static String TAG = "WELCOMEFRAGMENT";
+    private OnWelcomeListener onWelcomeListener;
+
+    public static WelcomeFragment newInstance() {
+        return new WelcomeFragment();
+    }
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.activity_welcome, container,false);
+        return inflater.inflate(R.layout.activity_welcome, container, false);
     }
 
     @Override
@@ -38,11 +41,7 @@ public class WelcomeFragment extends Fragment {
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginFragment = LoginFragment.newInstance();
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(android.R.id.content,loginFragment,LoginFragment.TAG);
-                fragmentTransaction.addToBackStack("WelcomeToLogin");
-                fragmentTransaction.commit();
+                onWelcomeListener.onGoLogin();
             }
         });
 
@@ -50,16 +49,33 @@ public class WelcomeFragment extends Fragment {
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registerFragment = RegisterFragment.newInstance();
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(android.R.id.content,registerFragment,RegisterFragment.TAG);
-                fragmentTransaction.addToBackStack("WelcomeToRegister");
-                fragmentTransaction.commit();
+                onWelcomeListener.onGoRegister();
             }
         });
     }
 
-    public static WelcomeFragment newInstance() {
-        return new WelcomeFragment();
+    public interface OnWelcomeListener {
+        void onGoLogin();
+
+        void onGoRegister();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnWelcomeListener) {
+            onWelcomeListener = (OnWelcomeListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnWelcomeListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        onWelcomeListener = null;
+
+
     }
 }

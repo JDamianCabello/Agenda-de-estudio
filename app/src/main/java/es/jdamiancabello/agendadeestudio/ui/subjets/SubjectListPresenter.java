@@ -17,7 +17,6 @@ public class SubjectListPresenter implements SubjectListContract.Presenter {
 
     @Override
     public void delete(Subject subject) {
-        //1. Realizar la operacion en el repo y comprobar el resultado
         if (SubjectRepository.getInstance().delete(subject)) {
             view.onSuccessDeleted(subject);
         }

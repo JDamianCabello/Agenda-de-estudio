@@ -59,4 +59,5 @@ public class SubjectRepository {
     public boolean delete(Subject subject) {
         return subjectList.remove(subject);
     }
+
 }
