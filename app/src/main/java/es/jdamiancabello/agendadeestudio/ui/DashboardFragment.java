@@ -2,6 +2,7 @@ package es.jdamiancabello.agendadeestudio.ui;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Context;
@@ -81,6 +82,7 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
     @Override

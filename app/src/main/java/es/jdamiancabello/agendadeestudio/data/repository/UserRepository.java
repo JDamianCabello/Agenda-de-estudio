@@ -51,4 +51,12 @@ public class UserRepository {
         return true;
     }
 
+    public User getUser(String user, String pass) {
+        for(User u : userList){
+            if(u.getEmail().equals(user) && u.getPassword().equals(pass)
+            || u.getUserName().equals(user) && u.getPassword().equals(pass))
+                return u;
+        }
+        return null;
+    }
 }

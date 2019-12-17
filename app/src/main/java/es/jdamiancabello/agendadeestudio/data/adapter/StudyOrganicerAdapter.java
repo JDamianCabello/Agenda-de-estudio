@@ -72,6 +72,10 @@ public class StudyOrganicerAdapter extends RecyclerView.Adapter<StudyOrganicerAd
         Collections.sort(studyOrganicerList, comparator) ;
     }
 
+    public void sortByName() {
+        studyOrganicerList.sort(new StudyOrganicer.IdSort());
+    }
+
     public interface OnManageStudyOrganicerListener{
         void onDeleteStudyOrganicerListener(StudyOrganicer studyOrganicer);
         void onAddorEditStudyOrganicerListener(StudyOrganicer studyOrganicer);

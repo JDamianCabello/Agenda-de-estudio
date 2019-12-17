@@ -2,6 +2,7 @@ package es.jdamiancabello.agendadeestudio.ui.login;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 
@@ -18,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import es.jdamiancabello.agendadeestudio.R;
+import es.jdamiancabello.agendadeestudio.utils.CommonUtils;
 
 public class LoginFragment extends Fragment implements LoginContract.View{
     private ImageView ivBack;
@@ -81,6 +83,8 @@ public class LoginFragment extends Fragment implements LoginContract.View{
                 presenter.loginUser(tiedEmail.getText().toString(),tiedPassword.getText().toString());
             }
         });
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
 

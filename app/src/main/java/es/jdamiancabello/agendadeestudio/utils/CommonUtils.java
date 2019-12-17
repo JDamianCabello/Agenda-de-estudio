@@ -1,7 +1,11 @@
 package es.jdamiancabello.agendadeestudio.utils;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import es.jdamiancabello.agendadeestudio.ui.FocusApplication;
 
 /**
  * Estas clases no se pueden heredar por eso se indica que son final

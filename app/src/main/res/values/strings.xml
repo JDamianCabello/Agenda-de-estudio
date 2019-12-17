@@ -29,7 +29,7 @@
 
     <string name="studyOrganicerList_NoEvents">Don\'t have events to show</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="loadingData">Loading data, please wait...</string>
     <string name="subjectlist_deleteditem">has been deleted</string>
@@ -37,4 +37,5 @@
     <string name="subjectlist_undobuttontext">UNDO</string>
     <string name="subjectlist_restoreditem">has been successfully restored</string>
     <string name="login_wrongLoginText">email or password entered is incorrect . please check</string>
+    <string name="sharedUserDataLogin">sharedUserData</string>
 </resources>

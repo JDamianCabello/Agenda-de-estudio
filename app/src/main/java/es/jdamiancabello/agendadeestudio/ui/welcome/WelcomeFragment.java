@@ -2,6 +2,7 @@ package es.jdamiancabello.agendadeestudio.ui.welcome;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Context;
@@ -15,7 +16,8 @@ import android.widget.TextView;
 
 import es.jdamiancabello.agendadeestudio.R;
 
-public class WelcomeFragment extends Fragment {
+public class WelcomeFragment extends Fragment implements WelcomeContract.view{
+    WelcomeContract.Presenter presenter;
     private Button btLogin;
     private TextView tvRegister;
 
@@ -32,6 +34,12 @@ public class WelcomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.activity_welcome, container, false);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        presenter.checkUserLogged();
     }
 
     @Override
@@ -52,12 +60,34 @@ public class WelcomeFragment extends Fragment {
                 onWelcomeListener.onGoRegister();
             }
         });
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+    }
+
+    @Override
+    public void onSucess() {
+
+    }
+
+    @Override
+    public void setPresenter(WelcomeContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void showGenericError(String s) {
+
+    }
+
+    @Override
+    public void existUserLogged() {
+        onWelcomeListener.onGoDashboard();
     }
 
     public interface OnWelcomeListener {
         void onGoLogin();
-
         void onGoRegister();
+        void onGoDashboard();
     }
 
     @Override
@@ -75,7 +105,5 @@ public class WelcomeFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         onWelcomeListener = null;
-
-
     }
 }

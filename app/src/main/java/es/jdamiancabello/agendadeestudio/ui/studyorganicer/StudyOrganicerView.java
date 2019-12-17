@@ -8,11 +8,16 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -33,7 +38,6 @@ public class StudyOrganicerView extends Fragment implements StudyOrganicerListCo
     private StudyOrganicerListContract.Presenter presenter;
     private RecyclerView rvStudyOrganicer;
     private FloatingActionButton fabButton;
-    private ProgressBar progressBar;
     private SectorListViewListener viewListener;
     private View loadData;
 
@@ -55,6 +59,23 @@ public class StudyOrganicerView extends Fragment implements StudyOrganicerListCo
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.context_menu_listorder,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.contextmenu_orderName:
+                adapter.sortByName();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -91,12 +112,12 @@ public class StudyOrganicerView extends Fragment implements StudyOrganicerListCo
                 viewListener.sectorAddEditFragmentShow(studyOrganicer);
             }
         };
-
         adapter.setOnManageStudyOrganicerListener(adapterOnManageStudyOrganicerListener);
         rvStudyOrganicer.setAdapter(adapter);
         rvStudyOrganicer.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
 
     @Override

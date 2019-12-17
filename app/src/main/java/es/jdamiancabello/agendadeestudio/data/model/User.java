@@ -3,6 +3,9 @@ package es.jdamiancabello.agendadeestudio.data.model;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class User {
+    public static final String userKey = "username";
+    public static final String passwordKey = "password";
+
     private static final AtomicInteger count = new AtomicInteger(0);
     private final int idUser;
     private String userName;

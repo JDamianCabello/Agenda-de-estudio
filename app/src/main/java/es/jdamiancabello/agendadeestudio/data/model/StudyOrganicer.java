@@ -134,4 +134,12 @@ public class StudyOrganicer implements Parcelable {
         }
     }
 
+    public static class stateSort implements Comparator<StudyOrganicer> {
+
+        @Override
+        public int compare(StudyOrganicer o1, StudyOrganicer o2) {
+            return 0;
+        }
+    }
+
 }
