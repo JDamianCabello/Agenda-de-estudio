@@ -28,11 +28,18 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    //animacion de transicciones
-    implementation 'com.github.mohammadatif:Animatoo:master'
-    implementation 'com.google.android.material:material:1.0.0'
-
     //About me
     implementation 'com.github.jrvansuita:MaterialAbout:+'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
+
+    //FacebookLogin
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+    implementation 'com.google.android.material:material:1.0.0'
+
+    //Circle image view (FB login)
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
+
+    //Loader remote images (FB login)
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 }

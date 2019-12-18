@@ -16,9 +16,10 @@ public class LoginPresenter implements LoginContract.Presenter{
     }
 
     @Override
-    public void loginUser(String user, String pass) {
+    public void loginUser(String user, String pass, boolean persistLogin) {
         if(UserRepository.getInstance().UserLogin(user,pass)) {
-            saveUserData(user,pass);
+            if(persistLogin)
+                saveUserData(user,pass);
             FocusApplication.setUser(UserRepository.getInstance().getUser(user,pass));
             view.onSucess();
         }

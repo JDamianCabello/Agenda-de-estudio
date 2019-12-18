@@ -38,4 +38,13 @@
     <string name="subjectlist_restoreditem">has been successfully restored</string>
     <string name="login_wrongLoginText">email or password entered is incorrect . please check</string>
     <string name="sharedUserDataLogin">sharedUserData</string>
+
+
+    <!--    Not translated-->
+    <string name="facebook_app_id" translatable="false">462499357788675</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb462499357788675</string>
+    <string name="fbLogin_email">email</string>
+    <string name="fbLogin_username">Username</string>
+    <string name="fbLogin_password">Password</string>
+    <string name="fbLogin_confirmPassword">Confirm password</string>
 </resources>

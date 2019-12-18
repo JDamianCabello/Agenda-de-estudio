@@ -8,6 +8,6 @@ public class LoginContract {
     }
 
     interface Presenter{
-        void loginUser(String user, String pass);
+        void loginUser(String user, String pass, boolean persistLogin);
     }
 }
