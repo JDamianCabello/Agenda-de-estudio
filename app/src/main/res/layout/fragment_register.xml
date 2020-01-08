@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".register.registerFacebook.FacebookRegisterFragment"
+    tools:context=".register.RegisterFragment"
     android:padding="32dp">
 
     <ImageView
-        android:id="@+id/fbLogin_ivBack"
+        android:id="@+id/login_ivBack"
         android:layout_width="32dp"
         android:layout_height="28dp"
         android:src="@drawable/back_button_arrow"
@@ -24,7 +24,7 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/fbLogin_profile_image"
+            android:id="@+id/login_profile_image"
             android:layout_width="96dp"
             android:layout_height="96dp"
             app:civ_border_width="2dp"
@@ -34,55 +34,59 @@
             android:layout_marginBottom="32dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_tilEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/fbLogin_edtEmail"
+                android:id="@+id/login_edtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/fbLogin_email" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_tilUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/fbLogin_edtUsername"
+                android:id="@+id/login_edtUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/fbLogin_username" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_tilPsw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/fbLogin_edtpsw"
+                android:id="@+id/login_edtpsw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/fbLogin_password" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_tilConfirmPsw"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="48dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/fbLogin_edtConfirmPsw"
+                android:id="@+id/login_edtConfirmPsw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/fbLogin_confirmPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/fbLogin_registerBt"
+            android:id="@+id/login_registerBt"
             android:layout_width="match_parent"
             android:layout_height="53dp"
             android:layout_gravity="left"

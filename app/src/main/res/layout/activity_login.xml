@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/login_emailHint"
                 android:inputType="textEmailAddress"
-                android:text="test" />
+                android:text="damian1@damian.damian" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/login_passwordHint"
                 android:inputType="textPassword"
-                android:text="test" />
+                android:text="damian" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

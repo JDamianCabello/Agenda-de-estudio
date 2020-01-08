@@ -1,6 +1,5 @@
 package es.jdamiancabello.agendadeestudio.register;
 
-import es.jdamiancabello.agendadeestudio.data.model.User;
 import es.jdamiancabello.agendadeestudio.ui.base.BaseView;
 
 public class RegisterContract {
@@ -16,6 +15,7 @@ public class RegisterContract {
         void setNotValidPasswordError();
 
         void setVoidConfirmPasswordError();
+        void setNoMachPasswordError();
 
 
 
@@ -30,12 +30,13 @@ public class RegisterContract {
         void clearNotValidPasswordError();
 
         void clearVoidConfirmPasswordError();
+        void clearNoMachPasswordError();
 
 
     }
 
     public interface Presenter{
         void login(String email, String username, String psw, String confirmPsw);
-        void checkRegisterUser(String email);
+        boolean checkRegisterUser(String email);
     }
 }

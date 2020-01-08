@@ -9,7 +9,7 @@ import es.jdamiancabello.agendadeestudio.data.model.User;
 import es.jdamiancabello.agendadeestudio.data.repository.UserRepository;
 import es.jdamiancabello.agendadeestudio.ui.FocusApplication;
 
-public class WelcomePresenter implements WelcomeContract.Presenter {
+public class WelcomePresenter implements WelcomeContract.Presenter, UserRepository.WelcomeListener{
     WelcomeContract.view view;
 
     public WelcomePresenter(WelcomeContract.view view) {
@@ -24,10 +24,11 @@ public class WelcomePresenter implements WelcomeContract.Presenter {
         String username = sharedPreferences.getString(User.userKey,"");
         String password = sharedPreferences.getString(User.passwordKey,"");
 
-        if(UserRepository.getInstance().getUser(username,password) != null) {
-            FocusApplication.setUser(UserRepository.getInstance().getUser(username, password));
-            view.existUserLogged();
-        }
+        UserRepository.getInstance().getUser(username,password,this);
+    }
 
+    @Override
+    public void onLoggedUser() {
+        view.existUserLogged();
     }
 }

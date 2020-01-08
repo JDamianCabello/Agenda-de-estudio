@@ -101,7 +101,7 @@ public class LoginFragment extends Fragment implements LoginContract.View{
         fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-
+                activityListener.showFacebookRegister(loginResult.getAccessToken());
             }
 
             @Override
@@ -111,7 +111,7 @@ public class LoginFragment extends Fragment implements LoginContract.View{
 
             @Override
             public void onError(FacebookException error) {
-
+                showGenericError(error.toString());
             }
         });
 
@@ -199,6 +199,6 @@ public class LoginFragment extends Fragment implements LoginContract.View{
         void showHelp();
         void onSuccesLogin();
         void showRegister();
-        void showFacebookRegister();
+        void showFacebookRegister(AccessToken accessToken);
     }
 }

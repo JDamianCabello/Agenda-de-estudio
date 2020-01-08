@@ -47,4 +47,8 @@
     <string name="fbLogin_username">Username</string>
     <string name="fbLogin_password">Password</string>
     <string name="fbLogin_confirmPassword">Confirm password</string>
+    <string name="errDuplicateEmail">This email is in use, try another diferent or recover the password</string>
+    <string name="errNotMatchPass">Passwords do not match</string>
+    <string name="errVoidField">This field can not be blank</string>
+    <string name="login_recoverPassword">Recover password</string>
 </resources>

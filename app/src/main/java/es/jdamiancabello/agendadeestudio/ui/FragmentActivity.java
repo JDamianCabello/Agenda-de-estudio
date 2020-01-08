@@ -10,10 +10,14 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 
+import com.facebook.AccessToken;
+
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.model.Note;
 import es.jdamiancabello.agendadeestudio.data.model.StudyOrganicer;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
+import es.jdamiancabello.agendadeestudio.register.RegisterFragment;
+import es.jdamiancabello.agendadeestudio.register.RegisterPresenter;
 import es.jdamiancabello.agendadeestudio.ui.aboutme.AboutMeFragment;
 import es.jdamiancabello.agendadeestudio.ui.login.LoginContract;
 import es.jdamiancabello.agendadeestudio.ui.login.LoginFragment;
@@ -40,7 +44,9 @@ public class FragmentActivity extends AppCompatActivity implements
         StudyOrganicerView.SectorListViewListener,
         StudyOrganicerManageView.OnSaveStudyOrganicerManageView,
         WelcomeFragment.OnWelcomeListener,
-        NotesListFragment.OnFragmentInteractionListener{
+        NotesListFragment.OnFragmentInteractionListener,
+        RegisterFragment.OnFragmentInteractionListener
+        {
     private Toolbar toolbar;
 
     private Fragment welcomeFragment;
@@ -52,9 +58,10 @@ public class FragmentActivity extends AppCompatActivity implements
 
     private Fragment aboutMeFragment;
     private Fragment loginFragment;
-
-    private Fragment registerFragment;
     private LoginPresenter loginPresenter;
+
+    private RegisterFragment registerFragment;
+    private RegisterPresenter registerPresenter;
 
     private Fragment dashboardFragment;
     private Fragment eventListFragment;
@@ -176,11 +183,25 @@ public class FragmentActivity extends AppCompatActivity implements
 
     @Override
     public void showRegister() {
-        registerFragment = RegisterFragment.newInstance();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.content,registerFragment,RegisterFragment.TAG);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        registerFragment = (RegisterFragment) getSupportFragmentManager().findFragmentByTag(RegisterFragment.TAG);
+
+        if(registerFragment == null){
+            registerFragment = RegisterFragment.newInstance(null);
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.content,registerFragment, RegisterFragment.TAG);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+
+        registerPresenter = new RegisterPresenter(registerFragment);
+        registerFragment.setPresenter(registerPresenter);
+
+
+    }
+
+    @Override
+    public void showFacebookRegister(AccessToken accessToken) {
+
     }
 
     @Override
@@ -234,7 +255,6 @@ public class FragmentActivity extends AppCompatActivity implements
         loginFragment = LoginFragment.newInstance();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content,loginFragment,LoginFragment.TAG);
-        fragmentTransaction.addToBackStack("WelcomeToLogin");
         fragmentTransaction.commit();
 
         loginPresenter = new LoginPresenter((LoginContract.View) loginFragment);
@@ -243,11 +263,14 @@ public class FragmentActivity extends AppCompatActivity implements
 
     @Override
     public void onGoRegister() {
-        registerFragment = RegisterFragment.newInstance();
+        registerFragment = es.jdamiancabello.agendadeestudio.register.RegisterFragment.newInstance(null);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.content,registerFragment,RegisterFragment.TAG);
+        fragmentTransaction.replace(R.id.content,registerFragment, RegisterFragment.TAG);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+
+        registerPresenter = new RegisterPresenter(registerFragment);
+        registerFragment.setPresenter(registerPresenter);
     }
 
     @Override
@@ -258,5 +281,10 @@ public class FragmentActivity extends AppCompatActivity implements
     @Override
     public void onAddorModifyNote(Note note) {
 
+    }
+
+    @Override
+     public void onDoneRegister() {
+        onSuccesLogin();
     }
 }

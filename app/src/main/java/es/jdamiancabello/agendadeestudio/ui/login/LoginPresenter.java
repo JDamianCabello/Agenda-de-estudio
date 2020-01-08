@@ -8,7 +8,7 @@ import es.jdamiancabello.agendadeestudio.data.model.User;
 import es.jdamiancabello.agendadeestudio.data.repository.UserRepository;
 import es.jdamiancabello.agendadeestudio.ui.FocusApplication;
 
-public class LoginPresenter implements LoginContract.Presenter{
+public class LoginPresenter implements LoginContract.Presenter, UserRepository.UserRepositoryListener{
     private LoginContract.View view;
 
     public LoginPresenter(LoginContract.View view) {
@@ -17,24 +17,17 @@ public class LoginPresenter implements LoginContract.Presenter{
 
     @Override
     public void loginUser(String user, String pass, boolean persistLogin) {
-        if(UserRepository.getInstance().UserLogin(user,pass)) {
-            if(persistLogin)
-                saveUserData(user,pass);
-            FocusApplication.setUser(UserRepository.getInstance().getUser(user,pass));
-            view.onSucess();
-        }
-        else
-            view.showWrongLogin();
+        UserRepository.getInstance().UserLogin(user,pass, this, persistLogin);
     }
 
-    private void saveUserData(String user, String pass) {
-        SharedPreferences sharedPreferences = FocusApplication.getUserContext().getSharedPreferences(FocusApplication.getUserContext().getString(R.string.sharedUserDataLogin), Context.MODE_PRIVATE);
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+    @Override
+    public void onSucessLogin() {
+        view.onSucess();
+    }
 
-        editor.putString(User.userKey,user);
-        editor.putString(User.passwordKey,pass);
+    @Override
+    public void onFailLogin() {
 
-        editor.commit();
     }
 }
