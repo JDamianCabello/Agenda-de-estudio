@@ -41,9 +41,7 @@ public class StudyOrganicerManageView extends Fragment implements StudyOrganicer
 
     public static Fragment newInstance(Bundle b) {
         StudyOrganicerManageView fragment = new StudyOrganicerManageView();
-        if (b != null){
-            fragment.setArguments(b);
-        }
+        fragment.setArguments(b);
         return fragment;
     }
 
