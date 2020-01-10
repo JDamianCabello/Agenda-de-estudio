@@ -16,7 +16,7 @@ import es.jdamiancabello.agendadeestudio.R;
 
 public class DashboardFragment extends Fragment {
     public static final String TAG = "DashboardFragment";
-    private ImageButton ibSubjectList, ibEventsList, ibSettings, ibChrono,ibSchedule, ibNotes;
+    private ImageButton ibSubjectList, ibEventsList, ibSettings, ibChrono,ibSchedule, ibNotes, loggout;
     private onDashboardListener activityListener;
 
     public static Fragment newInstance() {
@@ -82,6 +82,16 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        loggout = view.findViewById(R.id.loggout);
+        loggout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityListener.loggout();
+            }
+        });
+
+
+
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
@@ -104,6 +114,7 @@ public class DashboardFragment extends Fragment {
         void ShowSettingsView();
         void ShowScheduleView();
         void showNoteView();
+        void loggout();
     }
 
 

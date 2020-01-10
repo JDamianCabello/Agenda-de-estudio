@@ -2,9 +2,11 @@ package es.jdamiancabello.agendadeestudio.data.Network;
 
 import es.jdamiancabello.agendadeestudio.data.model.api_model.LoginResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.RegisterResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.SubjectListResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface ApiCalls {
@@ -22,6 +24,9 @@ public interface ApiCalls {
             @Field("name") String name,
             @Field("email") String email,
             @Field("password") String password);
+
+    @GET("subject/")
+    Call<SubjectListResponse> getSubjectList();
 
 
 

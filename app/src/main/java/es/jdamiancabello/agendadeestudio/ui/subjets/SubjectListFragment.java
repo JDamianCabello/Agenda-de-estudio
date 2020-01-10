@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,6 @@ import java.util.ArrayList;
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.adapter.SubjectAdapter;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
-import es.jdamiancabello.agendadeestudio.data.repository.SubjectRepository;
 
 public class SubjectListFragment extends Fragment implements SubjectListContract.View{
     public final static String TAG = "SubjectListFragment";
@@ -67,12 +65,12 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("subject",subject);
 //                listListener.addSubject(bundle);
-                    Toast.makeText(getContext(),"Has pulsado en: "+subject.getName(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"Has pulsado en: "+subject.getSubject_name(),Toast.LENGTH_LONG).show();
                 }
 
                 @Override
                 public void onDeleteSubjectListener(final Subject subject) {
-                    new AlertDialog.Builder(getContext()).setTitle("ELIMINAR").setMessage("¿Seguro que desea elmininar " + subject.getName() + "?").setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    new AlertDialog.Builder(getContext()).setTitle("ELIMINAR").setMessage("¿Seguro que desea elmininar " + subject.getSubject_name() + "?").setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             presenter.delete(subject);
@@ -146,7 +144,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
 
     @Override
     public void onSuccessDeleted(Subject subject) {
-        //Toast.makeText(getContext(),subject.getName() + " "+getString(R.string.subjectlist_deleteditem),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(),subject.getSubject_name() + " "+getString(R.string.subjectlist_deleteditem),Toast.LENGTH_SHORT).show();
         presenter.undo(subject);
         adapter.removeSubject(subject);
         adapter.notifyDataSetChanged();
@@ -154,14 +152,14 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
 
     @Override
     public void onSucessUndo(Subject subject) {
-        Toast.makeText(getContext(),subject.getName() + " "+getString(R.string.subjectlist_restoreditem),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),subject.getSubject_name() + " "+getString(R.string.subjectlist_restoreditem),Toast.LENGTH_SHORT).show();
         adapter.addSubject(subject);
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onUndo(final Subject subject) {
-        Snackbar.make(getView(),getString(R.string.subjectlist_undotext)+ " " + subject.getName()+"?",Snackbar.LENGTH_LONG)
+        Snackbar.make(getView(),getString(R.string.subjectlist_undotext)+ " " + subject.getSubject_name()+"?",Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.subjectlist_undobuttontext), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

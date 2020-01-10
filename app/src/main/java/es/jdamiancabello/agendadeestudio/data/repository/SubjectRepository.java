@@ -3,9 +3,12 @@ package es.jdamiancabello.agendadeestudio.data.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.jdamiancabello.agendadeestudio.data.DAO.SubjectDAO;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
+import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListPresenter;
 
-public class SubjectRepository {
+public class SubjectRepository implements SubjectDAO.ResponseSubject{
+    public RepositorySubject repositorySubject;
     private List<Subject> subjectList;
     private static SubjectRepository subjectRepository;
 
@@ -19,24 +22,29 @@ public class SubjectRepository {
 
     private SubjectRepository() {
         subjectList = new ArrayList<>();
-        Initialize();
+        //Initialize();
     }
 
     private void Initialize() {
-        subjectList.add(new Subject("DEINT",Subject.state.A_repasar));
-        subjectList.add(new Subject("Unity",Subject.state.A_repasar));
-        subjectList.add(new Subject("C#",Subject.state.Dominado));
-        subjectList.add(new Subject("Mysql",Subject.state.Dominado));
-        subjectList.add(new Subject("Sistemas",Subject.state.Ignorado));
-        subjectList.add(new Subject("Procesos",Subject.state.Dominado));
-        subjectList.add(new Subject("Fol",Subject.state.A_repasar));
-        subjectList.add(new Subject("Java",Subject.state.Dominado));
-        subjectList.add(new Subject("HTML",Subject.state.Ignorado));
-        subjectList.add(new Subject("CSS",Subject.state.Ignorado));
+        subjectList.add(new Subject("DEINT",0));
+        subjectList.add(new Subject("Unity",1));
+        subjectList.add(new Subject("C#",3));
+        subjectList.add(new Subject("Mysql",0));
+        subjectList.add(new Subject("Sistemas",0));
+        subjectList.add(new Subject("Procesos",2));
+        subjectList.add(new Subject("Fol",2));
+        subjectList.add(new Subject("Java",3));
+        subjectList.add(new Subject("HTML",3));
+        subjectList.add(new Subject("CSS",0));
     }
 
-    public List<Subject> getSubjectList() {
-        return subjectList;
+//    public List<Subject> getSubjects() {
+//        return subjectList;
+//    }
+
+    public void getSubjectList(SubjectRepository.RepositorySubject repositorySubject) {
+        this.repositorySubject = repositorySubject;
+        SubjectDAO.getSubjectList(this);
     }
 
     public boolean remove(Subject subject){
@@ -46,7 +54,7 @@ public class SubjectRepository {
     public int getPosition(Subject subject) {
 
         for (int j = 0; j < subjectList.size(); j++) {
-            if (subjectList.get(j).getName().equals(subject.getName()))
+            if (subjectList.get(j).getSubject_name().equals(subject.getSubject_name()))
                 return j;
         }
         return -1;
@@ -60,4 +68,18 @@ public class SubjectRepository {
         return subjectList.remove(subject);
     }
 
+    public List<Subject> getList(){
+        return this.subjectList;
+    }
+
+    @Override
+    public void onSucess(List<Subject> subjectList) {
+        this.subjectList.clear();
+        this.subjectList.addAll(subjectList);
+        repositorySubject.onLoaded();
+    }
+
+    public interface RepositorySubject{
+        void onLoaded();
+    }
 }

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.facebook.AccessToken;
 
 import es.jdamiancabello.agendadeestudio.R;
+import es.jdamiancabello.agendadeestudio.data.Network.ApiRestClientToken;
 import es.jdamiancabello.agendadeestudio.data.model.Note;
 import es.jdamiancabello.agendadeestudio.data.model.StudyOrganicer;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
@@ -133,13 +134,7 @@ public class FragmentActivity extends AppCompatActivity implements
 
     @Override
     public void ShowSettingsView() {
-        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.sharedUserDataLogin),MODE_PRIVATE);
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
-
-        editor.commit();
-        showWelcome();
+        Toast.makeText(this,"Settings is not implemented yet",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -163,7 +158,18 @@ public class FragmentActivity extends AppCompatActivity implements
 
     }
 
-    @Override
+            @Override
+            public void loggout() {
+                SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.sharedUserDataLogin),MODE_PRIVATE);
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+
+                editor.apply();
+                showWelcome();
+            }
+
+            @Override
     public void showHelp() {
         aboutMeFragment = AboutMeFragment.newInstance();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

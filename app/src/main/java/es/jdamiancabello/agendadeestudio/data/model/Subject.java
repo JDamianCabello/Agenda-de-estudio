@@ -6,19 +6,18 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 import java.util.Comparator;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Subject implements Parcelable {
 
 
 
-    private String name;
-    private int idUser;
-    private Enum<state> stateEnum;
+    private String subject_name;
+    private int id;
+    private int estate_priority;
 
     protected Subject(Parcel in) {
-        name = in.readString();
-        idUser = in.readInt();
+        subject_name = in.readString();
+        id = in.readInt();
     }
 
     public static final Creator<Subject> CREATOR = new Creator<Subject>() {
@@ -40,52 +39,52 @@ public class Subject implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(name);
-        parcel.writeInt(idUser);
+        parcel.writeString(subject_name);
+        parcel.writeInt(id);
     }
 
     public enum  state{
-        Dominado,A_repasar,Ignorado
+        Dominado,A_repasar,Resumido,Ignorado
     }
 
 
-    public String getName() {
-        return name;
+    public String getSubject_name() {
+        return subject_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSubject_name(String subject_name) {
+        this.subject_name = subject_name;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public int getId() {
+        return id;
     }
 
-    public Enum<state> getStateEnum() {
-        return stateEnum;
+    public int getEstate_priority() {
+        return estate_priority;
     }
 
-    public void setStateEnum(Enum<state> stateEnum) {
-        this.stateEnum = stateEnum;
+    public void setEstate_priority(int estate_priority) {
+        this.estate_priority = estate_priority;
     }
 
-    public Subject(String name, Enum<state> stateEnum) {
-        this.name = name;
-        this.idUser = 1;
-        this.stateEnum = stateEnum;
+    public Subject(String subject_name, int estate_priority) {
+        this.subject_name = subject_name;
+        this.id = 1;
+        this.estate_priority = estate_priority;
     }
 
     @NonNull
     @Override
     public String toString() {
-        return name;
+        return subject_name;
     }
 
     public static class SortByName implements Comparator<Subject> {
 
         @Override
         public int compare(Subject o1, Subject o2) {
-            return o1.getName().compareToIgnoreCase(o2.getName());
+            return o1.getSubject_name().compareToIgnoreCase(o2.getSubject_name());
         }
     }
 }

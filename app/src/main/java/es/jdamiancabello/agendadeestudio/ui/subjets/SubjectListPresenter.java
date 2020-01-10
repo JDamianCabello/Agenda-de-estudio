@@ -8,7 +8,7 @@ import java.util.List;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.repository.SubjectRepository;
 
-public class SubjectListPresenter implements SubjectListContract.Presenter {
+public class SubjectListPresenter implements SubjectListContract.Presenter, SubjectRepository.RepositorySubject {
     private SubjectListContract.View view;
 
     public SubjectListPresenter(SubjectListContract.View vista) {
@@ -22,38 +22,11 @@ public class SubjectListPresenter implements SubjectListContract.Presenter {
         }
     }
 
-    @Override
-    public void load() {
-        new AsyncTask<Void, Void, List<Subject>>() {
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                view.showProgress();
-            }
-
-            @Override
-            protected void onPostExecute(List<Subject> subjectList) {
-                super.onPostExecute(subjectList);
-                if (subjectList.isEmpty()) {
-                    view.noSubjets();
-                } else {
-                    view.refresh((ArrayList<Subject>) subjectList);
-                }
-                view.hideProgress();
-            }
-
-            @Override
-            protected List<Subject> doInBackground(Void... voids) {
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                return SubjectRepository.getInstance().getSubjectList();
-            }
-        }.execute();
+    public void load(){
+        view.showProgress();
+        SubjectRepository.getInstance().getSubjectList(this);
     }
+
 
     @Override
     public void undo(Subject subject) {
@@ -64,5 +37,12 @@ public class SubjectListPresenter implements SubjectListContract.Presenter {
     public void onSucessUndo(Subject subject) {
         if(SubjectRepository.getInstance().addSubject(subject))
             view.onSucessUndo(subject);
+    }
+
+
+    @Override
+    public void onLoaded() {
+        view.hideProgress();
+        view.refresh((ArrayList<Subject>) SubjectRepository.getInstance().getList());
     }
 }

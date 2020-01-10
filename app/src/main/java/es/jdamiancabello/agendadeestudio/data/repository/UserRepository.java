@@ -6,6 +6,7 @@ import android.util.Log;
 
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.Network.ApiRestClient;
+import es.jdamiancabello.agendadeestudio.data.Network.ApiRestClientToken;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.LoginResponse;
 import es.jdamiancabello.agendadeestudio.data.model.User;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.RegisterResponse;
@@ -17,7 +18,6 @@ import retrofit2.Response;
 
 public class UserRepository {
     private static UserRepository userRepository;
-    private User userLogged;
 
     static {
         userRepository = new UserRepository();
@@ -36,15 +36,18 @@ public class UserRepository {
            @Override
            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                if(response.isSuccessful()) {
-                   userLogged = new User(response.body().getApiToken());
 
                    if(persistLogin)
                        saveUserData(user,pass);
-                   FocusApplication.setUser(userLogged);
+//                   if(FocusApplication.user == null)
+//                       FocusApplication.setUser(new User(response.body().getApiToken()));
+//                   else
+//                        FocusApplication.user.setApi_token(response.body().getApiToken());
+                   ApiRestClientToken.APITOKEN = response.body().getApiToken();
+                       Log.d("TOKEN recibido", response.body().getApiToken());
+                   Log.d("TOKEN actual", ApiRestClientToken.APITOKEN);
 
-                   if(userLogged != null)
-                       Log.d("TESTEO OK", userLogged.getApi_token());
-
+                   saveToken(response.body().getApiToken());
                    userRepositoryListener.onSucessLogin();
                }
 
@@ -67,7 +70,17 @@ public class UserRepository {
         editor.putString(User.userKey,user);
         editor.putString(User.passwordKey,pass);
 
-        editor.commit();
+        editor.apply();
+    }
+
+    private void saveToken(String token) {
+        SharedPreferences sharedPreferences = FocusApplication.getUserContext().getSharedPreferences(FocusApplication.getUserContext().getString(R.string.sharedUserDataLogin), Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(User.userToken,token);
+
+        editor.apply();
     }
 
     public void userAdd(String username, String email, String psw, RegisterListener registerListener) {
@@ -103,8 +116,11 @@ public class UserRepository {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful()) {
-                    userLogged = new User(response.body().getApiToken());
-                    FocusApplication.setUser(userLogged);
+//                    if(FocusApplication.user == null)
+//                        FocusApplication.setUser(new User(response.body().getApiToken()));
+//                    else
+//                        FocusApplication.user.setApi_token(response.body().getApiToken());
+                    ApiRestClientToken.APITOKEN = response.body().getApiToken();
                     welcomeListener.onLoggedUser();
                 }
 

@@ -8,6 +8,15 @@ import es.jdamiancabello.agendadeestudio.data.model.User;
 public class FocusApplication extends Application {
     static Context context;
     public static User user;
+    public String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     @Override
     public void onCreate() {

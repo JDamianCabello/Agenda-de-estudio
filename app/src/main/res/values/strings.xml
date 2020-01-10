@@ -40,6 +40,7 @@
     <string name="sharedUserDataLogin">sharedUserData</string>
 
 
+
     <!--    Not translated-->
     <string name="facebook_app_id" translatable="false">462499357788675</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb462499357788675</string>

@@ -35,7 +35,7 @@ public class StudyOrganicerAdapter extends RecyclerView.Adapter<StudyOrganicerAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.organicerDateTime.setText(studyOrganicerList.get(position).getDateTime());
             holder.organicerDuration.setText(Integer.toString(studyOrganicerList.get(position).getDuration()));
-            holder.organicerTitle.setText(studyOrganicerList.get(position).getEventTitle().replace('_', ' '));
+            holder.organicerTitle.setText(studyOrganicerList.get(position).getEventTitle());
             holder.organicerSubtitle.setText(studyOrganicerList.get(position).getSubject().toString());
             holder.organicerTimeQuantifier.setText(studyOrganicerList.get(position).getDurationQuantifier());
 

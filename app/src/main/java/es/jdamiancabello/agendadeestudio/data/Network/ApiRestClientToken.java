@@ -18,6 +18,7 @@ public class ApiRestClientToken {
     private static ApiCalls API_SERVICE;
 
     private static final String BASE_URL = "https://focus.edufdez.es/";
+    public static String APITOKEN = "";
 
     public static synchronized ApiCalls getInstance() {
 
@@ -31,7 +32,7 @@ public class ApiRestClientToken {
             okHttpBuilder.addInterceptor(new LoggingInterceptor.Builder()
                     .loggable(BuildConfig.DEBUG)
                     .setLevel(Level.BASIC)
-                    .addHeader("Api-Token", FocusApplication.user.getApi_token())
+                    .addHeader("Api-Token", APITOKEN)
                     .log(Platform.INFO).build());
 
             Gson gson = new GsonBuilder()

@@ -17,7 +17,7 @@ public class StudyOrganicerManagePresenter implements StudyOrganicerManageContra
 
     @Override
     public void onViewCreated() {
-        view.setupContentList((ArrayList<Subject>) SubjectRepository.getInstance().getSubjectList());
+        view.setupContentList((ArrayList<Subject>) SubjectRepository.getInstance().getList());
     }
 
 

@@ -27,7 +27,7 @@ public class StudyOrganicer implements Parcelable {
         this.duration = duration;
         this.durationQuantifier = durationQuantifier;
         this.subject = subject;
-        this.eventTitle = subject.getStateEnum().toString();
+        this.eventTitle = Integer.toString(subject.getEstate_priority());
     }
 
     protected StudyOrganicer(Parcel in) {

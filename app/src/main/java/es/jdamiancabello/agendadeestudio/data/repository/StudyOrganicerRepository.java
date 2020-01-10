@@ -1,7 +1,5 @@
 package es.jdamiancabello.agendadeestudio.data.repository;
 
-import androidx.annotation.Nullable;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +17,8 @@ public class StudyOrganicerRepository {
 
     private void initialice() {
 
-        studyOrganicerList.add(new StudyOrganicer("01 - Diciembre - 2019   15:00", 5, "Horas", (new Subject("DEINT", Subject.state.A_repasar))));
-        studyOrganicerList.add(new StudyOrganicer("02 - Diciembre - 2019   08:00", 50, "Minutos", (new Subject("Unity", Subject.state.A_repasar))));
+        studyOrganicerList.add(new StudyOrganicer("01 - Diciembre - 2019   15:00", 5, "Horas", (new Subject("DEINT", 0))));
+        studyOrganicerList.add(new StudyOrganicer("02 - Diciembre - 2019   08:00", 50, "Minutos", (new Subject("Unity", 0))));
     }
 
     static {
@@ -49,7 +47,7 @@ public class StudyOrganicerRepository {
                 it.setDateTime(newStudyOrganicer.getDateTime());
                 it.setDuration(newStudyOrganicer.getDuration());
                 it.setSubject(newStudyOrganicer.getSubject());
-                it.setEventTitle(newStudyOrganicer.getSubject().getStateEnum().toString());
+                it.setEventTitle(Integer.toString(newStudyOrganicer.getSubject().getEstate_priority()));
                 it.setDurationQuantifier(newStudyOrganicer.getDurationQuantifier());
                 return true;
             }
