@@ -11,4 +11,10 @@
         <item>Minutes</item>
         <item>Hours</item>
     </string-array>
+    <string-array name="subject_manager_spinnerEntries">
+        <item>Dominated</item>
+        <item>Summarized</item>
+        <item>To review</item>
+        <item>Ignored</item>
+    </string-array>
 </resources>

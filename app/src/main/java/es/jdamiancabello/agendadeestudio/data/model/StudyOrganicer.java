@@ -15,7 +15,7 @@ public class StudyOrganicer implements Parcelable {
     private int duration;
     private String durationQuantifier; //Esto muestra el tipo de duración : ejemplo in duration 4 y aqui iria horas, minutos o dias.
     private Subject subject;
-    private String eventTitle;
+    private int eventTitle;
 
     public StudyOrganicer() {
 
@@ -27,7 +27,7 @@ public class StudyOrganicer implements Parcelable {
         this.duration = duration;
         this.durationQuantifier = durationQuantifier;
         this.subject = subject;
-        this.eventTitle = Integer.toString(subject.getEstate_priority());
+        this.eventTitle = subject.getEstate_priority();
     }
 
     protected StudyOrganicer(Parcel in) {
@@ -36,7 +36,7 @@ public class StudyOrganicer implements Parcelable {
         duration = in.readInt();
         durationQuantifier = in.readString();
         subject = in.readParcelable(Subject.class.getClassLoader());
-        eventTitle = in.readString();
+        eventTitle = in.readInt();
     }
 
     public static final Creator<StudyOrganicer> CREATOR = new Creator<StudyOrganicer>() {
@@ -89,11 +89,11 @@ public class StudyOrganicer implements Parcelable {
         this.subject = subject;
     }
 
-    public String getEventTitle() {
+    public int getEventTitle() {
         return eventTitle;
     }
 
-    public void setEventTitle(String eventTitle) {
+    public void setEventTitle(int eventTitle) {
         this.eventTitle = eventTitle;
     }
 
@@ -120,7 +120,7 @@ public class StudyOrganicer implements Parcelable {
         dest.writeInt(duration);
         dest.writeString(durationQuantifier);
         dest.writeParcelable(subject, flags);
-        dest.writeString(eventTitle);
+        dest.writeInt(eventTitle);
     }
 
     public static class IdSort implements Comparator<StudyOrganicer> {

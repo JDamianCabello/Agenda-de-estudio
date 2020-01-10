@@ -82,7 +82,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"No se permiten añadir más asignaturas",Toast.LENGTH_SHORT).show();
+                listListener.addSubject(null);
             }
         });
 
@@ -133,6 +133,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
 
     @Override
     public void noSubjets() {
+        Snackbar.make(getView(),getString(R.string.subjectlist_noSubjects),Snackbar.LENGTH_INDEFINITE).show();
     }
 
     @Override
@@ -144,7 +145,6 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
 
     @Override
     public void onSuccessDeleted(Subject subject) {
-        //Toast.makeText(getContext(),subject.getSubject_name() + " "+getString(R.string.subjectlist_deleteditem),Toast.LENGTH_SHORT).show();
         presenter.undo(subject);
         adapter.removeSubject(subject);
         adapter.notifyDataSetChanged();

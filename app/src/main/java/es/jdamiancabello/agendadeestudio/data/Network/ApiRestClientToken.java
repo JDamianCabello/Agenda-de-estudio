@@ -50,4 +50,8 @@ public class ApiRestClientToken {
         return API_SERVICE;
     }
 
+    public static void loggout(){
+        API_SERVICE = null;
+    }
+
 }

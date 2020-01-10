@@ -14,6 +14,7 @@ import java.util.Comparator;
 
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
+import es.jdamiancabello.agendadeestudio.ui.FocusApplication;
 
 public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.DependencyViewHolder> {
     private ArrayList<Subject> list;
@@ -34,12 +35,27 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.Dependen
     @Override
     public void onBindViewHolder(@NonNull DependencyViewHolder holder, int position) {
         holder.tvSubjectName.setText(list.get(position).getSubject_name());
-        holder.tvSubjectState.setText(Integer.toString(list.get(position).getEstate_priority()));
+        holder.tvSubjectState.setText(getState(list.get(position).getEstate_priority()));
         holder.bind(list.get(position), listener);
     }
 
-    public void setOnManageSubjectListener(onManegeSubjectListener listener) {
-        this.listener = listener;
+    private String getState(int estate_priority) {
+        String aux = "";
+        switch (estate_priority){
+            case 0:
+                aux = FocusApplication.getUserContext().getString(R.string.SubjectAdapter_state_0);
+                break;
+            case 1:
+                aux = FocusApplication.getUserContext().getString(R.string.SubjectAdapter_state_1);
+                break;
+            case 2:
+                aux = FocusApplication.getUserContext().getString(R.string.SubjectAdapter_state_2);
+                break;
+            case 3:
+                aux = FocusApplication.getUserContext().getString(R.string.SubjectAdapter_state_3);
+                break;
+        }
+        return aux;
     }
 
     @Override

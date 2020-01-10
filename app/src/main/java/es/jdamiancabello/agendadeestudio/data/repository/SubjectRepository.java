@@ -7,10 +7,11 @@ import es.jdamiancabello.agendadeestudio.data.DAO.SubjectDAO;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListPresenter;
 
-public class SubjectRepository implements SubjectDAO.ResponseSubject{
+public class SubjectRepository implements SubjectDAO.ResponseSubject, SubjectDAO.ResponseSubjectAddOrModify{
     public RepositorySubject repositorySubject;
     private List<Subject> subjectList;
     private static SubjectRepository subjectRepository;
+    private static ManageSubject manageSubject;
 
     static {
         subjectRepository = new SubjectRepository();
@@ -60,8 +61,9 @@ public class SubjectRepository implements SubjectDAO.ResponseSubject{
         return -1;
     }
 
-    public boolean addSubject(Subject subject) {
-        return subjectList.add(subject);
+    public void addSubject(SubjectRepository.ManageSubject manageSubject, String name, int state) {
+        this.manageSubject = manageSubject;
+        SubjectDAO.addNewSubject(this,name,state);
     }
 
     public boolean delete(Subject subject) {
@@ -79,7 +81,16 @@ public class SubjectRepository implements SubjectDAO.ResponseSubject{
         repositorySubject.onLoaded();
     }
 
+    @Override
+    public void onSave() {
+        manageSubject.onSaved();
+    }
+
     public interface RepositorySubject{
         void onLoaded();
+    }
+
+    public interface ManageSubject{
+        void onSaved();
     }
 }

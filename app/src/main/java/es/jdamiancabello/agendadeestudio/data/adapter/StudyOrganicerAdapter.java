@@ -15,6 +15,7 @@ import java.util.List;
 
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.model.StudyOrganicer;
+import es.jdamiancabello.agendadeestudio.ui.FocusApplication;
 
 public class StudyOrganicerAdapter extends RecyclerView.Adapter<StudyOrganicerAdapter.ViewHolder> {
     private List<StudyOrganicer> studyOrganicerList;
@@ -35,12 +36,31 @@ public class StudyOrganicerAdapter extends RecyclerView.Adapter<StudyOrganicerAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.organicerDateTime.setText(studyOrganicerList.get(position).getDateTime());
             holder.organicerDuration.setText(Integer.toString(studyOrganicerList.get(position).getDuration()));
-            holder.organicerTitle.setText(studyOrganicerList.get(position).getEventTitle());
+            holder.organicerTitle.setText(getState(studyOrganicerList.get(position).getEventTitle()));
             holder.organicerSubtitle.setText(studyOrganicerList.get(position).getSubject().toString());
             holder.organicerTimeQuantifier.setText(studyOrganicerList.get(position).getDurationQuantifier());
 
 
         holder.bind(studyOrganicerList.get(position),viewOnManageStudyOrganicerListener);
+    }
+
+    private String getState(int estate_priority) {
+        String aux = "";
+        switch (estate_priority){
+            case 0:
+                aux = FocusApplication.getUserContext().getString(R.string.SubjectAdapter_state_0);
+                break;
+            case 1:
+                aux = FocusApplication.getUserContext().getString(R.string.SubjectAdapter_state_1);
+                break;
+            case 2:
+                aux = FocusApplication.getUserContext().getString(R.string.SubjectAdapter_state_2);
+                break;
+            case 3:
+                aux = FocusApplication.getUserContext().getString(R.string.SubjectAdapter_state_3);
+                break;
+        }
+        return aux;
     }
 
     public void setOnManageStudyOrganicerListener(OnManageStudyOrganicerListener listener){

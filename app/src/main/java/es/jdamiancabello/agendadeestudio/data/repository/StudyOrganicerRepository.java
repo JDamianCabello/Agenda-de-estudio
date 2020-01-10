@@ -47,7 +47,7 @@ public class StudyOrganicerRepository {
                 it.setDateTime(newStudyOrganicer.getDateTime());
                 it.setDuration(newStudyOrganicer.getDuration());
                 it.setSubject(newStudyOrganicer.getSubject());
-                it.setEventTitle(Integer.toString(newStudyOrganicer.getSubject().getEstate_priority()));
+                it.setEventTitle(newStudyOrganicer.getSubject().getEstate_priority());
                 it.setDurationQuantifier(newStudyOrganicer.getDurationQuantifier());
                 return true;
             }

@@ -8,8 +8,7 @@ import androidx.annotation.NonNull;
 import java.util.Comparator;
 
 public class Subject implements Parcelable {
-
-
+    public static final String SUBJECT_KEY = "subject";
 
     private String subject_name;
     private int id;

@@ -2,6 +2,7 @@ package es.jdamiancabello.agendadeestudio.data.Network;
 
 import es.jdamiancabello.agendadeestudio.data.model.api_model.LoginResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.RegisterResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.SubjectAddResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.SubjectListResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -27,6 +28,13 @@ public interface ApiCalls {
 
     @GET("subject/")
     Call<SubjectListResponse> getSubjectList();
+
+    @FormUrlEncoded
+    @POST("subject/")
+    Call<SubjectAddResponse> addSubject(
+            @Field("subject_name") String subject_name,
+            @Field("estate_priority") int estate_priority
+    );
 
 
 

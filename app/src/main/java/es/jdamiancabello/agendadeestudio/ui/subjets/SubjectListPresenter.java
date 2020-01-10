@@ -35,14 +35,18 @@ public class SubjectListPresenter implements SubjectListContract.Presenter, Subj
 
     @Override
     public void onSucessUndo(Subject subject) {
-        if(SubjectRepository.getInstance().addSubject(subject))
-            view.onSucessUndo(subject);
+//        if(SubjectRepository.getInstance().addSubject(subject))
+//            view.onSucessUndo(subject);
     }
 
 
     @Override
     public void onLoaded() {
         view.hideProgress();
-        view.refresh((ArrayList<Subject>) SubjectRepository.getInstance().getList());
+        if(SubjectRepository.getInstance().getList().size() == 0)
+            view.noSubjets();
+        else {
+            view.refresh((ArrayList<Subject>) SubjectRepository.getInstance().getList());
+        }
     }
 }

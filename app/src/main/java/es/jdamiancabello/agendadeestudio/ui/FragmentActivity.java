@@ -34,6 +34,8 @@ import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerView;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListContract;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListFragment;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListPresenter;
+import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectManagerFragment;
+import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectManagerPresenter;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomeContract;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomeFragment;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomePresenter;
@@ -46,7 +48,8 @@ public class FragmentActivity extends AppCompatActivity implements
         StudyOrganicerManageView.OnSaveStudyOrganicerManageView,
         WelcomeFragment.OnWelcomeListener,
         NotesListFragment.OnFragmentInteractionListener,
-        RegisterFragment.OnFragmentInteractionListener
+        RegisterFragment.OnFragmentInteractionListener,
+        SubjectManagerFragment.OnFragmentInteractionListener
         {
     private Toolbar toolbar;
 
@@ -55,6 +58,8 @@ public class FragmentActivity extends AppCompatActivity implements
 
     private Fragment subjectList;
     private SubjectListPresenter subjectListPresenter;
+    private SubjectManagerFragment subjectManagerFragment;
+    private SubjectManagerPresenter subjectManagerPresenter;
 
 
     private Fragment aboutMeFragment;
@@ -73,6 +78,8 @@ public class FragmentActivity extends AppCompatActivity implements
 
     private NotesListFragment notesListFragment;
     private NoteListPresenter noteListPresenter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +173,8 @@ public class FragmentActivity extends AppCompatActivity implements
                 editor.clear();
 
                 editor.apply();
+
+                ApiRestClientToken.loggout();
                 showWelcome();
             }
 
@@ -253,6 +262,22 @@ public class FragmentActivity extends AppCompatActivity implements
 
     @Override
     public void addSubject(Subject subject) {
+        subjectManagerFragment = (SubjectManagerFragment) getSupportFragmentManager().findFragmentByTag(SubjectManagerFragment.TAG);
+
+        if(subjectManagerFragment == null){
+            Bundle b = null;
+            if(subject != null){
+                b = new Bundle();
+                b.putParcelable(Subject.SUBJECT_KEY,subject);
+            }
+            subjectManagerFragment = SubjectManagerFragment.newInstance(b);
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.content,subjectManagerFragment,SubjectManagerFragment.TAG);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+        subjectManagerPresenter = new SubjectManagerPresenter(subjectManagerFragment);
+        subjectManagerFragment.setPresenter(subjectManagerPresenter);
 
     }
 
@@ -292,5 +317,10 @@ public class FragmentActivity extends AppCompatActivity implements
     @Override
      public void onDoneRegister() {
         onSuccesLogin();
+    }
+
+    @Override
+    public void onSavedSubject() {
+        onBackPressed();
     }
 }
