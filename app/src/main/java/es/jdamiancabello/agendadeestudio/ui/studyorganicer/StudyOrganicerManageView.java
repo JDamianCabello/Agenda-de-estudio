@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -103,6 +104,9 @@ public class StudyOrganicerManageView extends Fragment implements StudyOrganicer
                 }
             }
         });
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+
     }
 
     private int quantifierPosition(String s) {

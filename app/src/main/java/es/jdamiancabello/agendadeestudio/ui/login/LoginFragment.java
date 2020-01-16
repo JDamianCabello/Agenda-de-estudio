@@ -37,7 +37,6 @@ import java.util.Arrays;
 import es.jdamiancabello.agendadeestudio.R;
 
 public class LoginFragment extends Fragment implements LoginContract.View{
-    private ImageView ivBack;
     private TextView tvRegister;
     private TextView tvHelp;
     private Button register_btLogin;
@@ -115,13 +114,6 @@ public class LoginFragment extends Fragment implements LoginContract.View{
             }
         });
 
-        ivBack = view.findViewById(R.id.ivBack);
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentManager().popBackStack();
-            }
-        });
 
         tvRegister = view.findViewById(R.id.tvRegister);
         tvRegister.setOnClickListener(new View.OnClickListener() {

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,10 +47,15 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
         presenter.load();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_subjectlist,container,false);
     }
 
@@ -64,7 +70,6 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
                 public void onEditSubjectListener(Subject subject) {
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("subject",subject);
-//                listListener.addSubject(bundle);
                     Toast.makeText(getContext(),"Has pulsado en: "+subject.getSubject_name(),Toast.LENGTH_LONG).show();
                 }
 
@@ -91,6 +96,9 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
 
         registerForContextMenu(recyclerView);
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+
     }
 
     @Override

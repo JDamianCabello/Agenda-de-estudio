@@ -1,5 +1,7 @@
 package es.jdamiancabello.agendadeestudio.data.DAO;
 
+import android.util.Log;
+
 import java.util.List;
 
 import es.jdamiancabello.agendadeestudio.data.Network.ApiRestClientToken;
@@ -22,13 +24,15 @@ public class SubjectDAO {
             @Override
             public void onResponse(Call<SubjectListResponse> call, Response<SubjectListResponse> response) {
                 if(response.isSuccessful()) {
+                    Log.d("OK","ESTA OK");
                     responseSubject.onSucess(response.body().getSubjects());
+
                 }
             }
 
             @Override
             public void onFailure(Call<SubjectListResponse> call, Throwable t) {
-
+                Log.d("OK","ESTA MAL");
             }
         });
     }

@@ -134,11 +134,11 @@ public class StudyOrganicer implements Parcelable {
         }
     }
 
-    public static class stateSort implements Comparator<StudyOrganicer> {
+    public static class SubjectSort implements Comparator<StudyOrganicer> {
 
         @Override
         public int compare(StudyOrganicer o1, StudyOrganicer o2) {
-            return 0;
+            return o1.getSubject().getSubject_name().compareToIgnoreCase(o2.getSubject().getSubject_name());
         }
     }
 

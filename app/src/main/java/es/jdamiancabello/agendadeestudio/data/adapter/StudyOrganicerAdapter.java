@@ -92,7 +92,12 @@ public class StudyOrganicerAdapter extends RecyclerView.Adapter<StudyOrganicerAd
         Collections.sort(studyOrganicerList, comparator) ;
     }
 
+
     public void sortByName() {
+        studyOrganicerList.sort(new StudyOrganicer.SubjectSort());
+    }
+
+    public void sortByID() {
         studyOrganicerList.sort(new StudyOrganicer.IdSort());
     }
 

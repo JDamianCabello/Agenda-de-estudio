@@ -35,7 +35,4 @@ public interface ApiCalls {
             @Field("subject_name") String subject_name,
             @Field("estate_priority") int estate_priority
     );
-
-
-
 }

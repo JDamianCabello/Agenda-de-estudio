@@ -70,11 +70,14 @@ public class StudyOrganicerView extends Fragment implements StudyOrganicerListCo
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
+            case R.id.contextmenu_orderID:
+                adapter.sortByID();
+                break;
             case R.id.contextmenu_orderName:
                 adapter.sortByName();
-                break;
         }
 
+        adapter.notifyDataSetChanged();
         return super.onOptionsItemSelected(item);
     }
 
