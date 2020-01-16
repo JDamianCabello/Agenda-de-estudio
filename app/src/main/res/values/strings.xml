@@ -57,4 +57,9 @@
     <string name="SubjectAdapter_state_1">Summarized</string>
     <string name="SubjectAdapter_state_2">To review</string>
     <string name="SubjectAdapter_state_3">Ignored</string>
+    <string name="dashboard_callendar">Callendar</string>
+    <string name="dashboard_organicer">Organicer</string>
+    <string name="dashboard_today">Today</string>
+    <string name="dashboard_subjects">Subjects</string>
+    <string name="dashboard_tools">Tools</string>
 </resources>
