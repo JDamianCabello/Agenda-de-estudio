@@ -60,4 +60,8 @@ dependencies {
     //Biblioteca de compatibilidad de diseño (Dashboard V2)
     implementation 'com.google.android.material:material:1.0.0'
 
+
+    //AppUpdater
+    implementation 'com.github.javiersantos:AppUpdater:2.7'
+
 }

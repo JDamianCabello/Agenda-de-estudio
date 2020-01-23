@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 
@@ -20,6 +21,7 @@ import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.register.RegisterFragment;
 import es.jdamiancabello.agendadeestudio.register.RegisterPresenter;
 import es.jdamiancabello.agendadeestudio.ui.aboutme.AboutMeFragment;
+import es.jdamiancabello.agendadeestudio.ui.dashboard.DashborardFragmentV2;
 import es.jdamiancabello.agendadeestudio.ui.login.LoginContract;
 import es.jdamiancabello.agendadeestudio.ui.login.LoginFragment;
 import es.jdamiancabello.agendadeestudio.ui.login.LoginPresenter;
@@ -49,7 +51,8 @@ public class FragmentActivity extends AppCompatActivity implements
         WelcomeFragment.OnWelcomeListener,
         NotesListFragment.OnFragmentInteractionListener,
         RegisterFragment.OnFragmentInteractionListener,
-        SubjectManagerFragment.OnFragmentInteractionListener
+        SubjectManagerFragment.OnFragmentInteractionListener,
+        DashborardFragmentV2.OnFragmentInteractionListener
         {
     private Toolbar toolbar;
 
@@ -70,6 +73,9 @@ public class FragmentActivity extends AppCompatActivity implements
     private RegisterPresenter registerPresenter;
 
     private Fragment dashboardFragment;
+    private Fragment dashboardFragmentv2;
+
+
     private Fragment eventListFragment;
     private Fragment eventManageFragment;
 
@@ -189,9 +195,9 @@ public class FragmentActivity extends AppCompatActivity implements
 
     @Override
     public void onSuccesLogin() {
-        dashboardFragment = DashboardFragment.newInstance();
+        dashboardFragmentv2 = DashborardFragmentV2.newInstance();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.content,dashboardFragment,DashboardFragment.TAG);
+        fragmentTransaction.replace(R.id.content,dashboardFragmentv2,DashborardFragmentV2.TAG);
         fragmentTransaction.commit();
     }
 
@@ -323,4 +329,68 @@ public class FragmentActivity extends AppCompatActivity implements
     public void onSavedSubject() {
         onBackPressed();
     }
+
+    @Override
+    public void showCallendar(int containerID) {
+        eventListFragment = getSupportFragmentManager().findFragmentByTag(StudyOrganicerView.TAG);
+
+        if(eventListFragment == null) {
+            eventListFragment = StudyOrganicerView.newInstance(null);
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(containerID, eventListFragment, StudyOrganicerView.TAG);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+
+        studyOrganicerPresenter = new StudyOrganicerPresenter((StudyOrganicerListContract.View) eventListFragment);
+        ((StudyOrganicerListContract.View) eventListFragment).setPresenter(studyOrganicerPresenter);
+    }
+
+    @Override
+    public void showOrganicer(int containerID) {
+        notesListFragment = (NotesListFragment) getSupportFragmentManager().findFragmentByTag(NotesListFragment.TAG);
+
+        if(notesListFragment == null){
+            notesListFragment = NotesListFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(containerID,notesListFragment,NotesListFragment.TAG)
+                    .addToBackStack(null).commit();
+        }
+
+        noteListPresenter = new NoteListPresenter(notesListFragment);
+        notesListFragment.setPresenter(noteListPresenter);
+    }
+
+    @Override
+    public void showToday(int containerID) {
+
+        dashboardFragment = DashboardFragment.newInstance();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(containerID,dashboardFragment,DashboardFragment.TAG);
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void showSubjects(int containerID) {
+        subjectList = getSupportFragmentManager().findFragmentByTag(SubjectListFragment.TAG);
+        if (subjectList==null) {
+            subjectList = SubjectListFragment.newInstance();
+
+
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(containerID, subjectList, SubjectListFragment.TAG);
+            fragmentTransaction.addToBackStack(DashboardFragment.TAG);
+            fragmentTransaction.commit();
+        }
+
+        subjectListPresenter = new SubjectListPresenter((SubjectListContract.View) subjectList);
+        ((SubjectListContract.View) subjectList).setPresenter(subjectListPresenter);
+    }
+
+    @Override
+    public void showTools(int containerID) {
+
+    }
 }
+
+

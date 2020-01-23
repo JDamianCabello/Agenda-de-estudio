@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
+import com.github.javiersantos.appupdater.AppUpdater;
+import com.github.javiersantos.appupdater.enums.UpdateFrom;
+
 import es.jdamiancabello.agendadeestudio.R;
 
 public class WelcomeFragment extends Fragment implements WelcomeContract.view{
@@ -28,6 +31,16 @@ public class WelcomeFragment extends Fragment implements WelcomeContract.view{
         return new WelcomeFragment();
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        AppUpdater appUpdater = new AppUpdater(getActivity())
+                .setUpdateFrom(UpdateFrom.GITHUB)
+                .setGitHubUserAndRepo("JDamianCabello","Agenda-de-estudio");
+
+        appUpdater.start();
+    }
 
     @Nullable
     @Override

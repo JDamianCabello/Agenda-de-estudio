@@ -2,27 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="dashborad_callendar"
+        android:id="@+id/dashborad_callendar"
         android:icon="@drawable/ic_calendar"
         android:title="@string/dashboard_callendar"/>
 
     <item
-        android:id="dashboard_organicer"
+        android:id="@+id/dashboard_organicer"
         android:icon="@drawable/ic_schedule"
         android:title="@string/dashboard_organicer"/>
 
     <item
-        android:id="dashboard_today"
+        android:id="@+id/dashboard_today"
         android:icon="@drawable/ic_account"
         android:title="@string/dashboard_today"/>
 
     <item
-        android:id="dashboard_subjects"
+        android:id="@+id/dashboard_subjects"
         android:icon="@drawable/ic_book"
         android:title="@string/dashboard_subjects"/>
 
     <item
-        android:id="dashboard_tools"
+        android:id="@+id/dashboard_tools"
         android:icon="@drawable/ic_settings"
         android:title="@string/dashboard_tools"/>
 
