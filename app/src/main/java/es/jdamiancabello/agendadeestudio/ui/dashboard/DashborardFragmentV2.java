@@ -79,7 +79,7 @@ public class DashborardFragmentV2 extends Fragment {
 
     private void setTodayFragment() {
         menu.setSelectedItemId(R.id.dashboard_today);
-        mListener.showToday(R.id.dashboard_container);
+        mListener.dashboardv2FirstLoad(R.id.dashboard_container);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class DashborardFragmentV2 extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+        void dashboardv2FirstLoad(int containerID);
         void showCallendar(int containerID);
         void showOrganicer(int containerID);
         void showToday(int containerID);

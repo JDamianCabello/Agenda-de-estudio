@@ -331,6 +331,14 @@ public class FragmentActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void dashboardv2FirstLoad(int containerID) {
+        dashboardFragment = DashboardFragment.newInstance();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(containerID,dashboardFragment,DashboardFragment.TAG);
+        fragmentTransaction.commit();
+    }
+
+            @Override
     public void showCallendar(int containerID) {
         eventListFragment = getSupportFragmentManager().findFragmentByTag(StudyOrganicerView.TAG);
 
@@ -363,11 +371,16 @@ public class FragmentActivity extends AppCompatActivity implements
 
     @Override
     public void showToday(int containerID) {
+        dashboardFragment = getSupportFragmentManager().findFragmentByTag(DashboardFragment.TAG);
 
-        dashboardFragment = DashboardFragment.newInstance();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(containerID,dashboardFragment,DashboardFragment.TAG);
-        fragmentTransaction.commit();
+        if(dashboardFragment == null) {
+            dashboardFragment = StudyOrganicerView.newInstance(null);
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(containerID, dashboardFragment, DashboardFragment.TAG);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+
     }
 
     @Override

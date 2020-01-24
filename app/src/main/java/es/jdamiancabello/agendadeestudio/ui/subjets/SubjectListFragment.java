@@ -186,6 +186,11 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
     public void showGenericError(String s) {
 
     }
