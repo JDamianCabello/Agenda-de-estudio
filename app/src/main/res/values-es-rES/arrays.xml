@@ -10,4 +10,33 @@
         <item>A repasar</item>
         <item>Ignorada</item>
     </string-array>
+
+
+    <string name="material_calendar_monday">lun</string>
+    <string name="material_calendar_tuesday">mart</string>
+    <string name="material_calendar_wednesday">miérc</string>
+    <string name="material_calendar_thursday">juev</string>
+    <string name="material_calendar_friday">vier</string>
+    <string name="material_calendar_saturday">sáb</string>
+    <string name="material_calendar_sunday">dom</string>
+
+    <array name="material_calendar_months_array">
+        <item>Enero</item>
+        <item>Febrero</item>
+        <item>Marzo</item>
+        <item>Abril</item>
+        <item>Mayo</item>
+        <item>Junio</item>
+        <item>Julio</item>
+        <item>Agosto</item>
+        <item>Septiembre</item>
+        <item>Octubre</item>
+        <item>Noviembre</item>
+        <item>Diciembre</item>
+    </array>
+
+    <string name="material_calendar_today_button">Hoy</string>
+    <string name="material_calendar_positive_button">Aceptar</string>
+    <string name="material_calendar_negative_button">Cancelar</string>
+
 </resources>

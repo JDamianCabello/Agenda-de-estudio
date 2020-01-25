@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 
@@ -21,6 +20,7 @@ import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.register.RegisterFragment;
 import es.jdamiancabello.agendadeestudio.register.RegisterPresenter;
 import es.jdamiancabello.agendadeestudio.ui.aboutme.AboutMeFragment;
+import es.jdamiancabello.agendadeestudio.ui.calendar.CalendarFragment;
 import es.jdamiancabello.agendadeestudio.ui.dashboard.DashborardFragmentV2;
 import es.jdamiancabello.agendadeestudio.ui.login.LoginContract;
 import es.jdamiancabello.agendadeestudio.ui.login.LoginFragment;
@@ -52,7 +52,8 @@ public class FragmentActivity extends AppCompatActivity implements
         NotesListFragment.OnFragmentInteractionListener,
         RegisterFragment.OnFragmentInteractionListener,
         SubjectManagerFragment.OnFragmentInteractionListener,
-        DashborardFragmentV2.OnFragmentInteractionListener
+        DashborardFragmentV2.OnFragmentInteractionListener,
+        CalendarFragment.OnFragmentInteractionListener
         {
     private Toolbar toolbar;
 
@@ -84,6 +85,8 @@ public class FragmentActivity extends AppCompatActivity implements
 
     private NotesListFragment notesListFragment;
     private NoteListPresenter noteListPresenter;
+
+    private CalendarFragment calendarFragment;
 
 
 
@@ -340,18 +343,18 @@ public class FragmentActivity extends AppCompatActivity implements
 
             @Override
     public void showCallendar(int containerID) {
-        eventListFragment = getSupportFragmentManager().findFragmentByTag(StudyOrganicerView.TAG);
+        calendarFragment = (CalendarFragment) getSupportFragmentManager().findFragmentByTag(CalendarFragment.TAG);
 
-        if(eventListFragment == null) {
-            eventListFragment = StudyOrganicerView.newInstance(null);
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(containerID, eventListFragment, StudyOrganicerView.TAG);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+        if(calendarFragment == null) {
+            calendarFragment = CalendarFragment.newInstance();
         }
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(containerID, calendarFragment, CalendarFragment.TAG);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
 
-        studyOrganicerPresenter = new StudyOrganicerPresenter((StudyOrganicerListContract.View) eventListFragment);
-        ((StudyOrganicerListContract.View) eventListFragment).setPresenter(studyOrganicerPresenter);
+//        studyOrganicerPresenter = new StudyOrganicerPresenter((StudyOrganicerListContract.View) eventListFragment);
+//        ((StudyOrganicerListContract.View) eventListFragment).setPresenter(studyOrganicerPresenter);
     }
 
     @Override
@@ -404,6 +407,11 @@ public class FragmentActivity extends AppCompatActivity implements
     public void showTools(int containerID) {
 
     }
-}
+
+            @Override
+            public void calendar_selected_date() {
+
+            }
+        }
 
 

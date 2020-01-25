@@ -64,4 +64,7 @@ dependencies {
     //AppUpdater
     implementation 'com.github.javiersantos:AppUpdater:2.7'
 
+    //Calendar
+    implementation 'com.applandeo:material-calendar-view:1.7.0'
+
 }
