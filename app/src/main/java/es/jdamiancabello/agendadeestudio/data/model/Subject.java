@@ -11,15 +11,16 @@ import java.util.Date;
 import java.util.List;
 
 public class Subject implements Parcelable {
-    private String name;
-    private Date date;
+    public static final String SUBJECT_KEY = "subject";
+    private String subject_name;
+    private Calendar exam_date;
     private int color;
-    private List<Subject> subjectList;
+    private List<Topic> topicList;
 
     protected Subject(Parcel in) {
-        name = in.readString();
+        subject_name = in.readString();
         color = in.readInt();
-        subjectList = in.createTypedArrayList(Subject.CREATOR);
+        topicList = in.createTypedArrayList(Topic.CREATOR);
     }
 
     public static final Creator<Subject> CREATOR = new Creator<Subject>() {
@@ -34,34 +35,34 @@ public class Subject implements Parcelable {
         }
     };
 
-    public List<Subject> getSubjectList() {
-        return subjectList;
+    public List<Topic> getTopicList() {
+        return topicList;
     }
 
-    public void setSubjectList(List<Subject> subjectList) {
-        this.subjectList = subjectList;
+    public void setSubjectList(List<Topic> topicList) {
+        this.topicList = topicList;
     }
 
-    public Subject(String name, Date date, int color) {
-        this.name = name;
-        this.date = date;
+    public Subject(String subject_name, Calendar exam_date, int color) {
+        this.subject_name = subject_name;
+        this.exam_date = exam_date;
         this.color = color;
     }
 
     public String getName() {
-        return name;
+        return subject_name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.subject_name = name;
     }
 
-    public Date getDate() {
-        return date;
+    public Calendar getDate() {
+        return exam_date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(Calendar date) {
+        this.exam_date = date;
     }
 
     public int getColor() {
@@ -79,8 +80,21 @@ public class Subject implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
+        dest.writeString(subject_name);
         dest.writeInt(color);
-        dest.writeTypedList(subjectList);
+        dest.writeTypedList(topicList);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.subject_name;
+    }
+
+    public static class SortByName implements Comparator {
+        @Override
+        public int compare(Object o1, Object o2) {
+            return o1.toString().compareToIgnoreCase(o2.toString());
+        }
     }
 }

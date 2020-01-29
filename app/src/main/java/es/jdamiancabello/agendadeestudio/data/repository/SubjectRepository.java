@@ -26,19 +26,6 @@ public class SubjectRepository implements SubjectDAO.ResponseSubject, SubjectDAO
         //Initialize();
     }
 
-    private void Initialize() {
-        subjectList.add(new Subject("DEINT",0));
-        subjectList.add(new Subject("Unity",1));
-        subjectList.add(new Subject("C#",3));
-        subjectList.add(new Subject("Mysql",0));
-        subjectList.add(new Subject("Sistemas",0));
-        subjectList.add(new Subject("Procesos",2));
-        subjectList.add(new Subject("Fol",2));
-        subjectList.add(new Subject("Java",3));
-        subjectList.add(new Subject("HTML",3));
-        subjectList.add(new Subject("CSS",0));
-    }
-
 //    public List<Subject> getSubjects() {
 //        return subjectList;
 //    }
@@ -55,7 +42,7 @@ public class SubjectRepository implements SubjectDAO.ResponseSubject, SubjectDAO
     public int getPosition(Subject subject) {
 
         for (int j = 0; j < subjectList.size(); j++) {
-            if (subjectList.get(j).getSubject_name().equals(subject.getSubject_name()))
+            if (subjectList.get(j).getName().equals(subject.getName()))
                 return j;
         }
         return -1;

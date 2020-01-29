@@ -3,6 +3,10 @@ package es.jdamiancabello.agendadeestudio.data.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,14 +15,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
+import es.jdamiancabello.agendadeestudio.data.model.Topic;
 import es.jdamiancabello.agendadeestudio.ui.FocusApplication;
 
 public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.DependencyViewHolder> {
     private ArrayList<Subject> list;
     private onManegeSubjectListener listener;
+    private final int TOTALMAXTOPICSTATE = 3;
 
     public SubjectAdapter(SubjectAdapter.onManegeSubjectListener listener) {
         list = new ArrayList<>();
@@ -34,28 +41,26 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.Dependen
 
     @Override
     public void onBindViewHolder(@NonNull DependencyViewHolder holder, int position) {
-        holder.tvSubjectName.setText(list.get(position).getName());
-        holder.tvSubjectState.setText(getState(list.get(position).getEstate_priority()));
+
         holder.bind(list.get(position), listener);
+        holder.tvSubjectName.setText(list.get(position).getName());
+        holder.tvSubjectDate.setText(list.get(position).getDate().toString());
+        holder.tvSubjectProgressNumber.setText(Integer.toString(getProgress(list.get(position).getTopicList())));
+        holder.progressBar.setProgress(Integer.parseInt(holder.tvSubjectProgressNumber.getText().toString()));
+
+
+        holder.topicList.setAdapter(new ArrayAdapter<>(FocusApplication.getUserContext(),android.R.layout.simple_expandable_list_item_1,list.get(position).getTopicList()));
+
+
     }
 
-    private String getState(int estate_priority) {
-        String aux = "";
-        switch (estate_priority){
-            case 0:
-                aux = FocusApplication.getUserContext().getString(R.string.SubjectAdapter_state_0);
-                break;
-            case 1:
-                aux = FocusApplication.getUserContext().getString(R.string.SubjectAdapter_state_1);
-                break;
-            case 2:
-                aux = FocusApplication.getUserContext().getString(R.string.SubjectAdapter_state_2);
-                break;
-            case 3:
-                aux = FocusApplication.getUserContext().getString(R.string.SubjectAdapter_state_3);
-                break;
+    private int getProgress(List<Topic> topics) {
+        int aux = 0;
+        for (Topic t:topics) {
+            aux += t.getState();
         }
-        return aux;
+        return (aux * 100) / (topics.size()*TOTALMAXTOPICSTATE);
+        //TODO: mirar si el porcentaje está bien
     }
 
     @Override
@@ -85,12 +90,19 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.Dependen
 
 
     public class DependencyViewHolder extends RecyclerView.ViewHolder {
-        TextView tvSubjectName, tvSubjectState;
+        private TextView tvSubjectName, tvSubjectDate, tvSubjectProgressNumber;
+        private ProgressBar progressBar;
+        private ListView topicList;
+        private ImageButton expand;
 
         public DependencyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvSubjectName = itemView.findViewById(R.id.subjectItem_subjectName);
-            tvSubjectState = itemView.findViewById(R.id.subjectItem_subjectState);
+            tvSubjectDate = itemView.findViewById(R.id.subjectItem_subjectDate);
+            tvSubjectProgressNumber = itemView.findViewById(R.id.subjectItem_subjectProgressNumber);
+            progressBar = itemView.findViewById(R.id.subjectItem_subjectProgressBar);
+            topicList = itemView.findViewById(R.id.subjectItem_topicList);
+            expand = itemView.findViewById(R.id.subjectItem_expandButton);
         }
 
         public void bind(final Subject subject, final onManegeSubjectListener listener) {

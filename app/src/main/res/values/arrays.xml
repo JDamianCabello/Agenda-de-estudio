@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="exampleSubjectArray">
-        <item>Ejemplo asignatura 1</item>
-        <item>Ejemplo asignatura 2</item>
-        <item>Ejemplo asignatura 3</item>
-        <item>Ejemplo asignatura 4</item>
-        <item>Ejemplo asignatura 5</item>
+        <item>Ejemplo tema 1</item>
+        <item>Ejemplo tema 2</item>
+        <item>Ejemplo tema 3</item>
+        <item>Ejemplo tema 4</item>
+        <item>Ejemplo tema 5</item>
     </string-array>
     <string-array name="quantifier">
         <item>Minutes</item>
