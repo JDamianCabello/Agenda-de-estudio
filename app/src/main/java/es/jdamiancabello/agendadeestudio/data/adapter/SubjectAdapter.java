@@ -34,7 +34,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.Dependen
 
     @Override
     public void onBindViewHolder(@NonNull DependencyViewHolder holder, int position) {
-        holder.tvSubjectName.setText(list.get(position).getSubject_name());
+        holder.tvSubjectName.setText(list.get(position).getName());
         holder.tvSubjectState.setText(getState(list.get(position).getEstate_priority()));
         holder.bind(list.get(position), listener);
     }

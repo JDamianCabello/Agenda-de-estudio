@@ -62,10 +62,9 @@ public class CalendarFragment extends Fragment {
         List<EventDay> events = new ArrayList<>();
 
         Calendar calendar = Calendar.getInstance();
-        //calendar.set(2020,1,28);
+        calendar.set(2020,1,10);
         //TODO: Ver como se cambia la fecha
         events.add(new EventDay(calendar, R.drawable.ic_book));
-        events.add(new EventDay(calendar, R.drawable.ic_account));
 
         calendarView.setEvents(events);
     }
