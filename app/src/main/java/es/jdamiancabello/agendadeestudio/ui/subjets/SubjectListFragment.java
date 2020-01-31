@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,10 +24,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.adapter.SubjectAdapter;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
+import es.jdamiancabello.agendadeestudio.data.model.Topic;
 
 public class SubjectListFragment extends Fragment implements SubjectListContract.View{
     public final static String TAG = "SubjectListFragment";
@@ -66,14 +70,17 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
         loadingView = view.findViewById(R.id.loading);
         adapter = new SubjectAdapter(new SubjectAdapter.onManegeSubjectListener() {
 
-                @Override
-                public void onEditSubjectListener(Subject subject) {
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable("subject",subject);
-                    Toast.makeText(getContext(),"Has pulsado en: "+subject.getName(),Toast.LENGTH_LONG).show();
-                }
+            @Override
+            public void onShowTopics(List<Topic> topicsList, View view) {
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1,getNames(topicsList));
+                SubjectAdapter.SubjectViewHolder subjectViewHolder = (SubjectAdapter.SubjectViewHolder) recyclerView.getChildViewHolder(view);
+                //subjectViewHolder.topicList.setMinimumHeight(RecyclerView.LayoutParams.WRAP_CONTENT);
+                subjectViewHolder.topicList.setAdapter(arrayAdapter);
+                adapter.notifyDataSetChanged();
 
-                @Override
+            }
+
+            @Override
                 public void onDeleteSubjectListener(final Subject subject) {
                     new AlertDialog.Builder(getContext()).setTitle("ELIMINAR").setMessage("¿Seguro que desea elmininar " + subject.getName() + "?").setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
@@ -99,6 +106,14 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
 
+    }
+
+    private List<String> getNames(List<Topic> topicsList) {
+        List<String> a = new ArrayList<>();
+
+        for(Topic t : topicsList)
+            a.add(t.getName());
+        return a;
     }
 
     @Override

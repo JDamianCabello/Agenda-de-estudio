@@ -20,9 +20,8 @@ import java.util.List;
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.model.Topic;
-import es.jdamiancabello.agendadeestudio.ui.FocusApplication;
 
-public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.DependencyViewHolder> {
+public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectViewHolder> {
     private ArrayList<Subject> list;
     private onManegeSubjectListener listener;
     private final int TOTALMAXTOPICSTATE = 3;
@@ -34,24 +33,19 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.Dependen
 
     @NonNull
     @Override
-    public DependencyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.subject_item, parent, false);
-        return new DependencyViewHolder(view);
+    public SubjectViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.subject_v2_item, parent, false);
+        return new SubjectViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DependencyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SubjectViewHolder holder, int position) {
 
         holder.bind(list.get(position), listener);
         holder.tvSubjectName.setText(list.get(position).getName());
-        holder.tvSubjectDate.setText(list.get(position).getDate().toString());
+        holder.tvSubjectDate.setText(list.get(position).getDate());
         holder.tvSubjectProgressNumber.setText(Integer.toString(getProgress(list.get(position).getTopicList())));
         holder.progressBar.setProgress(Integer.parseInt(holder.tvSubjectProgressNumber.getText().toString()));
-
-
-        holder.topicList.setAdapter(new ArrayAdapter<>(FocusApplication.getUserContext(),android.R.layout.simple_expandable_list_item_1,list.get(position).getTopicList()));
-
-
     }
 
     private int getProgress(List<Topic> topics) {
@@ -67,6 +61,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.Dependen
     public int getItemCount() {
         return list.size();
     }
+
 
     public void clear() {
         list.clear();
@@ -89,13 +84,13 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.Dependen
     }
 
 
-    public class DependencyViewHolder extends RecyclerView.ViewHolder {
+    public class SubjectViewHolder extends RecyclerView.ViewHolder {
         private TextView tvSubjectName, tvSubjectDate, tvSubjectProgressNumber;
         private ProgressBar progressBar;
-        private ListView topicList;
+        public ListView topicList;
         private ImageButton expand;
 
-        public DependencyViewHolder(@NonNull View itemView) {
+        public SubjectViewHolder(@NonNull View itemView) {
             super(itemView);
             tvSubjectName = itemView.findViewById(R.id.subjectItem_subjectName);
             tvSubjectDate = itemView.findViewById(R.id.subjectItem_subjectDate);
@@ -109,7 +104,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.Dependen
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onEditSubjectListener(subject);
+                    listener.onShowTopics(subject.getTopicList(), v);
                 }
             });
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -123,7 +118,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.Dependen
     }
 
     public interface onManegeSubjectListener {
-        void onEditSubjectListener(Subject subject);
+        void onShowTopics(List<Topic> topicsList, View view);
         void onDeleteSubjectListener(Subject subject);
     }
 }

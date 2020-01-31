@@ -13,7 +13,7 @@ import java.util.List;
 public class Subject implements Parcelable {
     public static final String SUBJECT_KEY = "subject";
     private String subject_name;
-    private Calendar exam_date;
+    private String exam_date;
     private int color;
     private List<Topic> topicList;
 
@@ -43,7 +43,7 @@ public class Subject implements Parcelable {
         this.topicList = topicList;
     }
 
-    public Subject(String subject_name, Calendar exam_date, int color) {
+    public Subject(String subject_name, String exam_date, int color) {
         this.subject_name = subject_name;
         this.exam_date = exam_date;
         this.color = color;
@@ -57,11 +57,11 @@ public class Subject implements Parcelable {
         this.subject_name = name;
     }
 
-    public Calendar getDate() {
+    public String getDate() {
         return exam_date;
     }
 
-    public void setDate(Calendar date) {
+    public void setDate(String date) {
         this.exam_date = date;
     }
 
@@ -81,6 +81,7 @@ public class Subject implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(subject_name);
+        dest.writeString(exam_date);
         dest.writeInt(color);
         dest.writeTypedList(topicList);
     }

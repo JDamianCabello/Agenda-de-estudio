@@ -114,13 +114,10 @@ public class FragmentActivity extends AppCompatActivity implements
         subjectList = getSupportFragmentManager().findFragmentByTag(SubjectListFragment.TAG);
         if (subjectList==null) {
             subjectList = SubjectListFragment.newInstance();
-
-
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.content, subjectList, SubjectListFragment.TAG);
-            fragmentTransaction.addToBackStack(DashboardFragment.TAG);
-            fragmentTransaction.commit();
         }
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.content, subjectList, SubjectListFragment.TAG);
+        fragmentTransaction.commit();
 
         subjectListPresenter = new SubjectListPresenter((SubjectListContract.View) subjectList);
         ((SubjectListContract.View) subjectList).setPresenter(subjectListPresenter);

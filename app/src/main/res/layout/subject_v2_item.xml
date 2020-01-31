@@ -10,7 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="18dp">
 
         <LinearLayout
@@ -109,11 +109,12 @@
                     app:srcCompat="@drawable/ic_arrow" />
             </LinearLayout>
 
+
             <ListView
                 android:id="@+id/subjectItem_topicList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/exampleSubjectArray" />
+                android:visibility="visible" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

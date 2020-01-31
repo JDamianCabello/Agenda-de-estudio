@@ -5,16 +5,16 @@ import android.os.Parcelable;
 
 public class Topic implements Parcelable {
     private String name;
-    private int State;
+    private int state;
 
     public Topic(String name, int state) {
         this.name = name;
-        State = state;
+        this.state = state;
     }
 
     protected Topic(Parcel in) {
         name = in.readString();
-        State = in.readInt();
+        state = in.readInt();
     }
 
     public static final Creator<Topic> CREATOR = new Creator<Topic>() {
@@ -38,11 +38,11 @@ public class Topic implements Parcelable {
     }
 
     public int getState() {
-        return State;
+        return state;
     }
 
     public void setState(int state) {
-        State = state;
+        this.state = state;
     }
 
     @Override
@@ -53,6 +53,6 @@ public class Topic implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
-        dest.writeInt(State);
+        dest.writeInt(state);
     }
 }

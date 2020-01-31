@@ -27,7 +27,7 @@ public class StudyOrganicer implements Parcelable {
         this.duration = duration;
         this.durationQuantifier = durationQuantifier;
         this.subject = subject;
-        this.eventTitle = subject.getEstate_priority();
+//        this.eventTitle = subject.getEstate_priority();
     }
 
     protected StudyOrganicer(Parcel in) {
@@ -138,7 +138,8 @@ public class StudyOrganicer implements Parcelable {
 
         @Override
         public int compare(StudyOrganicer o1, StudyOrganicer o2) {
-            return o1.getSubject().getSubject_name().compareToIgnoreCase(o2.getSubject().getSubject_name());
+//            return o1.getSubject().getSubject_name().compareToIgnoreCase(o2.getSubject().getSubject_name());
+            return 1;
         }
     }
 
