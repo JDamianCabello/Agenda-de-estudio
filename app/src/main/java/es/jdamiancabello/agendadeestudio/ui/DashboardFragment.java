@@ -98,7 +98,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        activityListener = (onDashboardListener)context;
+        //activityListener = (onDashboardListener)context;
     }
 
     @Override

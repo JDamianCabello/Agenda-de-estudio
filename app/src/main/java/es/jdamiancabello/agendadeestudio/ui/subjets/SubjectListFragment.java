@@ -81,8 +81,8 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
 
                 if(subjectViewHolder.topicList.getChildCount() == 0) {
                     List<Topic> topics = new ArrayList<>();
-                    topics.add(new Topic("Tema 1", 3));
-                    topics.add(new Topic("Tema 2", 0));
+                    topics.add(new Topic("Tema 1","t1", 3));
+                    topics.add(new Topic("Tema 2", "t2",0));
 
 
                     LinearLayout myRoot = subjectViewHolder.topicList;

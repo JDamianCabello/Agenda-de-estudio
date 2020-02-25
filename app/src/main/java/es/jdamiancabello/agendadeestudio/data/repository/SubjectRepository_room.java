@@ -1,5 +1,6 @@
 package es.jdamiancabello.agendadeestudio.data.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -29,7 +30,7 @@ public class SubjectRepository_room{
         }catch (ExecutionException | InterruptedException e){
             e.printStackTrace();
         }
-        return null;
+        return new ArrayList<>();
     }
 
     public boolean insert(Subject subject){

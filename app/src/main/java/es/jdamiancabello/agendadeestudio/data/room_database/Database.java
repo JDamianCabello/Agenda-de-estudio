@@ -10,11 +10,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import es.jdamiancabello.agendadeestudio.data.DAOroom.SubjectDao_room;
+import es.jdamiancabello.agendadeestudio.data.DAOroom.TopicDao_room;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
+import es.jdamiancabello.agendadeestudio.data.model.Topic;
 
-@androidx.room.Database(entities = {Subject.class}, version = 1, exportSchema = false)
+@androidx.room.Database(entities = {Subject.class, Topic.class}, version = 1, exportSchema = false)
 public abstract class Database extends RoomDatabase {
     public abstract SubjectDao_room subjectDAO();
+    public abstract TopicDao_room TopicDAO();
     private static volatile Database INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
     public static final ExecutorService databaseWriterExecutor =
@@ -25,6 +28,7 @@ public abstract class Database extends RoomDatabase {
             synchronized (Database.class){
                 if(INSTANCE == null){
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(), Database.class,"FocusDatabase")
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

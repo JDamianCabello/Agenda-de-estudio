@@ -17,6 +17,7 @@ import es.jdamiancabello.agendadeestudio.data.Network.ApiRestClientToken;
 import es.jdamiancabello.agendadeestudio.data.model.Note;
 import es.jdamiancabello.agendadeestudio.data.model.StudyOrganicer;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
+import es.jdamiancabello.agendadeestudio.data.model.Topic;
 import es.jdamiancabello.agendadeestudio.register.RegisterFragment;
 import es.jdamiancabello.agendadeestudio.register.RegisterPresenter;
 import es.jdamiancabello.agendadeestudio.ui.aboutme.AboutMeFragment;
@@ -38,13 +39,17 @@ import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListFragment;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListPresenter;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectManagerFragment;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectManagerPresenter;
+import es.jdamiancabello.agendadeestudio.ui.topic.TopicListContract;
+import es.jdamiancabello.agendadeestudio.ui.topic.TopicListFragment;
+import es.jdamiancabello.agendadeestudio.ui.topic.TopicListPresenter;
+import es.jdamiancabello.agendadeestudio.ui.topic.TopicManagerFragment;
+import es.jdamiancabello.agendadeestudio.ui.topic.TopicManagerPresenter;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomeContract;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomeFragment;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomePresenter;
 
 public class FragmentActivity extends AppCompatActivity implements
         SubjectListFragment.onSubjectListListener,
-        DashboardFragment.onDashboardListener,
         LoginFragment.onLoginListener,
         StudyOrganicerView.SectorListViewListener,
         StudyOrganicerManageView.OnSaveStudyOrganicerManageView,
@@ -53,7 +58,9 @@ public class FragmentActivity extends AppCompatActivity implements
         RegisterFragment.OnFragmentInteractionListener,
         SubjectManagerFragment.OnFragmentInteractionListener,
         DashborardFragmentV2.OnFragmentInteractionListener,
-        CalendarFragment.OnFragmentInteractionListener
+        CalendarFragment.OnFragmentInteractionListener,
+        TopicListFragment.OnFragmentInteractionListener,
+        TopicManagerFragment.OnFragmentInteractionListener
         {
     private Toolbar toolbar;
 
@@ -88,6 +95,12 @@ public class FragmentActivity extends AppCompatActivity implements
 
     private CalendarFragment calendarFragment;
 
+    private TopicListFragment topicListFragment;
+    private TopicListPresenter topicListPresenter;
+
+    private TopicManagerFragment topicManagerFragment;
+    private TopicManagerPresenter topicManagerPresenter;
+
 
 
     @Override
@@ -109,71 +122,8 @@ public class FragmentActivity extends AppCompatActivity implements
         ((WelcomeContract.view) welcomeFragment).setPresenter(welcomePresenter);
     }
 
-    @Override
-    public void showSubjectsList() {
-        subjectList = getSupportFragmentManager().findFragmentByTag(SubjectListFragment.TAG);
 
-        if (subjectList==null) {
-            subjectList = SubjectListFragment.newInstance();
-        }
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.content, subjectList, SubjectListFragment.TAG);
-        fragmentTransaction.commit();
-
-        subjectListPresenter = new SubjectListPresenter((SubjectListContract.View) subjectList);
-        ((SubjectListContract.View) subjectList).setPresenter(subjectListPresenter);
-    }
-
-    @Override
-    public void showEventsList() {
-
-        eventListFragment = getSupportFragmentManager().findFragmentByTag(StudyOrganicerView.TAG);
-
-        if(eventListFragment == null) {
-            eventListFragment = StudyOrganicerView.newInstance(null);
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.content, eventListFragment, StudyOrganicerView.TAG);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-        }
-
-        studyOrganicerPresenter = new StudyOrganicerPresenter((StudyOrganicerListContract.View) eventListFragment);
-        ((StudyOrganicerListContract.View) eventListFragment).setPresenter(studyOrganicerPresenter);
-    }
-
-    @Override
-    public void ShowChronoView() {
-        Toast.makeText(this,"ChronoView is not implemented yet",Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void ShowSettingsView() {
-        Toast.makeText(this,"Settings is not implemented yet",Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void ShowScheduleView() {
-        Toast.makeText(this,"ScheduleView is not implemented yet",Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void showNoteView() {
-        notesListFragment = (NotesListFragment) getSupportFragmentManager().findFragmentByTag(NotesListFragment.TAG);
-
-        if(notesListFragment == null){
-            notesListFragment = NotesListFragment.newInstance();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content,notesListFragment,NotesListFragment.TAG)
-                    .addToBackStack(null).commit();
-        }
-
-        noteListPresenter = new NoteListPresenter(notesListFragment);
-        notesListFragment.setPresenter(noteListPresenter);
-
-    }
-
-    @Override
-    public void loggout() {
+    private void loggout() {
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.sharedUserDataLogin),MODE_PRIVATE);
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -241,7 +191,6 @@ public class FragmentActivity extends AppCompatActivity implements
             eventManageFragment = StudyOrganicerManageView.newInstance(b);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content,eventManageFragment,StudyOrganicerManageView.TAG);
-            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }
 
@@ -252,7 +201,7 @@ public class FragmentActivity extends AppCompatActivity implements
 
     @Override
     public void onSaveStudyOrganicerManageView() {
-        onBackPressed();
+        showSubjects(R.id.dashboard_container);
     }
 
     @Override
@@ -407,18 +356,18 @@ public class FragmentActivity extends AppCompatActivity implements
 
     @Override
     public void showTools(int containerID) {
-        notesListFragment = (NotesListFragment) getSupportFragmentManager().findFragmentByTag(NotesListFragment.TAG);
+        topicListFragment = (TopicListFragment) getSupportFragmentManager().findFragmentByTag(TopicListFragment.TAG);
 
-        if(notesListFragment == null){
-            notesListFragment = NotesListFragment.newInstance();
+        if(topicListFragment == null){
+            topicListFragment = TopicListFragment.newInstance();
         }
 
         getSupportFragmentManager().beginTransaction()
-                .replace(containerID,notesListFragment,NotesListFragment.TAG)
+                .replace(R.id.dashboard_container,topicListFragment,TopicListFragment.TAG)
                 .commit();
 
-        noteListPresenter = new NoteListPresenter(notesListFragment);
-        notesListFragment.setPresenter(noteListPresenter);
+        topicListPresenter = new TopicListPresenter(topicListFragment);
+        topicListFragment.setPresenter(topicListPresenter);
     }
 
     @Override
@@ -438,6 +387,42 @@ public class FragmentActivity extends AppCompatActivity implements
             @Override
     public void calendar_selected_date() {
 
+    }
+
+    @Override
+    public void onAddOrModify(Topic topic) {
+        topicManagerFragment = (TopicManagerFragment) getSupportFragmentManager().findFragmentByTag(TopicManagerFragment.TAG);
+
+        if(topicManagerFragment == null) {
+            Bundle bundle = null;
+            if(topic != null)
+                bundle.putParcelable(Topic.TOPICTAG,topic);
+            topicManagerFragment = TopicManagerFragment.newInstance(bundle);
+        }
+
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.dashboard_container,topicManagerFragment,TopicManagerFragment.TAG);
+        fragmentTransaction.commit();
+
+        topicManagerPresenter = new TopicManagerPresenter(topicManagerFragment);
+        topicManagerFragment.setPresenter(topicManagerPresenter);
+    }
+
+    @Override
+    public void onSaved() {
+        topicListFragment = (TopicListFragment) getSupportFragmentManager().findFragmentByTag(TopicListFragment.TAG);
+
+        if(topicListFragment == null){
+            topicListFragment = TopicListFragment.newInstance();
+        }
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.dashboard_container,topicListFragment,TopicListFragment.TAG)
+                .commit();
+
+        topicListPresenter = new TopicListPresenter(topicListFragment);
+        topicListFragment.setPresenter(topicListPresenter);
     }
 }
 

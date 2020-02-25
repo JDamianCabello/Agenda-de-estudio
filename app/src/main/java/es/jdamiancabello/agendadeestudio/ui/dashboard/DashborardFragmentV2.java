@@ -123,7 +123,7 @@ public class DashborardFragmentV2 extends Fragment {
         return new ArrayList<Tab>(){{
             add(new Tab(R.drawable.ic_calendar,getString(R.string.dashboard_callendar)));
             add(new Tab(R.drawable.ic_book_white,getString(R.string.dashboard_subjects)));
-            add(new Tab(R.drawable.ic_note,getString(R.string.dashboard_notes)));
+            add(new Tab(R.drawable.ic_note,getString(R.string.dashboard_topics)));
             add(new Tab(R.drawable.ic_help,getString(R.string.help)));
         }};
 

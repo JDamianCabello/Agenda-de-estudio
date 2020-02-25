@@ -9,16 +9,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.model.Topic;
 
 public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> {
-    List<Topic> topicList;
+    private List<Topic> topicList;
+    private ItemActions itemActions;
 
-    public TopicAdapter(List<Topic> topicList) {
-        this.topicList = topicList;
+    public TopicAdapter(ItemActions actions) {
+
+        this.topicList = new ArrayList<>();
+        itemActions = actions;
     }
 
     @NonNull
@@ -32,6 +36,21 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
         holder.topicName.setText(topicList.get(position).getName());
         holder.topicState.setText(getState(topicList.get(position).getState()));
         holder.topicProgress.setProgress((topicList.get(position).getState() * 100) / 3);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemActions.onClick(topicList.get(position));
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                itemActions.onLongClick(topicList.get(position));
+                return true;
+            }
+        });
     }
 
     private String getState(int state) {
@@ -65,6 +84,11 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
         topics.addAll(topics);
     }
 
+
+    public interface ItemActions{
+        void onClick(Topic topic);
+        void onLongClick(Topic topic);
+    }
 
     @Override
     public int getItemCount() {

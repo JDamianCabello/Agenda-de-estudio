@@ -3,17 +3,36 @@ package es.jdamiancabello.agendadeestudio.data.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+
+@Entity(primaryKeys = {"subject_name","name"},foreignKeys = @ForeignKey(entity = Subject.class,
+        parentColumns = "subject_name",
+        childColumns = "subject_name",
+        onDelete = ForeignKey.CASCADE))
 public class Topic implements Parcelable {
+    @Ignore
+    public static final String TOPICTAG = "topic";
+    @NonNull
     private String subject_name;
+    @NonNull
     private String name;
+    @NonNull
     private int state;
 
-    public Topic(String name, int state) {
+    public Topic(String subject_name, String name, int state) {
+        this.subject_name = subject_name;
         this.name = name;
         this.state = state;
     }
 
+    @Ignore
     protected Topic(Parcel in) {
+        subject_name = in.readString();
         name = in.readString();
         state = in.readInt();
     }
@@ -61,6 +80,7 @@ public class Topic implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(subject_name);
         dest.writeString(name);
         dest.writeInt(state);
     }

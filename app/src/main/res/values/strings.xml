@@ -68,4 +68,7 @@
     <string name="dashboard_topics">Topics</string>
     <string name="dashboard_notes">Notes</string>
     <string name="topic_item_state">State:</string>
+    <string name="topicManager_topicNameHint">Topic name</string>
+    <string name="topicManager_tv_selectState">Topic state:</string>
+    <string name="topicManager_tv_SubjectOfTopic">Subject of topic</string>
 </resources>

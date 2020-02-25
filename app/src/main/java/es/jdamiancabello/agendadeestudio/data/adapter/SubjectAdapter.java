@@ -46,17 +46,11 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
         holder.tvSubjectName.setText(list.get(position).getName());
         holder.tvSubjectName.setTextColor(list.get(position).getColor());
         holder.tvSubjectDate.setText(list.get(position).getDate());
-        holder.tvSubjectProgressNumber.setText(Integer.toString(getProgress(dataExample())));
-        //holder.tvSubjectProgressNumber.setText(Integer.toString(0));
+        //holder.tvSubjectProgressNumber.setText(Integer.toString(getProgress(dataExample())));
+        holder.tvSubjectProgressNumber.setText(Integer.toString(0));
         holder.progressBar.setProgress(Integer.parseInt(holder.tvSubjectProgressNumber.getText().toString()));
     }
 
-    private List<Topic> dataExample() {
-        return new ArrayList<Topic>(){{
-            add(new Topic("Tema 1", 3));
-            add(new Topic("Tema 2", 0));
-        }};
-    }
 
     private int getProgress(List<Topic> topics) {
         if(topics.isEmpty() || topics == null)
