@@ -1,11 +1,13 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "es.jdamiancabello.agendadeestudio"
-        minSdkVersion 26
+        minSdkVersion 28
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -21,11 +23,6 @@ android {
         targetCompatibility = "8"
         sourceCompatibility = "8"
     }
-
-    dataBinding{
-        enabled true
-    }
-
 }
 
 dependencies {
@@ -62,7 +59,7 @@ dependencies {
     implementation 'com.github.ihsanbal:LoggingInterceptor:3.0.0'
 
     //Biblioteca de compatibilidad de diseño (Dashboard V2)
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:+'
 
 
     //AppUpdater
@@ -71,4 +68,22 @@ dependencies {
     //Calendar
     implementation 'com.applandeo:material-calendar-view:1.7.0'
 
+    //ColorPicker
+    implementation 'com.github.naz013:ColorSlider:1.0.5'
+
+    //SmoothBottomBar
+    implementation 'com.github.naz013:smooth-bottom-bar:1.0.2'
+    implementation "androidx.dynamicanimation:dynamicanimation:1.0.0"
+
+    //Room
+    implementation 'androidx.room:room-runtime:+'
+    annotationProcessor 'androidx.room:room-compiler:+'
+
+    //Kotlin gradle
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+}
+repositories {
+    mavenCentral()
 }

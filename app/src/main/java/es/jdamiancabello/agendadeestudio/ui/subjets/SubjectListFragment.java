@@ -5,12 +5,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +31,7 @@ import java.util.List;
 
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.adapter.SubjectAdapter;
+import es.jdamiancabello.agendadeestudio.data.adapter.TopicAdapter;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.model.Topic;
 
@@ -72,13 +76,32 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
 
             @Override
             public void onShowTopics(List<Topic> topicsList, View view) {
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1,getNames(topicsList));
-                SubjectAdapter.SubjectViewHolder subjectViewHolder = (SubjectAdapter.SubjectViewHolder) recyclerView.getChildViewHolder(view);
-                //subjectViewHolder.topicList.setMinimumHeight(RecyclerView.LayoutParams.WRAP_CONTENT);
-                subjectViewHolder.topicList.setAdapter(arrayAdapter);
-                adapter.notifyDataSetChanged();
 
+                SubjectAdapter.SubjectViewHolder subjectViewHolder = (SubjectAdapter.SubjectViewHolder) recyclerView.getChildViewHolder(view);
+
+                if(subjectViewHolder.topicList.getChildCount() == 0) {
+                    List<Topic> topics = new ArrayList<>();
+                    topics.add(new Topic("Tema 1", 3));
+                    topics.add(new Topic("Tema 2", 0));
+
+
+                    LinearLayout myRoot = subjectViewHolder.topicList;
+                    LinearLayout nuevo = new LinearLayout(getContext());
+                    nuevo.setOrientation(LinearLayout.VERTICAL);
+
+                    for (int i = 0; i < topics.size(); i++) {
+                        TextView t = new TextView(getContext());
+                        t.setText(topics.get(i).getName());
+                        t.setGravity(Gravity.CENTER);
+                        t.setTextAppearance(R.style.TextAppearance_AppCompat_Large);
+                        nuevo.addView(t);
+                    }
+                    myRoot.addView(nuevo);
+                }else{
+                    subjectViewHolder.topicList.removeAllViews();
+                }
             }
+
 
             @Override
                 public void onDeleteSubjectListener(final Subject subject) {

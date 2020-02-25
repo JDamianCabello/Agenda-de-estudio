@@ -1,7 +1,9 @@
 package es.jdamiancabello.agendadeestudio.ui.subjets;
 
 
+import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.repository.SubjectRepository;
+import es.jdamiancabello.agendadeestudio.data.repository.SubjectRepository_room;
 
 public class SubjectManagerPresenter implements SubjectManagerContract.Presenter, SubjectRepository.ManageSubject{
     private SubjectManagerContract.View view;
@@ -11,17 +13,17 @@ public class SubjectManagerPresenter implements SubjectManagerContract.Presenter
     }
 
     @Override
-    public void addSubject(String name, int state) {
-        SubjectRepository.getInstance().addSubject(this, name,state);
-    }
-
-    @Override
-    public void modifySubject(int id, String name, int state) {
-
-    }
-
-    @Override
     public void onSaved() {
         view.onSucess();
+    }
+
+    @Override
+    public void addSubject(String name, String examDate, int subjectColor) {
+        SubjectRepository_room.getInstance().insert(new Subject(name,examDate,subjectColor));
+    }
+
+    @Override
+    public void modifySubject(String name, String examDate, int subjectColor) {
+        SubjectRepository_room.getInstance().update(new Subject(name,examDate,subjectColor));
     }
 }

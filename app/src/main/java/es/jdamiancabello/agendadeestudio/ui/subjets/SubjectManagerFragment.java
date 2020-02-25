@@ -13,7 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.github.naz013.colorslider.ColorSlider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -26,7 +28,9 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
     private SubjectManagerContract.Presenter presenter;
 
     private TextInputEditText edsubjectName;
-    private Spinner subjectStateSpinner;
+    private TextInputEditText edSubjectDate;
+    private TextView colorChange;
+    private ColorSlider colorSlider;
     private FloatingActionButton floatingActionButton;
 
     public static SubjectManagerFragment newInstance(Bundle b) {
@@ -43,7 +47,6 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_subject_manager, container, false);
     }
 
@@ -51,20 +54,28 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         edsubjectName = view.findViewById(R.id.subjectManager_edSubjectName);
-        subjectStateSpinner = view.findViewById(R.id.subjectManager_stateSpinner);
+        edSubjectDate = view.findViewById(R.id.subjectManager_edSubjectDate);
 
 
         floatingActionButton = view.findViewById(R.id.subjectManager_fabSave);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.addSubject(edsubjectName.getText().toString(),subjectStateSpinner.getSelectedItemPosition());
+                presenter.addSubject(edsubjectName.getText().toString(), edSubjectDate.getText().toString(), colorSlider.getSelectedColor());
             }
         });
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
+        colorChange = view.findViewById(R.id.subjectManager_tvSelectColor);
+        colorSlider = view.findViewById(R.id.color_slider);
 
+        colorSlider.setListener(new ColorSlider.OnColorSelectedListener() {
+            @Override
+            public void onColorChanged(int position, int color) {
+                colorChange.setTextColor(color);
+            }
+        });
     }
 
     @Override

@@ -9,7 +9,7 @@ public class SubjectManagerContract {
     }
 
     public interface Presenter{
-        void addSubject(String name, int state);
-        void modifySubject(int id, String name, int state);
+        void addSubject(String name, String examDate, int subjectColor);
+        void modifySubject(String name, String examDate, int subjectColor);
     }
 }

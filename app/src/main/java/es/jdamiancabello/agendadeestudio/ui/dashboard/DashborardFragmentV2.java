@@ -14,7 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.github.naz013.smoothbottombar.SmoothBottomBar;
+import com.github.naz013.smoothbottombar.Tab;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import es.jdamiancabello.agendadeestudio.R;
 
@@ -22,7 +27,7 @@ import es.jdamiancabello.agendadeestudio.R;
 public class DashborardFragmentV2 extends Fragment {
     public static final String TAG = "DashborardFragmentV2";
     private OnFragmentInteractionListener mListener;
-    private BottomNavigationView menu;
+    private SmoothBottomBar menu;
     private FrameLayout container;
 
     public static DashborardFragmentV2 newInstance() {
@@ -47,38 +52,42 @@ public class DashborardFragmentV2 extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         menu = view.findViewById(R.id.dashboard_menu);
+        menu.setTabs(createBottonMenu());
+
+        menu.setOnTabSelectedListener(new SmoothBottomBar.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(int i) {
+                changeFragment(i);
+            }
+        });
+
         container = view.findViewById(R.id.dashboard_container);
 
 
         setTodayFragment();
 
-        menu.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.dashborad_callendar:
-                        mListener.showCallendar(R.id.dashboard_container);
-                        break;
-                    case R.id.dashboard_organicer:
-                        mListener.showOrganicer(R.id.dashboard_container);
-                        break;
-                    case R.id.dashboard_today:
-                        mListener.showToday(R.id.dashboard_container);
-                        break;
-                    case R.id.dashboard_subjects:
-                        mListener.showSubjects(R.id.dashboard_container);
-                        break;
-                    case R.id.dashboard_tools:
-                        mListener.showTools(R.id.dashboard_container);
-                        break;
-                }
-                return true;
-            }
-        });
+
+    }
+
+    private void changeFragment(int i) {
+        switch (i){
+            case 0:
+                mListener.showCallendar(R.id.dashboard_container);
+                break;
+            case 1:
+                mListener.showSubjects(R.id.dashboard_container);
+                break;
+            case 2:
+                mListener.showTools(R.id.dashboard_container);
+                break;
+            case 3:
+                mListener.showHelp(R.id.dashboard_container);
+                break;
+        }
     }
 
     private void setTodayFragment() {
-        menu.setSelectedItemId(R.id.dashboard_today);
+//        menu.setSelectedItemId(R.id.dashboard_today);
         mListener.dashboardv2FirstLoad(R.id.dashboard_container);
     }
 
@@ -104,7 +113,19 @@ public class DashborardFragmentV2 extends Fragment {
         void showCallendar(int containerID);
         void showOrganicer(int containerID);
         void showToday(int containerID);
+        void showTopics(int containerID);
         void showSubjects(int containerID);
         void showTools(int containerID);
+        void showHelp(int dashboard_container);
+    }
+
+    private List<Tab> createBottonMenu(){
+        return new ArrayList<Tab>(){{
+            add(new Tab(R.drawable.ic_calendar,getString(R.string.dashboard_callendar)));
+            add(new Tab(R.drawable.ic_book_white,getString(R.string.dashboard_subjects)));
+            add(new Tab(R.drawable.ic_note,getString(R.string.dashboard_notes)));
+            add(new Tab(R.drawable.ic_help,getString(R.string.help)));
+        }};
+
     }
 }

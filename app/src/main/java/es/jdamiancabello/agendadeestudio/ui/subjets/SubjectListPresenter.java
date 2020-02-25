@@ -7,6 +7,7 @@ import java.util.List;
 
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.repository.SubjectRepository;
+import es.jdamiancabello.agendadeestudio.data.repository.SubjectRepository_room;
 
 public class SubjectListPresenter implements SubjectListContract.Presenter, SubjectRepository.RepositorySubject {
     private SubjectListContract.View view;
@@ -17,14 +18,19 @@ public class SubjectListPresenter implements SubjectListContract.Presenter, Subj
 
     @Override
     public void delete(Subject subject) {
-        if (SubjectRepository.getInstance().delete(subject)) {
+        if (SubjectRepository_room.getInstance().delete(subject)) {
             view.onSuccessDeleted(subject);
         }
     }
 
     public void load(){
         view.showProgress();
-        SubjectRepository.getInstance().getSubjectList(this);
+        if(SubjectRepository_room.getInstance().getList().size() == 0)
+            view.noSubjets();
+        else {
+            view.refresh((ArrayList<Subject>) SubjectRepository_room.getInstance().getList());
+        }
+        view.hideProgress();
     }
 
 
@@ -42,11 +48,6 @@ public class SubjectListPresenter implements SubjectListContract.Presenter, Subj
 
     @Override
     public void onLoaded() {
-        view.hideProgress();
-        if(SubjectRepository.getInstance().getList().size() == 0)
-            view.noSubjets();
-        else {
-            view.refresh((ArrayList<Subject>) SubjectRepository.getInstance().getList());
-        }
+
     }
 }

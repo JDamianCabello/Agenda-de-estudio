@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import es.jdamiancabello.agendadeestudio.data.model.User;
+import es.jdamiancabello.agendadeestudio.data.room_database.Database;
 
 public class FocusApplication extends Application {
     static Context context;
@@ -22,6 +23,7 @@ public class FocusApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
+        Database.create(context);
     }
 
     public static Context getUserContext(){

@@ -13,14 +13,13 @@
         android:id="@+id/dashboard_container"
         />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <com.github.naz013.smoothbottombar.SmoothBottomBar
         android:id="@+id/dashboard_menu"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:itemIconTint="@color/colorPrimary"
-        app:itemTextColor="@color/colorPrimary"
+        android:layout_height="72dp"
         android:layout_alignParentBottom="true"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/bottonnavigation_dashboard" />
+        app:bar_background="@color/colorPrimaryDark"
+        app:bar_selectorColor="#80ffffff"
+        app:bar_textColor="#ffffff" />
 
 </RelativeLayout>

@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -43,12 +44,24 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
 
         holder.bind(list.get(position), listener);
         holder.tvSubjectName.setText(list.get(position).getName());
+        holder.tvSubjectName.setTextColor(list.get(position).getColor());
         holder.tvSubjectDate.setText(list.get(position).getDate());
-        holder.tvSubjectProgressNumber.setText(Integer.toString(getProgress(list.get(position).getTopicList())));
+        holder.tvSubjectProgressNumber.setText(Integer.toString(getProgress(dataExample())));
+        //holder.tvSubjectProgressNumber.setText(Integer.toString(0));
         holder.progressBar.setProgress(Integer.parseInt(holder.tvSubjectProgressNumber.getText().toString()));
     }
 
+    private List<Topic> dataExample() {
+        return new ArrayList<Topic>(){{
+            add(new Topic("Tema 1", 3));
+            add(new Topic("Tema 2", 0));
+        }};
+    }
+
     private int getProgress(List<Topic> topics) {
+        if(topics.isEmpty() || topics == null)
+            return 0;
+
         int aux = 0;
         for (Topic t:topics) {
             aux += t.getState();
@@ -87,7 +100,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
     public class SubjectViewHolder extends RecyclerView.ViewHolder {
         private TextView tvSubjectName, tvSubjectDate, tvSubjectProgressNumber;
         private ProgressBar progressBar;
-        public ListView topicList;
+        public LinearLayout topicList;
         private ImageButton expand;
 
         public SubjectViewHolder(@NonNull View itemView) {
@@ -97,14 +110,14 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
             tvSubjectProgressNumber = itemView.findViewById(R.id.subjectItem_subjectProgressNumber);
             progressBar = itemView.findViewById(R.id.subjectItem_subjectProgressBar);
             topicList = itemView.findViewById(R.id.subjectItem_topicList);
-            expand = itemView.findViewById(R.id.subjectItem_expandButton);
+            expand = itemView.findViewById(R.id.subjectItem_subjectExpand);
         }
 
         public void bind(final Subject subject, final onManegeSubjectListener listener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onShowTopics(subject.getTopicList(), v);
+                    listener.onShowTopics(null, v);
                 }
             });
             itemView.setOnLongClickListener(new View.OnLongClickListener() {

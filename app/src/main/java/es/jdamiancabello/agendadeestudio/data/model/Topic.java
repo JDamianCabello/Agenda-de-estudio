@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Topic implements Parcelable {
+    private String subject_name;
     private String name;
     private int state;
 
@@ -28,6 +29,14 @@ public class Topic implements Parcelable {
             return new Topic[size];
         }
     };
+
+    public String getSubject_name() {
+        return subject_name;
+    }
+
+    public void setSubject_name(String subject_name) {
+        this.subject_name = subject_name;
+    }
 
     public String getName() {
         return name;

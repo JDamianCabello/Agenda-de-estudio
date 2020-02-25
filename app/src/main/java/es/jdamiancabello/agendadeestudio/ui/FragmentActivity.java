@@ -112,6 +112,7 @@ public class FragmentActivity extends AppCompatActivity implements
     @Override
     public void showSubjectsList() {
         subjectList = getSupportFragmentManager().findFragmentByTag(SubjectListFragment.TAG);
+
         if (subjectList==null) {
             subjectList = SubjectListFragment.newInstance();
         }
@@ -171,18 +172,18 @@ public class FragmentActivity extends AppCompatActivity implements
 
     }
 
-            @Override
-            public void loggout() {
-                SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.sharedUserDataLogin),MODE_PRIVATE);
+    @Override
+    public void loggout() {
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.sharedUserDataLogin),MODE_PRIVATE);
 
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
 
-                editor.apply();
+        editor.apply();
 
-                ApiRestClientToken.loggout();
-                showWelcome();
-            }
+        ApiRestClientToken.loggout();
+        showWelcome();
+    }
 
             @Override
     public void showHelp() {
@@ -349,7 +350,7 @@ public class FragmentActivity extends AppCompatActivity implements
                 fragmentTransaction.replace(containerID, calendarFragment, CalendarFragment.TAG);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-
+//TODO: implementar el calendario
 //        studyOrganicerPresenter = new StudyOrganicerPresenter((StudyOrganicerListContract.View) eventListFragment);
 //        ((StudyOrganicerListContract.View) eventListFragment).setPresenter(studyOrganicerPresenter);
     }
@@ -384,17 +385,21 @@ public class FragmentActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void showTopics(int containerID) {
+
+    }
+
+            @Override
     public void showSubjects(int containerID) {
         subjectList = getSupportFragmentManager().findFragmentByTag(SubjectListFragment.TAG);
         if (subjectList==null) {
             subjectList = SubjectListFragment.newInstance();
-
-
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(containerID, subjectList, SubjectListFragment.TAG);
-            fragmentTransaction.addToBackStack(DashboardFragment.TAG);
-            fragmentTransaction.commit();
         }
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(containerID, subjectList, SubjectListFragment.TAG);
+        fragmentTransaction.addToBackStack(DashboardFragment.TAG);
+        fragmentTransaction.commit();
 
         subjectListPresenter = new SubjectListPresenter((SubjectListContract.View) subjectList);
         ((SubjectListContract.View) subjectList).setPresenter(subjectListPresenter);
@@ -402,13 +407,38 @@ public class FragmentActivity extends AppCompatActivity implements
 
     @Override
     public void showTools(int containerID) {
+        notesListFragment = (NotesListFragment) getSupportFragmentManager().findFragmentByTag(NotesListFragment.TAG);
 
+        if(notesListFragment == null){
+            notesListFragment = NotesListFragment.newInstance();
+        }
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(containerID,notesListFragment,NotesListFragment.TAG)
+                .commit();
+
+        noteListPresenter = new NoteListPresenter(notesListFragment);
+        notesListFragment.setPresenter(noteListPresenter);
+    }
+
+    @Override
+    public void showHelp(int dashboard_container) {
+
+        aboutMeFragment = getSupportFragmentManager().findFragmentByTag(AboutMeFragment.TAG);
+
+        if(aboutMeFragment == null)
+            aboutMeFragment = AboutMeFragment.newInstance();
+
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(dashboard_container,aboutMeFragment,AboutMeFragment.TAG);
+        fragmentTransaction.commit();
     }
 
             @Override
-            public void calendar_selected_date() {
+    public void calendar_selected_date() {
 
-            }
-        }
+    }
+}
 
 

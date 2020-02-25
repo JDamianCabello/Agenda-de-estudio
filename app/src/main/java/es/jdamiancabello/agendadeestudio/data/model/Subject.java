@@ -4,23 +4,49 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
-import java.util.Calendar;
+
 import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-
+@Entity
 public class Subject implements Parcelable {
+    @Ignore
     public static final String SUBJECT_KEY = "subject";
-    private String subject_name;
-    private String exam_date;
-    private int color;
-    private List<Topic> topicList;
 
+    @NonNull
+    public String getSubject_name() {
+        return subject_name;
+    }
+
+    public void setSubject_name(@NonNull String subject_name) {
+        this.subject_name = subject_name;
+    }
+
+    @NonNull
+    public String getExam_date() {
+        return exam_date;
+    }
+
+    public void setExam_date(@NonNull String exam_date) {
+        this.exam_date = exam_date;
+    }
+
+    @PrimaryKey
+    @NonNull
+    private String subject_name;
+
+    @NonNull
+    private String exam_date;
+
+    @NonNull
+    private int color;
+
+    @Ignore
     protected Subject(Parcel in) {
         subject_name = in.readString();
         color = in.readInt();
-        topicList = in.createTypedArrayList(Topic.CREATOR);
     }
 
     public static final Creator<Subject> CREATOR = new Creator<Subject>() {
@@ -34,14 +60,6 @@ public class Subject implements Parcelable {
             return new Subject[size];
         }
     };
-
-    public List<Topic> getTopicList() {
-        return topicList;
-    }
-
-    public void setSubjectList(List<Topic> topicList) {
-        this.topicList = topicList;
-    }
 
     public Subject(String subject_name, String exam_date, int color) {
         this.subject_name = subject_name;
@@ -83,7 +101,6 @@ public class Subject implements Parcelable {
         dest.writeString(subject_name);
         dest.writeString(exam_date);
         dest.writeInt(color);
-        dest.writeTypedList(topicList);
     }
 
     @NonNull
