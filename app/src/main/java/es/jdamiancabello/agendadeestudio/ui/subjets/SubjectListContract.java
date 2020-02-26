@@ -1,8 +1,10 @@
 package es.jdamiancabello.agendadeestudio.ui.subjets;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
+import es.jdamiancabello.agendadeestudio.data.model.Topic;
 import es.jdamiancabello.agendadeestudio.ui.base.BaseView;
 
 public interface SubjectListContract{
@@ -21,5 +23,7 @@ public interface SubjectListContract{
         void load();
         void undo(Subject subject);
         void onSucessUndo(Subject subject);
+
+        List<Topic> getTopicsBySubject(String subjectName);
     }
 }

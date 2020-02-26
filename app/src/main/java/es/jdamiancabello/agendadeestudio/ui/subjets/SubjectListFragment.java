@@ -75,15 +75,12 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
         adapter = new SubjectAdapter(new SubjectAdapter.onManegeSubjectListener() {
 
             @Override
-            public void onShowTopics(List<Topic> topicsList, View view) {
+            public void onShowTopics(Subject subject, View view) {
 
                 SubjectAdapter.SubjectViewHolder subjectViewHolder = (SubjectAdapter.SubjectViewHolder) recyclerView.getChildViewHolder(view);
 
                 if(subjectViewHolder.topicList.getChildCount() == 0) {
-                    List<Topic> topics = new ArrayList<>();
-                    topics.add(new Topic("Tema 1","t1", 3));
-                    topics.add(new Topic("Tema 2", "t2",0));
-
+                    List<Topic> topics = presenter.getTopicsBySubject(subject.getName());
 
                     LinearLayout myRoot = subjectViewHolder.topicList;
                     LinearLayout nuevo = new LinearLayout(getContext());

@@ -80,8 +80,8 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
     }
 
     public void addAll(List<Topic> topics){
-        topics.clear();
-        topics.addAll(topics);
+        topicList.clear();
+        topicList.addAll(topics);
     }
 
 

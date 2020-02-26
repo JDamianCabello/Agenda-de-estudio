@@ -67,7 +67,7 @@ public class TopicListFragment extends Fragment implements TopicListContract.Vie
 
         contenido = view.findViewById(R.id.topicList_content);
         contenido.setAdapter(topicAdapter);
-        contenido.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+        contenido.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
 
         floatingActionButton = view.findViewById(R.id.topicList_fabAdd);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {

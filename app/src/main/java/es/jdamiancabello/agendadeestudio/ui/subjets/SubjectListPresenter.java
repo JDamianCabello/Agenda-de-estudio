@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
+import es.jdamiancabello.agendadeestudio.data.model.Topic;
 import es.jdamiancabello.agendadeestudio.data.repository.SubjectRepository;
 import es.jdamiancabello.agendadeestudio.data.repository.SubjectRepository_room;
+import es.jdamiancabello.agendadeestudio.data.repository.TopicRepository_room;
 
 public class SubjectListPresenter implements SubjectListContract.Presenter, SubjectRepository.RepositorySubject {
     private SubjectListContract.View view;
@@ -43,6 +45,11 @@ public class SubjectListPresenter implements SubjectListContract.Presenter, Subj
     public void onSucessUndo(Subject subject) {
 //        if(SubjectRepository.getInstance().addSubject(subject))
 //            view.onSucessUndo(subject);
+    }
+
+    @Override
+    public List<Topic> getTopicsBySubject(String s) {
+        return TopicRepository_room.getInstance().getListFromSubject(s);
     }
 
 

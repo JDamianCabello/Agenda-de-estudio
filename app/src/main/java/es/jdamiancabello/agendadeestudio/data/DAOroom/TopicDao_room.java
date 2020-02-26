@@ -21,9 +21,9 @@ public interface TopicDao_room {
     @Update
     void update(Topic topic);
 
-    @Query("SELECT * FROM topic ORDER by subject_name ASC")
-    public List<Topic> getAll();
+    @Query("SELECT * FROM topic")
+    List<Topic> getAll();
 
     @Query("SELECT * FROM topic WHERE subject_name =:subjectName")
-    public List<Topic> getAllFromSubject(String subjectName);
+    List<Topic> getAllFromSubject(String subjectName);
 }

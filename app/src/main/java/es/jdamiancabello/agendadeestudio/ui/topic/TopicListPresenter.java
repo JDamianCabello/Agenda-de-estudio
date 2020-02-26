@@ -17,7 +17,13 @@ public class TopicListPresenter implements TopicListContract.Presenter {
 
     @Override
     public void load() {
-        view.refresh(TopicRepository_room.getInstance().getList());
+        view.showProgress();
+        if(TopicRepository_room.getInstance().getList().size() == 0)
+            view.noTopics();
+        else {
+            view.refresh(TopicRepository_room.getInstance().getList());
+        }
+        view.hideProgress();
     }
 
     @Override

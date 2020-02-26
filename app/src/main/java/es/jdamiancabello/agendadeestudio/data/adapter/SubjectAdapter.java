@@ -111,7 +111,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onShowTopics(null, v);
+                    listener.onShowTopics(subject, v);
                 }
             });
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -125,7 +125,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
     }
 
     public interface onManegeSubjectListener {
-        void onShowTopics(List<Topic> topicsList, View view);
+        void onShowTopics(Subject subject, View view);
         void onDeleteSubjectListener(Subject subject);
     }
 }
