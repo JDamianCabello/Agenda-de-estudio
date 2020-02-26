@@ -71,4 +71,11 @@
     <string name="topicManager_topicNameHint">Topic name</string>
     <string name="topicManager_tv_selectState">Topic state:</string>
     <string name="topicManager_tv_SubjectOfTopic">Subject of topic</string>
+    <string name="deleteTopic">Delete the topic</string>
+    <string name="deleteTopicPrepo">from</string>
+    <string name="topiclist_undotext">Restore the topic</string>
+    <string name="topicList_Restored">" has been sucefully restored"</string>
+    <string name="logout">Logout</string>
+    <string name="channel_name">Focus</string>
+    <string name="channel_description">Focus description</string>
 </resources>

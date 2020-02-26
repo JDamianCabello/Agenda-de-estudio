@@ -109,10 +109,24 @@ public class Subject implements Parcelable {
         return this.subject_name;
     }
 
-    public static class SortByName implements Comparator {
+    public static class SortByName implements Comparator<Subject> {
         @Override
-        public int compare(Object o1, Object o2) {
-            return o1.toString().compareToIgnoreCase(o2.toString());
+        public int compare(Subject o1, Subject o2) {
+            return o1.getSubject_name().compareToIgnoreCase(o2.getSubject_name());
+        }
+    }
+
+    public static class SortByColor implements Comparator<Subject> {
+        @Override
+        public int compare(Subject o1, Subject o2) {
+            return o1.getColor() - o2.getColor();
+        }
+    }
+
+    public static class SortByExamdate implements Comparator<Subject> {
+        @Override
+        public int compare(Subject o1, Subject o2) {
+            return o1.getExam_date().compareToIgnoreCase(o2.getExam_date());
         }
     }
 }

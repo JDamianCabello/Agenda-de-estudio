@@ -15,14 +15,14 @@ public interface SubjectListContract{
         void refresh(ArrayList<Subject> subjectArrayList);
         void onSuccessDeleted(Subject subject);
         void onSucessUndo(Subject subject);
-        void onUndo(Subject subject);
+        void onUndo(Subject subject, List<Topic> subjectsTopics);
     }
 
     interface Presenter{
         void delete(Subject subject);
         void load();
         void undo(Subject subject);
-        void onSucessUndo(Subject subject);
+        void onSucessUndo(Subject subject, List<Topic> subjectTopics);
 
         List<Topic> getTopicsBySubject(String subjectName);
     }

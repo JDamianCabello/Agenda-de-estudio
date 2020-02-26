@@ -26,8 +26,7 @@
             </activity>
 
 
-        <activity android:name=".ui.FragmentActivity"
-            android:configChanges="orientation|screenSize">
+        <activity android:name=".ui.FragmentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

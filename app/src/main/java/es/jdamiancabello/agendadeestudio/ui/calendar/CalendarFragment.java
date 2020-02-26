@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -55,7 +56,7 @@ public class CalendarFragment extends Fragment {
         //user cannot assign past dates
         calendarView.setMinimumDate(Calendar.getInstance());
 
-        añadirEventosDummy();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
     private void añadirEventosDummy() {
@@ -67,6 +68,7 @@ public class CalendarFragment extends Fragment {
         events.add(new EventDay(calendar, R.drawable.ic_book));
 
         calendarView.setEvents(events);
+
     }
 
     @Override

@@ -116,10 +116,6 @@ public class UserRepository {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful()) {
-//                    if(FocusApplication.user == null)
-//                        FocusApplication.setUser(new User(response.body().getApiToken()));
-//                    else
-//                        FocusApplication.user.setApi_token(response.body().getApiToken());
                     ApiRestClientToken.APITOKEN = response.body().getApiToken();
                     welcomeListener.onLoggedUser();
                 }
@@ -148,43 +144,4 @@ public class UserRepository {
         void onDuplicateEmail();
         void onFailedRegister();
     }
-
-//    private void Initialize(){
-//        userList.add(new User("test","test@test.test","test"));
-//    }
-//
-//    public boolean UserLogin(String email, String password){
-//        for (int i = 0; i < userList.size(); i++) {
-//            if(userList.get(i).getEmail().equals(email) && userList.get(i).getPassword().equals(password)
-//                    || userList.get(i).getUserName().equals(email) && userList.get(i).getPassword().equals(password))
-//                return true;
-//        }
-//        return false;
-//    }
-//
-//    public boolean userAdd(String name, String email, String password){
-//        for (int i = 0; i < userList.size(); i++) {
-//            if(userList.get(i).getEmail().equals(email))
-//                return false;
-//        }
-//        userList.add(new User(name,email,password));
-//        return true;
-//    }
-//
-//    public User getUser(String user, String pass) {
-//        for(User u : userList){
-//            if(u.getEmail().equals(user) && u.getPassword().equals(pass)
-//            || u.getUserName().equals(user) && u.getPassword().equals(pass))
-//                return u;
-//        }
-//        return null;
-//    }
-//
-//    public boolean existUser(String email) {
-//        for (User u : userList) {
-//            if (u.getEmail().equals(email))
-//                return true;
-//        }
-//        return false;
-//    }
 }

@@ -9,6 +9,8 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.Comparator;
+
 
 @Entity(primaryKeys = {"subject_name","name"},foreignKeys = @ForeignKey(entity = Subject.class,
         parentColumns = "subject_name",
@@ -83,5 +85,26 @@ public class Topic implements Parcelable {
         dest.writeString(subject_name);
         dest.writeString(name);
         dest.writeInt(state);
+    }
+
+    public static class SortByName implements Comparator<Topic>{
+        @Override
+        public int compare(Topic o1, Topic o2) {
+            return o1.getName().compareToIgnoreCase(o2.getName());
+        }
+    }
+
+    public static class SortBySubjectName implements Comparator<Topic>{
+        @Override
+        public int compare(Topic o1, Topic o2) {
+            return o1.getSubject_name().compareToIgnoreCase(o2.getSubject_name());
+        }
+    }
+
+    public static class SortByState implements Comparator<Topic>{
+        @Override
+        public int compare(Topic o1, Topic o2) {
+            return o1.getState() - o2.getState();
+        }
     }
 }

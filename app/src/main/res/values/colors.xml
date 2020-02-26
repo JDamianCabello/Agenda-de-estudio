@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#03005E</color>
     <color name="colorAccent">#0A81DC</color>
     <color name="til_background">#E8EBEC</color>
+
+    <color name="colorTopicItem">#F7FFAC</color>
 </resources>

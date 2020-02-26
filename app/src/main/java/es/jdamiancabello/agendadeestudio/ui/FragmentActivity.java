@@ -60,7 +60,8 @@ public class FragmentActivity extends AppCompatActivity implements
         DashborardFragmentV2.OnFragmentInteractionListener,
         CalendarFragment.OnFragmentInteractionListener,
         TopicListFragment.OnFragmentInteractionListener,
-        TopicManagerFragment.OnFragmentInteractionListener
+        TopicManagerFragment.OnFragmentInteractionListener,
+        AboutMeFragment.OnFragmentInteractionListener
         {
     private Toolbar toolbar;
 
@@ -101,9 +102,15 @@ public class FragmentActivity extends AppCompatActivity implements
     private TopicManagerFragment topicManagerFragment;
     private TopicManagerPresenter topicManagerPresenter;
 
-
-
     @Override
+    protected void onResume() {
+        super.onResume();
+        if(getIntent().getBooleanExtra("NOTIFICACION", false)){
+            addSubject(getIntent().getParcelableExtra(Subject.SUBJECT_KEY));
+        }
+    }
+
+            @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
@@ -220,7 +227,6 @@ public class FragmentActivity extends AppCompatActivity implements
     public void addSubject(Subject subject) {
         subjectManagerFragment = (SubjectManagerFragment) getSupportFragmentManager().findFragmentByTag(SubjectManagerFragment.TAG);
 
-        if(subjectManagerFragment == null){
             Bundle b = null;
             if(subject != null){
                 b = new Bundle();
@@ -228,10 +234,9 @@ public class FragmentActivity extends AppCompatActivity implements
             }
             subjectManagerFragment = SubjectManagerFragment.newInstance(b);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.content,subjectManagerFragment,SubjectManagerFragment.TAG);
+            fragmentTransaction.replace(R.id.dashboard_container,subjectManagerFragment,SubjectManagerFragment.TAG);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-        }
         subjectManagerPresenter = new SubjectManagerPresenter(subjectManagerFragment);
         subjectManagerFragment.setPresenter(subjectManagerPresenter);
 
@@ -282,9 +287,14 @@ public class FragmentActivity extends AppCompatActivity implements
 
     @Override
     public void dashboardv2FirstLoad(int containerID) {
-        dashboardFragment = DashboardFragment.newInstance();
+        calendarFragment = (CalendarFragment) getSupportFragmentManager().findFragmentByTag(CalendarFragment.TAG);
+
+        if(calendarFragment == null) {
+            calendarFragment = CalendarFragment.newInstance();
+        }
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(containerID,dashboardFragment,DashboardFragment.TAG);
+        fragmentTransaction.replace(containerID, calendarFragment, CalendarFragment.TAG);
+
         fragmentTransaction.commit();
     }
 
@@ -297,7 +307,7 @@ public class FragmentActivity extends AppCompatActivity implements
         }
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(containerID, calendarFragment, CalendarFragment.TAG);
-                fragmentTransaction.addToBackStack(null);
+
                 fragmentTransaction.commit();
 //TODO: implementar el calendario
 //        studyOrganicerPresenter = new StudyOrganicerPresenter((StudyOrganicerListContract.View) eventListFragment);
@@ -347,7 +357,6 @@ public class FragmentActivity extends AppCompatActivity implements
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(containerID, subjectList, SubjectListFragment.TAG);
-        fragmentTransaction.addToBackStack(DashboardFragment.TAG);
         fragmentTransaction.commit();
 
         subjectListPresenter = new SubjectListPresenter((SubjectListContract.View) subjectList);
@@ -393,16 +402,18 @@ public class FragmentActivity extends AppCompatActivity implements
     public void onAddOrModify(Topic topic) {
         topicManagerFragment = (TopicManagerFragment) getSupportFragmentManager().findFragmentByTag(TopicManagerFragment.TAG);
 
-        if(topicManagerFragment == null) {
             Bundle bundle = null;
-            if(topic != null)
-                bundle.putParcelable(Topic.TOPICTAG,topic);
+            if(topic != null) {
+                bundle = new Bundle();
+                bundle.putParcelable(Topic.TOPICTAG, topic);
+            }
             topicManagerFragment = TopicManagerFragment.newInstance(bundle);
-        }
+
 
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.dashboard_container,topicManagerFragment,TopicManagerFragment.TAG);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
         topicManagerPresenter = new TopicManagerPresenter(topicManagerFragment);
@@ -423,6 +434,19 @@ public class FragmentActivity extends AppCompatActivity implements
 
         topicListPresenter = new TopicListPresenter(topicListFragment);
         topicListFragment.setPresenter(topicListPresenter);
+    }
+
+    @Override
+    public void onLogout() {
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.sharedUserDataLogin),MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+
+        editor.apply();
+
+        ApiRestClientToken.loggout();
+        showWelcome();
     }
 }
 

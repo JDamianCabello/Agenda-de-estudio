@@ -15,6 +15,9 @@ public interface TopicDao_room {
     @Insert
     void insert(Topic topic);
 
+    @Insert
+    void insert(List<Topic> topics);
+
     @Delete
     void delete(Topic topic);
 

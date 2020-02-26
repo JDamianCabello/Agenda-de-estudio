@@ -1,6 +1,5 @@
 package es.jdamiancabello.agendadeestudio.ui.subjets;
 
-import android.os.AsyncTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,13 +37,16 @@ public class SubjectListPresenter implements SubjectListContract.Presenter, Subj
 
     @Override
     public void undo(Subject subject) {
-        view.onUndo(subject);
+        view.onUndo(subject,TopicRepository_room.getInstance().getListFromSubject(subject.getSubject_name()));
     }
 
     @Override
-    public void onSucessUndo(Subject subject) {
-//        if(SubjectRepository.getInstance().addSubject(subject))
-//            view.onSucessUndo(subject);
+    public void onSucessUndo(Subject subject, List<Topic> subjectTopics) {
+        SubjectRepository_room.getInstance().insert(subject);
+        for (int i = 0; i < subjectTopics.size(); i++) {
+            TopicRepository_room.getInstance().insert(subjectTopics.get(i));
+        }
+        view.onSucessUndo(subject);
     }
 
     @Override

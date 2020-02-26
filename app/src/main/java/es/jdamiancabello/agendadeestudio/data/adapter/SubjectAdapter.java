@@ -21,6 +21,7 @@ import java.util.List;
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.model.Topic;
+import es.jdamiancabello.agendadeestudio.data.repository.TopicRepository_room;
 
 public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectViewHolder> {
     private ArrayList<Subject> list;
@@ -46,13 +47,20 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
         holder.tvSubjectName.setText(list.get(position).getName());
         holder.tvSubjectName.setTextColor(list.get(position).getColor());
         holder.tvSubjectDate.setText(list.get(position).getDate());
-        //holder.tvSubjectProgressNumber.setText(Integer.toString(getProgress(dataExample())));
-        holder.tvSubjectProgressNumber.setText(Integer.toString(0));
+        holder.tvSubjectProgressNumber.setText(Integer.toString(getProgress(list.get(position).getSubject_name())));
         holder.progressBar.setProgress(Integer.parseInt(holder.tvSubjectProgressNumber.getText().toString()));
+
+        holder.expand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.expandCard(list.get(position), holder.itemView);
+            }
+        });
     }
 
 
-    private int getProgress(List<Topic> topics) {
+    private int getProgress(String subjectName) {
+        List<Topic> topics = TopicRepository_room.getInstance().getListFromSubject(subjectName);
         if(topics.isEmpty() || topics == null)
             return 0;
 
@@ -61,7 +69,6 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
             aux += t.getState();
         }
         return (aux * 100) / (topics.size()*TOTALMAXTOPICSTATE);
-        //TODO: mirar si el porcentaje está bien
     }
 
     @Override
@@ -86,8 +93,18 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
         list.add(subject);
     }
 
-    public void sortByName(Comparator comparator) {
-        Collections.sort(list,comparator);
+    public void sortByName() {
+        this.list.sort(new Subject.SortByName());
+        this.notifyDataSetChanged();
+    }
+    public void sortByColor() {
+        this.list.sort(new Subject.SortByColor());
+        this.notifyDataSetChanged();
+    }
+
+    public void sortByExam() {
+        this.list.sort(new Subject.SortByExamdate());
+        this.notifyDataSetChanged();
     }
 
 
@@ -95,7 +112,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
         private TextView tvSubjectName, tvSubjectDate, tvSubjectProgressNumber;
         private ProgressBar progressBar;
         public LinearLayout topicList;
-        private ImageButton expand;
+        public ImageButton expand;
 
         public SubjectViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -111,7 +128,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onShowTopics(subject, v);
+                    listener.onShowTopics(subject);
                 }
             });
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -125,8 +142,9 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
     }
 
     public interface onManegeSubjectListener {
-        void onShowTopics(Subject subject, View view);
+        void onShowTopics(Subject subject);
         void onDeleteSubjectListener(Subject subject);
+        void expandCard(Subject subject, View view);
     }
 }
 

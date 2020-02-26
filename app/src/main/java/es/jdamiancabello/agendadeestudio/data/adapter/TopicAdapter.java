@@ -33,7 +33,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.topicName.setText(topicList.get(position).getName());
+        holder.topicName.setText(topicList.get(position).getSubject_name()+": "+topicList.get(position).getName());
         holder.topicState.setText(getState(topicList.get(position).getState()));
         holder.topicProgress.setProgress((topicList.get(position).getState() * 100) / 3);
 
@@ -82,6 +82,25 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
     public void addAll(List<Topic> topics){
         topicList.clear();
         topicList.addAll(topics);
+    }
+
+    public void delete(Topic topic) {
+        topicList.remove(topic);
+    }
+
+    public void sortByName() {
+        this.topicList.sort(new Topic.SortByName());
+        this.notifyDataSetChanged();
+    }
+
+    public void sortByState() {
+        this.topicList.sort(new Topic.SortByState());
+        this.notifyDataSetChanged();
+    }
+
+    public void sortBySubjectName() {
+        this.topicList.sort(new Topic.SortBySubjectName());
+        this.notifyDataSetChanged();
     }
 
 

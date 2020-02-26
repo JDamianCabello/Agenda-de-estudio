@@ -12,7 +12,8 @@ public class TopicListPresenter implements TopicListContract.Presenter {
 
     @Override
     public void delete(Topic topic) {
-
+        TopicRepository_room.getInstance().delete(topic);
+        view.onUndo(topic);
     }
 
     @Override
@@ -28,11 +29,12 @@ public class TopicListPresenter implements TopicListContract.Presenter {
 
     @Override
     public void undo(Topic topic) {
-
+        view.onUndo(topic);
     }
 
     @Override
     public void onSucessUndo(Topic topic) {
-
+        TopicRepository_room.getInstance().insert(topic);
+        view.onSucessUndo(topic);
     }
 }

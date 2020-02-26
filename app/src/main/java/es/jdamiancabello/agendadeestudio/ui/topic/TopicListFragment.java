@@ -7,15 +7,21 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -55,7 +61,7 @@ public class TopicListFragment extends Fragment implements TopicListContract.Vie
 
             @Override
             public void onLongClick(Topic topic) {
-                new AlertDialog.Builder(getContext()).setTitle("ELIMINAR").setMessage("¿Seguro que desea elmininar " + topic.getName() + "?").setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                new AlertDialog.Builder(getContext()).setTitle("ELIMINAR").setMessage(getString(R.string.deleteTopic) + " "+topic.getName() + " " + getString(R.string.deleteTopicPrepo)+" " +topic.getSubject_name()+"?").setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         presenter.delete(topic);
@@ -77,11 +83,35 @@ public class TopicListFragment extends Fragment implements TopicListContract.Vie
             }
         });
 
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.context_menu_topic_listorder,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.contextmenu_topic_orderName:
+                topicAdapter.sortByName();
+                break;
+            case R.id.contextmenu_topic_orderSubjectName:
+                topicAdapter.sortBySubjectName();
+                break;
+            case R.id.contextmenu_topic_orderTopicState:
+                topicAdapter.sortByState();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -135,12 +165,22 @@ public class TopicListFragment extends Fragment implements TopicListContract.Vie
 
     @Override
     public void onSucessUndo(Topic topic) {
-
+        Toast.makeText(getContext(),topic.getName() + getString(R.string.topicList_Restored),Toast.LENGTH_SHORT).show();
+        topicAdapter.add(topic);
+        topicAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onUndo(Topic topic) {
-
+        topicAdapter.delete(topic);
+        topicAdapter.notifyDataSetChanged();
+        Snackbar.make(getView(),getString(R.string.topiclist_undotext) + " "+topic.getName() + "?",Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.subjectlist_undobuttontext), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        presenter.onSucessUndo(topic);
+                    }
+                }).show();
     }
 
     @Override

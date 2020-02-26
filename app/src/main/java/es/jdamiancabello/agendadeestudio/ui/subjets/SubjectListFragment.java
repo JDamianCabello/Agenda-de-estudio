@@ -7,9 +7,13 @@ import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -61,6 +65,28 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
         setHasOptionsMenu(true);
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.context_menu_listorder,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.contextmenu_orderName:
+                adapter.sortByName();
+                break;
+            case R.id.contextmenu_orderColor:
+                adapter.sortByColor();
+                break;
+            case R.id.contextmenu_orderExam:
+                adapter.sortByExam();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -73,11 +99,28 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
         recyclerView= view.findViewById(R.id.rvsubjectlist);
         loadingView = view.findViewById(R.id.loading);
         adapter = new SubjectAdapter(new SubjectAdapter.onManegeSubjectListener() {
+            @Override
+            public void onShowTopics(Subject subject) {
+                listListener.addSubject(subject);
+            }
+
 
             @Override
-            public void onShowTopics(Subject subject, View view) {
+            public void onDeleteSubjectListener(final Subject subject) {
+                new AlertDialog.Builder(getContext()).setTitle("ELIMINAR").setMessage("¿Seguro que desea elmininar " + subject.getName() + "?").setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        presenter.delete(subject);
+                    }
+                }).setNegativeButton(android.R.string.no,null).show();
+            }
 
+            @Override
+            public void expandCard(Subject subject, View view) {
                 SubjectAdapter.SubjectViewHolder subjectViewHolder = (SubjectAdapter.SubjectViewHolder) recyclerView.getChildViewHolder(view);
+
+                float deg = (subjectViewHolder.expand.getRotation() == 180F) ? 0F : 180F;
+                subjectViewHolder.expand.animate().rotation(deg).setInterpolator(new AccelerateInterpolator());
 
                 if(subjectViewHolder.topicList.getChildCount() == 0) {
                     List<Topic> topics = presenter.getTopicsBySubject(subject.getName());
@@ -98,18 +141,9 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
                     subjectViewHolder.topicList.removeAllViews();
                 }
             }
+        });
 
 
-            @Override
-                public void onDeleteSubjectListener(final Subject subject) {
-                    new AlertDialog.Builder(getContext()).setTitle("ELIMINAR").setMessage("¿Seguro que desea elmininar " + subject.getName() + "?").setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            presenter.delete(subject);
-                        }
-                    }).setNegativeButton(android.R.string.no,null).show();
-                }
-            });
         fabAdd= view.findViewById(R.id.fbAddSubject);
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,17 +173,6 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
     @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
         getActivity().getMenuInflater().inflate(R.menu.context_menu_listorder,menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.contextmenu_orderName:
-                adapter.sortByName(new Subject.SortByName());
-                break;
-        }
-        adapter.notifyDataSetChanged();
-        return super.onContextItemSelected(item);
     }
 
     @Override
@@ -201,12 +224,12 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
     }
 
     @Override
-    public void onUndo(final Subject subject) {
+    public void onUndo(Subject subject, List<Topic> subjectTopics) {
         Snackbar.make(getView(),getString(R.string.subjectlist_undotext)+ " " + subject.getName()+"?",Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.subjectlist_undobuttontext), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        presenter.onSucessUndo(subject);
+                        presenter.onSucessUndo(subject, subjectTopics);
                     }
                 }).show();
     }

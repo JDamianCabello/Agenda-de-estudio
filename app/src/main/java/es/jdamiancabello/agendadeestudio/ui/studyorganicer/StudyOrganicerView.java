@@ -67,19 +67,7 @@ public class StudyOrganicerView extends Fragment implements StudyOrganicerListCo
         inflater.inflate(R.menu.context_menu_listorder,menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.contextmenu_orderID:
-                adapter.sortByID();
-                break;
-            case R.id.contextmenu_orderName:
-                adapter.sortByName();
-        }
 
-        adapter.notifyDataSetChanged();
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

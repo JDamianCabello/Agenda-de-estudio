@@ -50,7 +50,8 @@ public class TopicManagerFragment extends Fragment implements TopicManagerContra
 
             state.setSelection(t.getState());
             tiledTopicName.setText(t.getName());
-            //tiledTopicName.setEnabled(false);
+            tiledTopicName.setEnabled(false);
+            subjects.setEnabled(false);
 
             subjects.setSelection(selectSubject(t.getSubject_name()));
 

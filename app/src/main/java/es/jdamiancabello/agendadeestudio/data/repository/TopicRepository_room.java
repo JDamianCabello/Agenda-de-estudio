@@ -47,6 +47,11 @@ public class TopicRepository_room {
         return true;
     }
 
+    public boolean insertList(List<Topic> topic){
+        Database.databaseWriterExecutor.execute(()->topicDao.insert(topic));
+        return true;
+    }
+
     public boolean update(Topic topic){
         Database.databaseWriterExecutor.execute(()->topicDao.update(topic));
         return true;
