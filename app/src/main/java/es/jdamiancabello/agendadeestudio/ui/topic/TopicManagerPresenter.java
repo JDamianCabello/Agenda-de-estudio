@@ -16,8 +16,10 @@ public class TopicManagerPresenter implements TopicManagerContract.Presenter{
 
     @Override
     public void addTopict(String subjectName, String name, int state) {
-        TopicRepository_room.getInstance().insert(new Topic(subjectName,name,state));
-        view.onSucess();
+        if(TopicRepository_room.getInstance().insert(new Topic(subjectName,name,state))!= -1)
+            view.onSucess();
+        else
+            view.showGenericError("Ya existe ese tema en esa asignatura, prueba con otro nombre");
     }
 
     @Override

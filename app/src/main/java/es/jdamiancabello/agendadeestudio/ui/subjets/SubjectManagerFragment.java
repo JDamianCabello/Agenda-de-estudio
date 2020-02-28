@@ -44,7 +44,6 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
     private TextView colorChange;
     private ColorSlider colorSlider;
     private FloatingActionButton floatingActionButton;
-    private static AtomicInteger atomicInteger = new AtomicInteger();
 
     public static SubjectManagerFragment newInstance(Bundle b) {
         SubjectManagerFragment fragment = new SubjectManagerFragment();

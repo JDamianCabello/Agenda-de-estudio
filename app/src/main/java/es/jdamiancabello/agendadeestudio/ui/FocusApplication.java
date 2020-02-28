@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Build;
 
 import es.jdamiancabello.agendadeestudio.R;
+import es.jdamiancabello.agendadeestudio.data.broadcastReceiver_service.MyBroadcast;
 import es.jdamiancabello.agendadeestudio.data.model.User;
 import es.jdamiancabello.agendadeestudio.data.room_database.Database;
 
@@ -30,7 +31,7 @@ public class FocusApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
         Database.create(context);
-        createNotificationChannel();
+        MyBroadcast myBroadcast = new MyBroadcast();
     }
 
     public static Context getUserContext(){

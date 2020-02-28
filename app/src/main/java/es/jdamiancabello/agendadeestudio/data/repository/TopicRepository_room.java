@@ -42,14 +42,17 @@ public class TopicRepository_room {
         return new ArrayList<>();
     }
 
-    public boolean insert(Topic topic){
-        Database.databaseWriterExecutor.execute(()->topicDao.insert(topic));
-        return true;
-    }
+    public long insert(Topic topic){
+        long insertID = -1;
+        try {
+            insertID = Database.databaseWriterExecutor.submit(()->topicDao.insert(topic)).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-    public boolean insertList(List<Topic> topic){
-        Database.databaseWriterExecutor.execute(()->topicDao.insert(topic));
-        return true;
+        return insertID;
     }
 
     public boolean update(Topic topic){

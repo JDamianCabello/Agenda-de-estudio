@@ -25,8 +25,6 @@ import es.jdamiancabello.agendadeestudio.R;
 
 
 public class CalendarFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String TAG = "CalendarFragment";
 
     private CalendarView calendarView;
@@ -45,7 +43,6 @@ public class CalendarFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_calendar, container, false);
     }
 
@@ -54,7 +51,6 @@ public class CalendarFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         calendarView = view.findViewById(R.id.calendar_calendarView);
 
-        //user cannot assign past dates
         calendarView.setMinimumDate(Calendar.getInstance());
 
         añadirEventosDummy();
@@ -69,7 +65,7 @@ public class CalendarFragment extends Fragment {
         for (int i = 1; i <= 20; i++) {
             Calendar a = Calendar.getInstance();
             a.add(Calendar.DAY_OF_YEAR,i);
-            events.add(new EventDay(a, randomIcon(),Color.RED));
+            events.add(new EventDay(a, randomIcon(),Color.rgb(rnd.nextInt(255),rnd.nextInt(255),rnd.nextInt(255))));
         }
 
         calendarView.setEvents(events);

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -143,7 +144,7 @@ public class TopicManagerFragment extends Fragment implements TopicManagerContra
 
     @Override
     public void showGenericError(String s) {
-
+        Toast.makeText(getContext(),s,Toast.LENGTH_SHORT).show();
     }
 
 

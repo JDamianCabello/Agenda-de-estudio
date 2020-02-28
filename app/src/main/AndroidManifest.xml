@@ -2,12 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="es.jdamiancabello.agendadeestudio">
 
+    <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
 
-    <uses-permission-sdk-23 android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<!--    <uses-permission android:name="android.permission.RECEIVE_SMS" />-->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <application android:name=".ui.FocusApplication"
+
+    <application
+        android:name=".ui.FocusApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,19 +18,39 @@
         android:supportsRtl="true"
         android:theme="@style/welcome">
 
-<!--        Fb login-->
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-            <activity android:name="com.facebook.FacebookActivity" android:configChanges= "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-                android:label="@string/app_name" /> <activity android:name="com.facebook.CustomTabActivity" android:exported="true">
-                <intent-filter>
-                    <action android:name="android.intent.action.VIEW" />
-                    <category android:name="android.intent.category.DEFAULT" />
-                    <category android:name="android.intent.category.BROWSABLE" />
-                    <data android:scheme="@string/fb_login_protocol_scheme" />
-                </intent-filter>
-            </activity>
+        <service
+            android:name=".data.broadcastReceiver_service.MyService"
+            android:enabled="true"
+            android:exported="true" />
 
+        <receiver android:name=".data.broadcastReceiver_service.MyBroadcast">
+            <intent-filter>
+<!--                <action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
+            </intent-filter>
+        </receiver>
+        <!-- Fb login -->
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.FragmentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,15 +58,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <receiver android:name=".ui.FocusListener">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-        <service android:name=".ui.FocusService" >
-        </service>
-
     </application>
 
 </manifest>
