@@ -4,8 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class LoginResponse {
-
-
     @SerializedName("error")
     @Expose
     private String error;
@@ -39,5 +37,4 @@ public class LoginResponse {
     public void setApiToken(String apiToken) {
         this.apiToken = apiToken;
     }
-
 }

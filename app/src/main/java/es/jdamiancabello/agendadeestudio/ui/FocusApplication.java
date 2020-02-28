@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.widget.Toast;
 
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.broadcastReceiver_service.MyBroadcast;
@@ -32,6 +33,7 @@ public class FocusApplication extends Application {
         context = getApplicationContext();
         Database.create(context);
         MyBroadcast myBroadcast = new MyBroadcast();
+        Toast.makeText(this,"El broadcast ha sido iniciado. Ya se puede apagar el móvil.", Toast.LENGTH_LONG).show();
     }
 
     public static Context getUserContext(){

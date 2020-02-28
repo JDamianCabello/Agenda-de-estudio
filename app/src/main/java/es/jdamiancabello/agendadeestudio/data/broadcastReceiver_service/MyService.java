@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.core.app.NotificationManagerCompat;
 
 import java.util.Random;
@@ -18,18 +19,15 @@ import es.jdamiancabello.agendadeestudio.ui.FragmentActivity;
 import static java.security.AccessController.getContext;
 
 public class MyService extends Service {
-    public MyService() {
-    }
 
     @Override
     public void onCreate() {
         Toast.makeText(this,"Servicio onCreate llamado",Toast.LENGTH_SHORT).show();
         super.onCreate();
     }
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+        Toast.makeText(this,"Servicio onStartCommand llamado",Toast.LENGTH_SHORT).show();
 
         Notification.Builder builder = new Notification.Builder(this, FocusApplication.CHANNEL_ID)
                 .setAutoCancel(true)
@@ -51,8 +49,9 @@ public class MyService extends Service {
         Toast.makeText(this,"Servicio onDestroy llamado",Toast.LENGTH_SHORT).show();
     }
 
+    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        return null;
     }
 }

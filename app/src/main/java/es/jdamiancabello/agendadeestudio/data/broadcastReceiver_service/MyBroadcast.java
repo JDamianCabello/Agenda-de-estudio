@@ -8,7 +8,6 @@ import android.widget.Toast;
 import es.jdamiancabello.agendadeestudio.ui.FragmentActivity;
 
 public class MyBroadcast extends BroadcastReceiver {
-
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent i = new Intent(context,FragmentActivity.class);
