@@ -1,4 +1,4 @@
-package es.jdamiancabello.agendadeestudio.register;
+package es.jdamiancabello.agendadeestudio.ui.register;
 
 import es.jdamiancabello.agendadeestudio.data.repository.UserRepository;
 import es.jdamiancabello.agendadeestudio.utils.CommonUtils;

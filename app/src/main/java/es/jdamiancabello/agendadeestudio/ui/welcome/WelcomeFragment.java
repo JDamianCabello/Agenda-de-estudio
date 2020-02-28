@@ -13,14 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-
-import com.github.javiersantos.appupdater.AppUpdater;
-import com.github.javiersantos.appupdater.enums.UpdateFrom;
-
 import es.jdamiancabello.agendadeestudio.R;
-import es.jdamiancabello.agendadeestudio.ui.FocusApplication;
-import es.jdamiancabello.agendadeestudio.ui.FocusService;
 
 public class WelcomeFragment extends Fragment implements WelcomeContract.view{
     WelcomeContract.Presenter presenter;
@@ -51,6 +44,7 @@ public class WelcomeFragment extends Fragment implements WelcomeContract.view{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         presenter.checkUserLogged();
     }
 

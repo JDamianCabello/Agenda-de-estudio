@@ -4,7 +4,7 @@
     <!--    LoginFragment strings-->
     <string name="login_registerText">You don\'t have an account yet? Sign up</string>
     <string name="login_passwordHint">Password</string>
-    <string name="login_emailHint">Username or E-mail</string>
+    <string name="login_emailHint">E-mail</string>
     <string name="login_signInButtonText">Sign in</string>
     <string name="login_tittle">¡Welcome!</string>
     <string name="login_subtittle">Start organizing your study form</string>
@@ -30,14 +30,13 @@
     <string name="studyOrganicerList_NoEvents">Don\'t have events to show</string>
 
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="loadingData">Loading data, please wait...</string>
     <string name="subjectlist_deleteditem">has been deleted</string>
     <string name="subjectlist_undotext">Restore the subject</string>
     <string name="subjectlist_undobuttontext">UNDO</string>
     <string name="subjectlist_restoreditem">has been successfully restored</string>
     <string name="login_wrongLoginText">email or password entered is incorrect . please check</string>
-    <string name="sharedUserDataLogin">sharedUserData</string>
+    <string name="sharedUserDataLogin" translatable="false">sharedUserData</string>
 
 
     <!--    Not translated-->
@@ -57,12 +56,12 @@
     <string name="SubjectAdapter_state_1">Summarized</string>
     <string name="SubjectAdapter_state_2">To review</string>
     <string name="SubjectAdapter_state_3">Dominated</string>
-    <string name="dashboard_callendar">Callendar</string>
+    <string name="dashboard_callendar">Calendar</string>
     <string name="dashboard_organicer">Organicer</string>
     <string name="dashboard_today">Today</string>
     <string name="dashboard_subjects">Subjects</string>
     <string name="dashboard_tools">Tools</string>
-    <string name="lorem">\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="lorem" translatable="false">\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
     <string name="subject_manager_hintSubjectDate">Exam date</string>
     <string name="subject_manager_tv_selectcolor">Select subject color:</string>
     <string name="dashboard_topics">Topics</string>
@@ -76,6 +75,6 @@
     <string name="topiclist_undotext">Restore the topic</string>
     <string name="topicList_Restored">" has been sucefully restored"</string>
     <string name="logout">Logout</string>
-    <string name="channel_name">Focus</string>
-    <string name="channel_description">Focus description</string>
+    <string name="channel_name" translatable="false">Focus</string>
+    <string name="channel_description" translatable="false">Focus description</string>
 </resources>

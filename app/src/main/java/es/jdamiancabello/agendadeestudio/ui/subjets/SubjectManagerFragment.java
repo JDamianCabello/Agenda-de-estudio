@@ -54,6 +54,7 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
     }
 
     @Override

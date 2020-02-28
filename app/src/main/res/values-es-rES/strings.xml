@@ -5,7 +5,7 @@
     <!--    LoginFragment strings-->
     <string name="login_registerText">¿Aún no tienes cuenta? Registrate</string>
     <string name="login_passwordHint">Contraseña</string>
-    <string name="login_emailHint">E-mail</string>
+    <string name="login_emailHint">Correo</string>
     <string name="login_signInButtonText">Entrar</string>
     <string name="login_tittle">¡Bienvenido!</string>
     <string name="login_subtittle">Empieza a organizar tu forma de estudio</string>
@@ -25,7 +25,7 @@
 
     <string name="errUserEmpty">El usuario está vacío. La longitud debe ser entre 6 y 20 caracteres</string>
     <string name="errPassword">La contraseña debe contener, al menos, una mayúscula, una minúscula y un número. Y la longitud debe ser entre 8 y 20 caracteres</string>
-    <string name="errEmail">El correo está vacío o no es válido</string>
+    <string name="errEmail">El correo no es válido</string>
 
 
     <!--    Undo event button-->
@@ -44,4 +44,34 @@
     <!--    Add Subjects strings-->
     <string name="subject_manager_hintSubjectDate">Fecha de examen</string>
     <string name="subject_manager_tv_selectcolor">Elige el color de la asignatura:</string>
+    <string name="dashboard_callendar">Calendario</string>
+    <string name="dashboard_notes">Notas</string>
+    <string name="dashboard_organicer">Organizador</string>
+    <string name="dashboard_subjects">Asignaturas</string>
+    <string name="dashboard_today">Hoy</string>
+    <string name="dashboard_tools">Herramientas</string>
+    <string name="dashboard_topics">Temas</string>
+    <string name="deleteTopic">Borrar tema</string>
+    <string name="deleteTopicPrepo">de</string>
+    <string name="errDuplicateEmail">El correo está en uso, prueba otro distinto o recupera este</string>
+    <string name="errNotMatchPass">Las contraseñas no coinciden</string>
+    <string name="errVoidField">Este campo no puede esta vacio</string>
+    <string name="fbLogin_confirmPassword">Confirmar contraseña</string>
+    <string name="fbLogin_email">Correo</string>
+    <string name="fbLogin_password">Contraseña</string>
+    <string name="fbLogin_username">Usuario</string>
+    <string name="loadingData">Cargando, por favor espere...</string>
+    <string name="login_recoverPassword">Recuperar contraseña</string>
+    <string name="login_wrongLoginText">El correo o la contraseña son incorrectos</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="subjectlist_deleteditem">ha sido eliminada</string>
+    <string name="subjectlist_restoreditem">ha sido restaurada</string>
+    <string name="subjectlist_undobuttontext">RESTAURAR</string>
+    <string name="subjectlist_undotext">Restaurar la asignatura</string>
+    <string name="topicList_Restored">" ha sido correctamente restaurada"</string>
+    <string name="topicManager_topicNameHint">Nombre del tema</string>
+    <string name="topicManager_tv_SubjectOfTopic">Asignatura a la que pertenece:</string>
+    <string name="topicManager_tv_selectState">Estado del tema:</string>
+    <string name="topic_item_state">Estado:</string>
+    <string name="topiclist_undotext">Restaurar tema</string>
 </resources>

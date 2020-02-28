@@ -16,10 +16,14 @@ public class TopicManagerPresenter implements TopicManagerContract.Presenter{
 
     @Override
     public void addTopict(String subjectName, String name, int state) {
-        if(TopicRepository_room.getInstance().insert(new Topic(subjectName,name,state))!= -1)
-            view.onSucess();
-        else
-            view.showGenericError("Ya existe ese tema en esa asignatura, prueba con otro nombre");
+        if(!notNullString(name)) {
+            if (TopicRepository_room.getInstance().insert(new Topic(subjectName, name, state)) != -1)
+                view.onSucess();
+            else
+                view.showGenericError("Ya existe ese tema en esa asignatura, prueba con otro nombre");
+        }else{
+            view.showGenericError("El nombre del tema no puede estar vacío");
+        }
     }
 
     @Override
@@ -31,5 +35,9 @@ public class TopicManagerPresenter implements TopicManagerContract.Presenter{
     @Override
     public List<Subject> getSubjectList() {
         return SubjectRepository_room.getInstance().getList();
+    }
+
+    private boolean notNullString(String s){
+        return s.trim().isEmpty();
     }
 }

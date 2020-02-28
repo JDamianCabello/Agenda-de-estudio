@@ -70,6 +70,7 @@ public class AboutMeFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.logout_menu,menu);
+        setRetainInstance(true);
         super.onCreateOptionsMenu(menu, inflater);
     }
 

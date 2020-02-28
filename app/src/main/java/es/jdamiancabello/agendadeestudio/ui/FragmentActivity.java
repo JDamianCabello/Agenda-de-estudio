@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.Toast;
 
 
 import com.facebook.AccessToken;
@@ -18,8 +17,8 @@ import es.jdamiancabello.agendadeestudio.data.model.Note;
 import es.jdamiancabello.agendadeestudio.data.model.StudyOrganicer;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.model.Topic;
-import es.jdamiancabello.agendadeestudio.register.RegisterFragment;
-import es.jdamiancabello.agendadeestudio.register.RegisterPresenter;
+import es.jdamiancabello.agendadeestudio.ui.register.RegisterFragment;
+import es.jdamiancabello.agendadeestudio.ui.register.RegisterPresenter;
 import es.jdamiancabello.agendadeestudio.ui.aboutme.AboutMeFragment;
 import es.jdamiancabello.agendadeestudio.ui.calendar.CalendarFragment;
 import es.jdamiancabello.agendadeestudio.ui.dashboard.DashborardFragmentV2;
@@ -39,7 +38,6 @@ import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListFragment;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListPresenter;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectManagerFragment;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectManagerPresenter;
-import es.jdamiancabello.agendadeestudio.ui.topic.TopicListContract;
 import es.jdamiancabello.agendadeestudio.ui.topic.TopicListFragment;
 import es.jdamiancabello.agendadeestudio.ui.topic.TopicListPresenter;
 import es.jdamiancabello.agendadeestudio.ui.topic.TopicManagerFragment;
@@ -262,7 +260,7 @@ public class FragmentActivity extends AppCompatActivity implements
 
     @Override
     public void onGoRegister() {
-        registerFragment = es.jdamiancabello.agendadeestudio.register.RegisterFragment.newInstance(null);
+        registerFragment = es.jdamiancabello.agendadeestudio.ui.register.RegisterFragment.newInstance(null);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content,registerFragment, RegisterFragment.TAG);
         fragmentTransaction.addToBackStack(null);
@@ -342,15 +340,6 @@ public class FragmentActivity extends AppCompatActivity implements
 
     @Override
     public void showToday(int containerID) {
-        dashboardFragment = getSupportFragmentManager().findFragmentByTag(DashboardFragment.TAG);
-
-        if(dashboardFragment == null) {
-            dashboardFragment = StudyOrganicerView.newInstance(null);
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(containerID, dashboardFragment, DashboardFragment.TAG);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-        }
 
     }
 

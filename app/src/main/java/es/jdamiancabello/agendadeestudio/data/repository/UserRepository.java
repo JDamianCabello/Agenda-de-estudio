@@ -4,17 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
-
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.Network.ApiRestClient;
 import es.jdamiancabello.agendadeestudio.data.Network.ApiRestClientToken;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.LoginResponse;
 import es.jdamiancabello.agendadeestudio.data.model.User;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.RegisterResponse;
-import es.jdamiancabello.agendadeestudio.register.RegisterPresenter;
 import es.jdamiancabello.agendadeestudio.ui.FocusApplication;
 import retrofit2.Call;
 import retrofit2.Callback;

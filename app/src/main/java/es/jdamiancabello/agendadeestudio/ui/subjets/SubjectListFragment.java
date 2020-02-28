@@ -63,6 +63,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        setRetainInstance(true);
     }
 
     @Override

@@ -19,11 +19,19 @@ public class SubjectManagerPresenter implements SubjectManagerContract.Presenter
 
     @Override
     public void addSubject(String name, String examDate, int subjectColor) {
-        if(SubjectRepository_room.getInstance().insert(new Subject(name,examDate,subjectColor)) != -1)
-            view.onSucess(new Subject(name,examDate,subjectColor));
-        else
-            view.showGenericError("Ya existe esa asignatura, prueba otro nombre");
+        if(!notNullString(name) && !notNullString(examDate)) {
+            if (SubjectRepository_room.getInstance().insert(new Subject(name, examDate, subjectColor)) != -1)
+                view.onSucess(new Subject(name, examDate, subjectColor));
+            else
+                view.showGenericError("Ya existe esa asignatura, prueba otro nombre");
+        }
+        else{
+            view.showGenericError("Uno de los campos está vacío.");
+        }
+    }
 
+    private boolean notNullString(String s){
+        return s.trim().isEmpty();
     }
 
     @Override

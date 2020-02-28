@@ -41,6 +41,7 @@ public class MyService extends Service {
 
         notificationManagerCompat.notify(new Random().nextInt(100), builder.build());
 
+        this.onDestroy();
         return super.onStartCommand(intent, flags, startId);
     }
 
