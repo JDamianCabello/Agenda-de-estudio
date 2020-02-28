@@ -36,10 +36,10 @@
     <string name="studyOrganicerList_NoEvents">No hay eventos que mostrar</string>
     <string name="subject_manager_hintSubjectName">Nombre de la asignatura</string>
     <string name="subjectlist_noSubjects">No hay asignatursas que mostrar, intenta crear una :D</string>
-    <string name="SubjectAdapter_state_0">Dominado</string>
+    <string name="SubjectAdapter_state_0">Ignorado</string>
     <string name="SubjectAdapter_state_1">Resumido</string>
     <string name="SubjectAdapter_state_2">A repasar</string>
-    <string name="SubjectAdapter_state_3">Ignorado</string>
+    <string name="SubjectAdapter_state_3">Dominado</string>
 
     <!--    Add Subjects strings-->
     <string name="subject_manager_hintSubjectDate">Fecha de examen</string>

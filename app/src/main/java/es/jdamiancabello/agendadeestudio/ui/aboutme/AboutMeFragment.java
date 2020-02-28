@@ -25,26 +25,37 @@ public class AboutMeFragment extends Fragment {
     public static final String TAG = "AboutMeFragment";
     private ImageButton logout;
     private OnFragmentInteractionListener mListener;
-    public static Fragment newInstance() {
-        return new AboutMeFragment();
+
+    public static Fragment newInstance(boolean showToolbar) {
+        AboutMeFragment aboutMeFragment = new AboutMeFragment();
+        Bundle b = new Bundle();
+        b.putBoolean("toolbar", showToolbar);
+        aboutMeFragment.setArguments(b);
+        return aboutMeFragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
-        setHasOptionsMenu(true);
+        if(getArguments().getBoolean("toolbar")) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+            setHasOptionsMenu(true);
+        }
+        else {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        }
+
         AboutView aboutView = AboutBuilder.with(getContext())
                 .setPhoto(android.R.mipmap.sym_def_app_icon)
                 .setCover(R.mipmap.profile_cover)
                 .setName("Damián Cabello")
                 .setSubTitle("Mobile Developer")
-                .setBrief("To esto es pa ná seguro suspendo")
-                .setAppIcon(R.mipmap.ic_launcher)
+                .setBrief("Aprobando DEINT desde tiempos inmemoriables")
                 .setAppName(R.string.app_name)
                 .addGooglePlayStoreLink("")
                 .addGitHubLink("jdamiancabello/agenda-de-estudio")
                 .addFacebookLink("jdamiancabello")
+                .addTwitterLink("")
                 .addWebsiteLink("www.stackoverflow.com")
                 .addFiveStarsAction()
                 .setVersionNameAsAppSubTitle()

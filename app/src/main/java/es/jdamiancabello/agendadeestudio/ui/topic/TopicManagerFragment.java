@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;
@@ -70,6 +71,17 @@ public class TopicManagerFragment extends Fragment implements TopicManagerContra
         });
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+
+        if(presenter.getSubjectList().size() == 0){
+            fabSave.setVisibility(View.GONE);
+            Snackbar.make(getView(),"Need almost one subject",Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Make one", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mListener.onCreateNewSubject();
+                        }
+                    }).show();
+        }
 
     }
 
@@ -137,5 +149,6 @@ public class TopicManagerFragment extends Fragment implements TopicManagerContra
 
     public interface OnFragmentInteractionListener {
         void onSaved();
+        void onCreateNewSubject();
     }
 }

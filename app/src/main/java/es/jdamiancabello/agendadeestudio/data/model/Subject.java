@@ -11,9 +11,40 @@ import androidx.room.PrimaryKey;
 
 import java.util.Comparator;
 @Entity
-public class Subject implements Parcelable {
+public class Subject implements Parcelable{
     @Ignore
     public static final String SUBJECT_KEY = "subject";
+
+
+    protected Subject(Parcel in) {
+        subject_name = in.readString();
+        exam_date = in.readString();
+        color = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(subject_name);
+        dest.writeString(exam_date);
+        dest.writeInt(color);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Subject> CREATOR = new Creator<Subject>() {
+        @Override
+        public Subject createFromParcel(Parcel in) {
+            return new Subject(in);
+        }
+
+        @Override
+        public Subject[] newArray(int size) {
+            return new Subject[size];
+        }
+    };
 
     @NonNull
     public String getSubject_name() {
@@ -43,23 +74,7 @@ public class Subject implements Parcelable {
     @NonNull
     private int color;
 
-    @Ignore
-    protected Subject(Parcel in) {
-        subject_name = in.readString();
-        color = in.readInt();
-    }
 
-    public static final Creator<Subject> CREATOR = new Creator<Subject>() {
-        @Override
-        public Subject createFromParcel(Parcel in) {
-            return new Subject(in);
-        }
-
-        @Override
-        public Subject[] newArray(int size) {
-            return new Subject[size];
-        }
-    };
 
     public Subject(String subject_name, String exam_date, int color) {
         this.subject_name = subject_name;
@@ -91,23 +106,13 @@ public class Subject implements Parcelable {
         this.color = color;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(subject_name);
-        dest.writeString(exam_date);
-        dest.writeInt(color);
-    }
 
     @NonNull
     @Override
     public String toString() {
         return this.subject_name;
     }
+
 
     public static class SortByName implements Comparator<Subject> {
         @Override

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,8 @@ import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.javiersantos.appupdater.enums.UpdateFrom;
 
 import es.jdamiancabello.agendadeestudio.R;
+import es.jdamiancabello.agendadeestudio.ui.FocusApplication;
+import es.jdamiancabello.agendadeestudio.ui.FocusService;
 
 public class WelcomeFragment extends Fragment implements WelcomeContract.view{
     WelcomeContract.Presenter presenter;
@@ -35,11 +38,7 @@ public class WelcomeFragment extends Fragment implements WelcomeContract.view{
     @Override
     public void onStart() {
         super.onStart();
-        AppUpdater appUpdater = new AppUpdater(getActivity())
-                .setUpdateFrom(UpdateFrom.GITHUB)
-                .setGitHubUserAndRepo("JDamianCabello","Agenda-de-estudio");
 
-        appUpdater.start();
     }
 
     @Nullable

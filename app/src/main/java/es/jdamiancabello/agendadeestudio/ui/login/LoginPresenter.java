@@ -27,7 +27,7 @@ public class LoginPresenter implements LoginContract.Presenter, UserRepository.U
     }
 
     @Override
-    public void onFailLogin() {
-
+    public void onFailLogin(String message) {
+        view.showWrongLogin(message);
     }
 }

@@ -105,8 +105,8 @@ public class FragmentActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        if(getIntent().getBooleanExtra("NOTIFICACION", false)){
-            addSubject(getIntent().getParcelableExtra(Subject.SUBJECT_KEY));
+        if(getIntent().getBooleanExtra("NOTIFICATION", false)){
+            addSubject(getIntent().getExtras().getParcelable(Subject.SUBJECT_KEY));
         }
     }
 
@@ -144,7 +144,7 @@ public class FragmentActivity extends AppCompatActivity implements
 
             @Override
     public void showHelp() {
-        aboutMeFragment = AboutMeFragment.newInstance();
+        aboutMeFragment = AboutMeFragment.newInstance(false);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content,aboutMeFragment,AboutMeFragment.TAG);
         fragmentTransaction.addToBackStack("WelcomeToAboutMe");
@@ -234,9 +234,16 @@ public class FragmentActivity extends AppCompatActivity implements
             }
             subjectManagerFragment = SubjectManagerFragment.newInstance(b);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+        if(getIntent().getBooleanExtra("NOTIFICATION", false))
+            fragmentTransaction.replace(R.id.content,subjectManagerFragment,SubjectManagerFragment.TAG);
+        else
             fragmentTransaction.replace(R.id.dashboard_container,subjectManagerFragment,SubjectManagerFragment.TAG);
+
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
+
+
         subjectManagerPresenter = new SubjectManagerPresenter(subjectManagerFragment);
         subjectManagerFragment.setPresenter(subjectManagerPresenter);
 
@@ -267,7 +274,8 @@ public class FragmentActivity extends AppCompatActivity implements
 
     @Override
     public void onGoDashboard() {
-        onSuccesLogin();
+        if(!getIntent().getBooleanExtra("NOTIFICATION", false))
+            onSuccesLogin();
     }
 
     @Override
@@ -286,6 +294,11 @@ public class FragmentActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onCreateNewSubject() {
+        addSubject(null);
+    }
+
+            @Override
     public void dashboardv2FirstLoad(int containerID) {
         calendarFragment = (CalendarFragment) getSupportFragmentManager().findFragmentByTag(CalendarFragment.TAG);
 
@@ -310,8 +323,6 @@ public class FragmentActivity extends AppCompatActivity implements
 
                 fragmentTransaction.commit();
 //TODO: implementar el calendario
-//        studyOrganicerPresenter = new StudyOrganicerPresenter((StudyOrganicerListContract.View) eventListFragment);
-//        ((StudyOrganicerListContract.View) eventListFragment).setPresenter(studyOrganicerPresenter);
     }
 
     @Override
@@ -385,7 +396,7 @@ public class FragmentActivity extends AppCompatActivity implements
         aboutMeFragment = getSupportFragmentManager().findFragmentByTag(AboutMeFragment.TAG);
 
         if(aboutMeFragment == null)
-            aboutMeFragment = AboutMeFragment.newInstance();
+            aboutMeFragment = AboutMeFragment.newInstance(true);
 
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

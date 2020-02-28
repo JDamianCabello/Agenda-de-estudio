@@ -33,9 +33,17 @@ public class SubjectRepository_room{
         return new ArrayList<>();
     }
 
-    public boolean insert(Subject subject){
-        Database.databaseWriterExecutor.execute(()->subjectDAO.insert(subject));
-        return true;
+    public long insert(Subject subject){
+        long rowID = -1;
+        try {
+            rowID = Database.databaseWriterExecutor.submit(()->subjectDAO.insert(subject)).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return rowID;
     }
 
     public boolean update(Subject subject){

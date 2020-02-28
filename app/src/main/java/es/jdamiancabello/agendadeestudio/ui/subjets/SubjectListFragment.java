@@ -107,7 +107,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
 
             @Override
             public void onDeleteSubjectListener(final Subject subject) {
-                new AlertDialog.Builder(getContext()).setTitle("ELIMINAR").setMessage("¿Seguro que desea elmininar " + subject.getName() + "?").setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                new AlertDialog.Builder(getContext()).setTitle("ELIMINAR").setMessage("¿Seguro que desea elmininar la asignatura " + subject.getName() + " y TODOS SUS TEMAS de la misma?").setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         presenter.delete(subject);

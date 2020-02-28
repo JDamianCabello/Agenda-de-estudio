@@ -36,7 +36,7 @@
                     android:autoSizeTextType="none"
                     android:gravity="center_horizontal"
                     android:text="@string/subject_manager_hintSubjectName"
-                    android:textSize="24dp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <TextView

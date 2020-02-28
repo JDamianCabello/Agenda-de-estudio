@@ -13,23 +13,25 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.naz013.colorslider.ColorSlider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.ui.FocusApplication;
+import es.jdamiancabello.agendadeestudio.ui.FragmentActivity;
 
 
 public class SubjectManagerFragment extends Fragment implements SubjectManagerContract.View{
@@ -101,6 +103,7 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
             edSubjectDate.setText(subject.getDate());
             colorSlider.setSelection(searchColor(subject.getColor()));
         }
+        colorChange.setTextColor(colorSlider.getSelectedColor());
     }
 
     private int searchColor(int color) {
@@ -168,32 +171,34 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
 
     @Override
     public void showGenericError(String s) {
-
+        Toast.makeText(getContext(),s,Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onSucess(Subject subject) {
-        Intent intent = new Intent(getActivity(), FragmentActivity.class);
-        intent.putExtra("NOTIFICACION", true);
+
+        Intent intent = new Intent(getContext(), FragmentActivity.class);
+        intent.putExtra("NOTIFICATION", true);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle bundle = new Bundle();
-        bundle.putParcelable(Subject.SUBJECT_KEY,subject);
+        bundle.putParcelable(Subject.SUBJECT_KEY, subject);
         intent.putExtras(bundle);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(),atomicInteger.getAndIncrement(),
-                intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), new Random().nextInt(100), intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            Notification.Builder builder = new Notification.Builder(getContext(), FocusApplication.CHANNEL_ID)
-                    .setAutoCancel(true)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentText("Se ha creado una asignatura")
-                    .setContentTitle("FOCUS")
-                    .setContentIntent(pendingIntent);
 
-            NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getContext());
-            notificationManagerCompat.notify(99, builder.build());
-        }
+
+        Notification.Builder builder = new Notification.Builder(getContext(), FocusApplication.CHANNEL_ID)
+                .setAutoCancel(true)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentText(subject.getName())
+                .setContentTitle(subject.getDate())
+                .setContentIntent(pendingIntent);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getContext());
+
+        notificationManagerCompat.notify(new Random().nextInt(100), builder.build());
+
 
         mListener.onSavedSubject();
     }

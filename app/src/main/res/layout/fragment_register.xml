@@ -43,7 +43,8 @@
                 android:id="@+id/login_edtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/fbLogin_email" />
+                android:hint="@string/fbLogin_email"
+                android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -63,26 +64,32 @@
             android:id="@+id/login_tilPsw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp">
+            android:layout_marginBottom="32dp"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_edtpsw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/fbLogin_password" />
+                android:hint="@string/fbLogin_password"
+                android:inputType="textPassword"
+                android:password="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/login_tilConfirmPsw"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="48dp">
+            android:layout_marginBottom="48dp"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_edtConfirmPsw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/fbLogin_confirmPassword" />
+                android:hint="@string/fbLogin_confirmPassword"
+                android:inputType="textPassword"
+                android:password="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

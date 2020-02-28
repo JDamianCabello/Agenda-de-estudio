@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.Network.ApiRestClient;
 import es.jdamiancabello.agendadeestudio.data.Network.ApiRestClientToken;
@@ -39,16 +43,16 @@ public class UserRepository {
 
                    if(persistLogin)
                        saveUserData(user,pass);
-//                   if(FocusApplication.user == null)
-//                       FocusApplication.setUser(new User(response.body().getApiToken()));
-//                   else
-//                        FocusApplication.user.setApi_token(response.body().getApiToken());
+
                    ApiRestClientToken.APITOKEN = response.body().getApiToken();
-                       Log.d("TOKEN recibido", response.body().getApiToken());
-                   Log.d("TOKEN actual", ApiRestClientToken.APITOKEN);
 
                    saveToken(response.body().getApiToken());
                    userRepositoryListener.onSucessLogin();
+
+
+               }
+               else{
+                   userRepositoryListener.onFailLogin("");
                }
 
 
@@ -57,7 +61,7 @@ public class UserRepository {
            @Override
            public void onFailure(Call<LoginResponse> call, Throwable t) {
                Log.d("TESTEO fail", t.getMessage());
-               userRepositoryListener.onFailLogin();
+               userRepositoryListener.onFailLogin(t.getMessage());
            }
        });
     }
@@ -92,7 +96,10 @@ public class UserRepository {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                 if(response.isSuccessful())
-                    registerListener.onSucessRegister();
+                    if(!response.body().getMessage().equals("duplicate email"))
+                        registerListener.onSucessRegister();
+                    else
+                        registerListener.onDuplicateEmail();
             }
 
             @Override
@@ -108,6 +115,10 @@ public class UserRepository {
     }
 
     public void getUser(String username, String password, WelcomeListener welcomeListener) {
+
+        if(username == "" || password == "")
+            return;
+
         Call<LoginResponse> call = ApiRestClient
                 .getInstance()
                 .login(username,password);
@@ -115,24 +126,22 @@ public class UserRepository {
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+
                 if(response.isSuccessful()) {
                     ApiRestClientToken.APITOKEN = response.body().getApiToken();
                     welcomeListener.onLoggedUser();
                 }
-
-
-            }
+                            }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Log.d("TESTEO fail", t.getMessage());
             }
         });
     }
 
     public interface UserRepositoryListener{
         void onSucessLogin();
-        void onFailLogin();
+        void onFailLogin(String message);
     }
 
     public  interface WelcomeListener{

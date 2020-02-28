@@ -173,7 +173,7 @@ public class RegisterPresenter implements RegisterContract.Presenter, UserReposi
 
     @Override
     public void onDuplicateEmail() {
-
+        view.setDuplicateEmailError();
     }
 
     @Override

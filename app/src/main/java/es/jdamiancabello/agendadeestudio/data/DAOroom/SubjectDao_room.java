@@ -3,6 +3,7 @@ package es.jdamiancabello.agendadeestudio.data.DAOroom;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -12,8 +13,8 @@ import es.jdamiancabello.agendadeestudio.data.model.Subject;
 
 @Dao
 public interface SubjectDao_room {
-    @Insert
-    void insert(Subject subject);
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    long insert(Subject subject);
 
     @Delete
     void delete(Subject subject);

@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -168,8 +169,10 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     }
 
     @Override
-    public void showWrongLogin() {
+    public void showWrongLogin(String msg) {
         Snackbar.make(getView(),R.string.login_wrongLoginText,Snackbar.LENGTH_SHORT).show();
+        //Snackbar.make(getView(),msg,Snackbar.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT).show();
     }
 
     @Override

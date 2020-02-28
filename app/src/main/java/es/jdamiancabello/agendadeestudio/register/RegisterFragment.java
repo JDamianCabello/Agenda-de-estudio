@@ -45,6 +45,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         return fragment;
     }
 
+    //TODO Integrar fb login en la api
     //https://www.youtube.com/watch?v=q0jAFmB-wkU
 
     @Override
