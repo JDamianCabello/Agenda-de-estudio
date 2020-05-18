@@ -1,4 +1,4 @@
-package es.jdamiancabello.agendadeestudio.ui;
+package es.jdamiancabello.agendadeestudio.ui.dashboard;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -46,7 +46,7 @@ import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomeContract;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomeFragment;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomePresenter;
 
-public class FragmentActivity extends AppCompatActivity implements
+public class DashboardActivity extends AppCompatActivity implements
         SubjectListFragment.onSubjectListListener,
         LoginFragment.onLoginListener,
         StudyOrganicerView.SectorListViewListener,
@@ -114,7 +114,7 @@ public class FragmentActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_fragment);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        showWelcome();
+        onSuccesLogin();
     }
 
     private void showWelcome() {
@@ -153,7 +153,7 @@ public class FragmentActivity extends AppCompatActivity implements
     public void onSuccesLogin() {
         dashboardFragmentv2 = DashborardFragmentV2.newInstance();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.content,dashboardFragmentv2,DashborardFragmentV2.TAG);
+        fragmentTransaction.add(R.id.content,dashboardFragmentv2,DashborardFragmentV2.TAG);
         fragmentTransaction.commit();
     }
 

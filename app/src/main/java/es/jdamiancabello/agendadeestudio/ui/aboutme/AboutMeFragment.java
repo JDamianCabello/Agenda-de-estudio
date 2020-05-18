@@ -26,7 +26,7 @@ public class AboutMeFragment extends Fragment {
     private ImageButton logout;
     private OnFragmentInteractionListener mListener;
 
-    public static Fragment newInstance(boolean showToolbar) {
+    public static AboutMeFragment newInstance(boolean showToolbar) {
         AboutMeFragment aboutMeFragment = new AboutMeFragment();
         Bundle b = new Bundle();
         b.putBoolean("toolbar", showToolbar);

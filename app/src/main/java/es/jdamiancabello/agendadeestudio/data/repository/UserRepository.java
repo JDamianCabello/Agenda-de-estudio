@@ -49,8 +49,6 @@ public class UserRepository {
                else{
                    userRepositoryListener.onFailLogin("");
                }
-
-
            }
 
            @Override

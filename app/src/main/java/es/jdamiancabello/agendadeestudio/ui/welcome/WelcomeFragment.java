@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +37,7 @@ public class WelcomeFragment extends Fragment implements WelcomeContract.view{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.activity_welcome, container, false);
+        return inflater.inflate(R.layout.fragment_welcome, container, false);
     }
 
     @Override
@@ -66,8 +65,6 @@ public class WelcomeFragment extends Fragment implements WelcomeContract.view{
                 onWelcomeListener.onGoRegister();
             }
         });
-
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
     @Override

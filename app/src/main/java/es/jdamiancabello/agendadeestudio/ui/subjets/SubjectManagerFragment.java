@@ -28,7 +28,7 @@ import java.util.Random;
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.ui.FocusApplication;
-import es.jdamiancabello.agendadeestudio.ui.FragmentActivity;
+import es.jdamiancabello.agendadeestudio.ui.dashboard.DashboardActivity;
 
 
 public class SubjectManagerFragment extends Fragment implements SubjectManagerContract.View{
@@ -174,7 +174,7 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
     @Override
     public void onSucess(Subject subject) {
 
-        Intent intent = new Intent(getContext(), FragmentActivity.class);
+        Intent intent = new Intent(getContext(), DashboardActivity.class);
         intent.putExtra("NOTIFICATION", true);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle bundle = new Bundle();
