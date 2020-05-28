@@ -34,6 +34,8 @@
         app:layout_constraintTop_toBottomOf="@+id/subjectManager_tilSubjectName">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:clickable="false"
+            android:focusable="false"
             android:id="@+id/subjectManager_edSubjectDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

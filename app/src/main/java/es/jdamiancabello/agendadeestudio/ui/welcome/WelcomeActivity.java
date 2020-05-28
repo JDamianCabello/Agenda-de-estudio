@@ -26,6 +26,7 @@ LoginFragment.onLoginListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //TODO: Arreglar error al cerrar sesion se queda la toolbar
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 

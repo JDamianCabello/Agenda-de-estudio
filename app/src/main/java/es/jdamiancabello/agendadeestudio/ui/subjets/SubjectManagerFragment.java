@@ -1,5 +1,6 @@
 package es.jdamiancabello.agendadeestudio.ui.subjets;
 
+import android.app.DatePickerDialog;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -16,13 +17,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.naz013.colorslider.ColorSlider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Random;
 
 import es.jdamiancabello.agendadeestudio.R;
@@ -41,6 +46,7 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
     private TextView colorChange;
     private ColorSlider colorSlider;
     private FloatingActionButton floatingActionButton;
+    private TextInputLayout inputLayoutSubjectDate;
 
     public static SubjectManagerFragment newInstance(Bundle b) {
         SubjectManagerFragment fragment = new SubjectManagerFragment();
@@ -65,7 +71,29 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
         super.onViewCreated(view, savedInstanceState);
         edsubjectName = view.findViewById(R.id.subjectManager_edSubjectName);
         edSubjectDate = view.findViewById(R.id.subjectManager_edSubjectDate);
+        inputLayoutSubjectDate = view.findViewById(R.id.subjectManager_tilSubjectDate);
 
+        inputLayoutSubjectDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar actualDate = Calendar.getInstance();
+                DatePickerDialog picker = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        edSubjectDate.setText(String.format("%02d",dayOfMonth) + "-" + String.format("%02d",month + 1) + "-" + year);
+                    }
+                }, LocalDate.now().getYear(), LocalDate.now().getMonthValue() -1, LocalDate.now().getDayOfMonth());
+                picker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                picker.show();
+            }
+        });
+
+        edSubjectDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputLayoutSubjectDate.callOnClick();
+            }
+        });
 
         floatingActionButton = view.findViewById(R.id.subjectManager_fabSave);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {

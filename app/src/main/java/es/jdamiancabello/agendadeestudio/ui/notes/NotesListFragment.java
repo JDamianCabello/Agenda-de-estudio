@@ -115,7 +115,6 @@ public class NotesListFragment extends Fragment implements NoteListContract.View
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onAddorModifyNote(Note note);
     }
 }

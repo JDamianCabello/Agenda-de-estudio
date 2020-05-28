@@ -3,9 +3,11 @@ package es.jdamiancabello.agendadeestudio.ui.register;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import es.jdamiancabello.agendadeestudio.R;
+import es.jdamiancabello.agendadeestudio.ui.dashboard.DashboardActivity;
 
 public class RegisterActivity extends AppCompatActivity
 implements  RegisterFragment.OnFragmentInteractionListener{
@@ -28,6 +30,7 @@ implements  RegisterFragment.OnFragmentInteractionListener{
 
     @Override
     public void onDoneRegister() {
-        //TODO: LLAMAR AL ACTIVITY DEL DASHBOARD
+        startActivity(new Intent(this, DashboardActivity.class));
+        finish();
     }
 }

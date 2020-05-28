@@ -145,7 +145,7 @@ public class LoginFragment extends Fragment implements LoginContract.View{
         });
 
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
 
