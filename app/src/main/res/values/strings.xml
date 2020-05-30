@@ -77,4 +77,5 @@
     <string name="logout">Logout</string>
     <string name="channel_name" translatable="false">Focus</string>
     <string name="channel_description" translatable="false">Focus description</string>
+    <string name="SubjectInfoAddTaskHint">Add task or topic...</string>
 </resources>
