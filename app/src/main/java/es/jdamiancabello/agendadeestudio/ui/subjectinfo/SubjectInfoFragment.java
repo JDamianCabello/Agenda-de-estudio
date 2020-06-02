@@ -6,13 +6,20 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -27,7 +34,6 @@ import es.jdamiancabello.agendadeestudio.data.adapter.TopicAdapter;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.model.Topic;
 import es.jdamiancabello.agendadeestudio.data.repository.TopicRepository_room;
-import es.jdamiancabello.agendadeestudio.ui.dashboard.DashborardFragmentV2;
 
 public class SubjectInfoFragment extends Fragment implements SubjectInfoContract.View {
 
@@ -39,6 +45,7 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
     private ProgressBar progressBarPercent;
     private TopicAdapter topicAdapter;
     private RecyclerView recyclerView;
+    private ImageButton ibt_contextMenu;
 
     private SubjectInfoContract.Presenter presenter;
 
@@ -63,17 +70,26 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         iv_backArrow = view.findViewById(R.id.subjectInfo_iv_backArrow);
+        ibt_contextMenu = view.findViewById(R.id.subjectInfo_ibt_contextMenu);
         tv_subjectName = view.findViewById(R.id.subjectInfo_tv_subjectName);
         tv_totalTask = view.findViewById(R.id.subjectInfo_tv_totalTasks);
         tv_totalTaskDone=view.findViewById(R.id.subjectInfo_tv_totalTaskDone);
         tv_totalPercentComplete = view.findViewById(R.id.subjectInfo_tv_totalPercentComplete);
         progressBarPercent = view.findViewById(R.id.subjectInfo_progressBar_Percent);
         recyclerView = view.findViewById(R.id.subjectInfo_recyclerView);
+        registerForContextMenu(ibt_contextMenu);
 
         iv_backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.onSubjectInfoBack();
+            }
+        });
+
+        ibt_contextMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopMenu();
             }
         });
 
@@ -111,6 +127,32 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
         presenter.loadData();
+    }
+
+    private void showPopMenu() {
+        PopupMenu popupMenu = new PopupMenu(getContext(),ibt_contextMenu);
+        Menu menu = popupMenu.getMenu();
+        popupMenu.getMenuInflater().inflate(R.menu.subjectfinfo_listorder,menu);
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.subjectinfo_menu_orderby_name:
+                        Toast.makeText(getContext(),"name",Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.subjectinfo_menu_orderby_priority:
+                        Toast.makeText(getContext(),"priority",Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.subjectinfo_menu_orderby_state:
+                        Toast.makeText(getContext(),"state",Toast.LENGTH_SHORT).show();
+                        return true;
+                }
+                return false;
+            }
+        });
+
+        popupMenu.show();
     }
 
     private int getSubjectPercent(String subjectName) {

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/subjectinfo_menu_orderby_priority"
+        android:title="order by priority" />
+    <item
+        android:id="@+id/subjectinfo_menu_orderby_state"
+        android:title="order by state" />
+    <item
+        android:id="@+id/subjectinfo_menu_orderby_name"
+        android:title="order by name" />
+</menu>
