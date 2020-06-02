@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +21,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -26,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;
 
@@ -46,6 +51,9 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
     private TopicAdapter topicAdapter;
     private RecyclerView recyclerView;
     private ImageButton ibt_contextMenu;
+    private View addNewTask;
+    private TextInputEditText tiedAddTask;
+    private CheckBox checkBoxHigPrio, checkBoxMidPrio, checkBoxLowPrio;
 
     private SubjectInfoContract.Presenter presenter;
 
@@ -78,6 +86,55 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         progressBarPercent = view.findViewById(R.id.subjectInfo_progressBar_Percent);
         recyclerView = view.findViewById(R.id.subjectInfo_recyclerView);
         registerForContextMenu(ibt_contextMenu);
+        addNewTask = view.findViewById(R.id.include_addNewTask);
+        tiedAddTask = view.findViewById(R.id.textInput_addTask);
+        checkBoxHigPrio = view.findViewById(R.id.checkBoxHig);
+        checkBoxMidPrio = view.findViewById(R.id.checkBoxMed);
+        checkBoxLowPrio = view.findViewById(R.id.checkBoxLow);
+
+        checkBoxHigPrio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    changeCheck(buttonView.getId());
+            }
+        });
+
+        checkBoxMidPrio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    changeCheck(buttonView.getId());
+            }
+        });
+
+        checkBoxLowPrio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    changeCheck(buttonView.getId());
+            }
+        });
+
+        tiedAddTask.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(count != 0)
+                    addNewTask.setVisibility(View.VISIBLE);
+                else
+                    addNewTask.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         iv_backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +184,25 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
         presenter.loadData();
+    }
+
+    private void changeCheck(int id) {
+        switch (id){
+            case R.id.checkBoxHig:
+                checkBoxLowPrio.setChecked(false);
+                checkBoxMidPrio.setChecked(false);
+                break;
+
+            case R.id.checkBoxMed:
+                checkBoxLowPrio.setChecked(false);
+                checkBoxHigPrio.setChecked(false);
+                break;
+
+            case R.id.checkBoxLow:
+                checkBoxHigPrio.setChecked(false);
+                checkBoxMidPrio.setChecked(false);
+                break;
+        }
     }
 
     private void showPopMenu() {
