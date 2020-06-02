@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -33,6 +34,8 @@ import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerManageP
 import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerManageView;
 import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerPresenter;
 import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerView;
+import es.jdamiancabello.agendadeestudio.ui.subjectinfo.SubjectInfoFragment;
+import es.jdamiancabello.agendadeestudio.ui.subjectinfo.SubjectInfoPresenter;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListContract;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListFragment;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListPresenter;
@@ -42,12 +45,14 @@ import es.jdamiancabello.agendadeestudio.ui.topic.TopicListFragment;
 import es.jdamiancabello.agendadeestudio.ui.topic.TopicListPresenter;
 import es.jdamiancabello.agendadeestudio.ui.topic.TopicManagerFragment;
 import es.jdamiancabello.agendadeestudio.ui.topic.TopicManagerPresenter;
+import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomeActivity;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomeContract;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomeFragment;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomePresenter;
 
 public class DashboardActivity extends AppCompatActivity implements
         SubjectListFragment.onSubjectListListener,
+        SubjectInfoFragment.OnFragmentInteractionListener,
         LoginFragment.onLoginListener,
         StudyOrganicerView.SectorListViewListener,
         StudyOrganicerManageView.OnSaveStudyOrganicerManageView,
@@ -100,6 +105,9 @@ public class DashboardActivity extends AppCompatActivity implements
     private TopicManagerFragment topicManagerFragment;
     private TopicManagerPresenter topicManagerPresenter;
 
+    private SubjectInfoFragment subjectInfoFragment;
+    private SubjectInfoPresenter subjectInfoPresenter;
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -118,13 +126,8 @@ public class DashboardActivity extends AppCompatActivity implements
     }
 
     private void showWelcome() {
-        welcomeFragment = WelcomeFragment.newInstance();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.content,welcomeFragment,WelcomeFragment.TAG);
-        fragmentTransaction.commit();
-
-        welcomePresenter = new WelcomePresenter((WelcomeContract.view) welcomeFragment);
-        ((WelcomeContract.view) welcomeFragment).setPresenter(welcomePresenter);
+        startActivity(new Intent(this, WelcomeActivity.class));
+        finish();
     }
 
 
@@ -223,6 +226,7 @@ public class DashboardActivity extends AppCompatActivity implements
 
     @Override
     public void addSubject(Subject subject) {
+
         subjectManagerFragment = (SubjectManagerFragment) getSupportFragmentManager().findFragmentByTag(SubjectManagerFragment.TAG);
 
             Bundle b = null;
@@ -248,6 +252,23 @@ public class DashboardActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void showSubjectInfo(Subject subject) {
+        subjectInfoFragment = (SubjectInfoFragment) getSupportFragmentManager().findFragmentByTag(SubjectInfoFragment.TAG);
+
+        Bundle subjectInfoBundle = new Bundle();
+        subjectInfoBundle.putParcelable(Subject.SUBJECT_KEY,subject);
+
+        subjectInfoFragment = SubjectInfoFragment.newInstance(subjectInfoBundle);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.dashboard_container,subjectInfoFragment,SubjectInfoFragment.TAG);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+
+        subjectInfoPresenter = new SubjectInfoPresenter(subjectInfoFragment);
+        subjectInfoFragment.setPresenter(subjectInfoPresenter);
+    }
+
+            @Override
     public void onGoLogin() {
         loginFragment = LoginFragment.newInstance();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -447,6 +468,11 @@ public class DashboardActivity extends AppCompatActivity implements
 
         ApiRestClientToken.loggout();
         showWelcome();
+    }
+
+    @Override
+    public void onSubjectInfoBack() {
+        onBackPressed();
     }
 }
 

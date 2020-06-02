@@ -102,7 +102,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
         adapter = new SubjectAdapter(new SubjectAdapter.onManegeSubjectListener() {
             @Override
             public void onShowTopics(Subject subject) {
-                listListener.addSubject(subject);
+                listListener.showSubjectInfo(subject);
             }
 
 
@@ -256,5 +256,6 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
 
     public interface onSubjectListListener{
         void addSubject(Subject subject);
+        void showSubjectInfo(Subject subject);
     }
 }

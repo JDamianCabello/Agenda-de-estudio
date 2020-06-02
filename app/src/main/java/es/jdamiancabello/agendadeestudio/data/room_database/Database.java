@@ -14,7 +14,7 @@ import es.jdamiancabello.agendadeestudio.data.DAOroom.TopicDao_room;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.model.Topic;
 
-@androidx.room.Database(entities = {Subject.class, Topic.class}, version = 3, exportSchema = false)
+@androidx.room.Database(entities = {Subject.class, Topic.class}, version = 4, exportSchema = false)
 public abstract class Database extends RoomDatabase {
     public abstract SubjectDao_room subjectDAO();
     public abstract TopicDao_room TopicDAO();

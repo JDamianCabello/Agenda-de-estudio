@@ -20,18 +20,7 @@ public class Subject implements Parcelable{
         subject_name = in.readString();
         exam_date = in.readString();
         color = in.readInt();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(subject_name);
-        dest.writeString(exam_date);
-        dest.writeInt(color);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+        percent = in.readInt();
     }
 
     public static final Creator<Subject> CREATOR = new Creator<Subject>() {
@@ -74,12 +63,16 @@ public class Subject implements Parcelable{
     @NonNull
     private int color;
 
+    @NonNull
+    private int percent;
 
 
-    public Subject(String subject_name, String exam_date, int color) {
+
+    public Subject(String subject_name, String exam_date, int color, int percent) {
         this.subject_name = subject_name;
         this.exam_date = exam_date;
         this.color = color;
+        this.percent = percent;
     }
 
     public String getName() {
@@ -106,11 +99,31 @@ public class Subject implements Parcelable{
         this.color = color;
     }
 
+    public int getPercent() {
+        return percent;
+    }
+
+    public void setPercent(int percent) {
+        this.percent = percent;
+    }
 
     @NonNull
     @Override
     public String toString() {
         return this.subject_name;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(subject_name);
+        dest.writeString(exam_date);
+        dest.writeInt(color);
+        dest.writeInt(percent);
     }
 
 
