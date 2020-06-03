@@ -62,16 +62,17 @@
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Select initial state:"
         app:layout_constraintStart_toStartOf="@+id/textView12"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinnerAddTaskOrTopic"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:entries="@array/subject_manager_spinnerEntries"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
         app:layout_constraintStart_toStartOf="@+id/textView16"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
@@ -79,7 +80,7 @@
     <Button
         android:id="@+id/button3"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="25dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="50dp"
@@ -88,7 +89,16 @@
         android:text="Save"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="@+id/spinner"
-        app:layout_constraintStart_toStartOf="@+id/spinner"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintEnd_toEndOf="@+id/spinnerAddTaskOrTopic"
+        app:layout_constraintStart_toStartOf="@+id/spinnerAddTaskOrTopic"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerAddTaskOrTopic" />
+
+    <CheckBox
+        android:id="@+id/checkbox_ChangeStateContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="is a task"
+        app:layout_constraintBottom_toBottomOf="@+id/textView16"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
+        app:layout_constraintTop_toTopOf="@+id/textView16" />
 </androidx.constraintlayout.widget.ConstraintLayout>

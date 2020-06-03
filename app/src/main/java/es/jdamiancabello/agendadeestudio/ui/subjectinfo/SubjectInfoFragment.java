@@ -21,17 +21,20 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import es.jdamiancabello.agendadeestudio.R;
@@ -53,7 +56,8 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
     private ImageButton ibt_contextMenu;
     private View addNewTask;
     private TextInputEditText tiedAddTask;
-    private CheckBox checkBoxHigPrio, checkBoxMidPrio, checkBoxLowPrio;
+    private CheckBox checkBoxHigPrio, checkBoxMidPrio, checkBoxLowPrio, isTask;
+    private Spinner state;
 
     private SubjectInfoContract.Presenter presenter;
 
@@ -91,6 +95,9 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         checkBoxHigPrio = view.findViewById(R.id.checkBoxHig);
         checkBoxMidPrio = view.findViewById(R.id.checkBoxMed);
         checkBoxLowPrio = view.findViewById(R.id.checkBoxLow);
+        state = view.findViewById(R.id.spinnerAddTaskOrTopic);
+        stateFirstLoad();
+        isTask = view.findViewById(R.id.checkbox_ChangeStateContent);
 
         checkBoxHigPrio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -113,6 +120,23 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked)
                     changeCheck(buttonView.getId());
+            }
+        });
+
+        isTask.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                List<String> options = new ArrayList<>();
+                if(!isChecked){
+                    options.add("1");
+                    options.add("2");
+                    options.add("3");
+                    options.add("4");
+                }else{
+                    options.add("1 task");
+                    options.add("2 task");
+                }
+                state.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, options));
             }
         });
 
@@ -184,6 +208,16 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
         presenter.loadData();
+    }
+
+    private void stateFirstLoad() {
+        List<String> options = new ArrayList<>();
+        options.add("1");
+        options.add("2");
+        options.add("3");
+        options.add("4");
+
+        state.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, options));
     }
 
     private void changeCheck(int id) {

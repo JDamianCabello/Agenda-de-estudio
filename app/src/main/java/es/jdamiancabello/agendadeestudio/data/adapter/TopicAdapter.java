@@ -36,6 +36,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
         holder.topicName.setText(topicList.get(position).getSubject_name()+": "+topicList.get(position).getName());
         holder.topicState.setText(getState(topicList.get(position).getState()));
         holder.topicProgress.setProgress((topicList.get(position).getState() * 100) / 3);
+        holder.topicPercent.setText(String.valueOf(holder.topicProgress.getProgress()) + "%");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,13 +116,14 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView topicName, topicState;
+        public TextView topicName, topicState, topicPercent;
         public ProgressBar topicProgress;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             topicName = itemView.findViewById(R.id.topicitem_topicName);
             topicState = itemView.findViewById(R.id.topicitem_topicState);
             topicProgress = itemView.findViewById(R.id.topicitem_topicStateProgress);
+            topicPercent = itemView.findViewById(R.id.topicItem_tv_topicPercent);
         }
     }
 }

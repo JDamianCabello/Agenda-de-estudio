@@ -31,10 +31,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:ellipsize="end"
             android:gravity="center_horizontal"
+            android:maxLength="12"
+            android:maxLines="1"
             android:text="Asignatura"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <ImageButton
@@ -141,7 +144,6 @@
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout"
         app:layout_constraintTop_toBottomOf="@+id/include_addNewTask"
-        app:layout_constraintVertical_bias="1.0"
         tools:listitem="@layout/recycler_view_item" />
 
     <ProgressBar
