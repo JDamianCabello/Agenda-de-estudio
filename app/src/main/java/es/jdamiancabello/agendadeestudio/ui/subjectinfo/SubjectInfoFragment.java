@@ -41,7 +41,6 @@ import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.adapter.TopicAdapter;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.model.Topic;
-import es.jdamiancabello.agendadeestudio.data.repository.TopicRepository_room;
 
 public class SubjectInfoFragment extends Fragment implements SubjectInfoContract.View {
 
@@ -179,7 +178,7 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         tv_subjectName.setText(subject.getSubject_name());
         tv_subjectName.setTextColor(subject.getColor());
         //TODO: Eliminar esta mierda es pa pruebas hermano
-        subject.setPercent(getSubjectPercent(subject.getSubject_name()));
+        subject.setPercent(subject.getPercent());
 
 
         tv_totalPercentComplete.setText(subject.getPercent()+"%" + " / 100%");
@@ -263,18 +262,6 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         });
 
         popupMenu.show();
-    }
-
-    private int getSubjectPercent(String subjectName) {
-        List<Topic> topics = TopicRepository_room.getInstance().getListFromSubject(subjectName);
-        if(topics.isEmpty() || topics == null)
-            return 0;
-
-        int aux = 0;
-        for (Topic t:topics) {
-            aux += t.getState();
-        }
-        return (aux * 100) / (topics.size()*3);
     }
 
     @Override

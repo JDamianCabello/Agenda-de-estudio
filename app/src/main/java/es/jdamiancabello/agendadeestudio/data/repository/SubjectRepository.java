@@ -42,7 +42,7 @@ public class SubjectRepository implements SubjectDAO.ResponseSubject, SubjectDAO
     public int getPosition(Subject subject) {
 
         for (int j = 0; j < subjectList.size(); j++) {
-            if (subjectList.get(j).getName().equals(subject.getName()))
+            if (subjectList.get(j).getSubject_name().equals(subject.getSubject_name()))
                 return j;
         }
         return -1;

@@ -70,5 +70,27 @@
         android:text="@string/subject_manager_tv_selectcolor"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/subjectManager_tilSubjectName"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <TextView
+        android:id="@+id/textView15"
+        style="@android:style/Widget.TextView.SpinnerItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/subject_manager_tv_selectIcon"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="@+id/subjectManager_tilSubjectDate"
         app:layout_constraintTop_toBottomOf="@+id/subjectManager_tilSubjectDate" />
+
+    <Spinner
+        android:id="@+id/subjectManager_spinner_selectIcon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toBottomOf="@+id/textView15"
+        app:layout_constraintEnd_toEndOf="@+id/subjectManager_tilSubjectDate"
+        app:layout_constraintStart_toEndOf="@+id/textView15"
+        app:layout_constraintTop_toTopOf="@+id/textView15" />
 </androidx.constraintlayout.widget.ConstraintLayout>

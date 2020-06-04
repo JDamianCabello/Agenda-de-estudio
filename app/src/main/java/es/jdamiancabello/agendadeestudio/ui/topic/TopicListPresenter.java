@@ -1,7 +1,6 @@
 package es.jdamiancabello.agendadeestudio.ui.topic;
 
 import es.jdamiancabello.agendadeestudio.data.model.Topic;
-import es.jdamiancabello.agendadeestudio.data.repository.TopicRepository_room;
 
 public class TopicListPresenter implements TopicListContract.Presenter {
     private TopicListContract.View view;
@@ -12,19 +11,19 @@ public class TopicListPresenter implements TopicListContract.Presenter {
 
     @Override
     public void delete(Topic topic) {
-        TopicRepository_room.getInstance().delete(topic);
+//        TopicRepository_room.getInstance().delete(topic);
         view.onUndo(topic);
     }
 
     @Override
     public void load() {
-        view.showProgress();
-        if(TopicRepository_room.getInstance().getList().size() == 0)
-            view.noTopics();
-        else {
-            view.refresh(TopicRepository_room.getInstance().getList());
-        }
-        view.hideProgress();
+//        view.showProgress();
+//        if(TopicRepository_room.getInstance().getList().size() == 0)
+//            view.noTopics();
+//        else {
+//            view.refresh(TopicRepository_room.getInstance().getList());
+//        }
+//        view.hideProgress();
     }
 
     @Override
@@ -34,7 +33,7 @@ public class TopicListPresenter implements TopicListContract.Presenter {
 
     @Override
     public void onSucessUndo(Topic topic) {
-        TopicRepository_room.getInstance().insert(topic);
-        view.onSucessUndo(topic);
+//        TopicRepository_room.getInstance().insert(topic);
+//        view.onSucessUndo(topic);
     }
 }

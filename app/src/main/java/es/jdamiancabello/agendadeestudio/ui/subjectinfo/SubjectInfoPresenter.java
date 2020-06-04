@@ -1,6 +1,6 @@
 package es.jdamiancabello.agendadeestudio.ui.subjectinfo;
 
-import es.jdamiancabello.agendadeestudio.data.repository.TopicRepository_room;
+
 
 public class SubjectInfoPresenter implements SubjectInfoContract.Presenter {
     private SubjectInfoContract.View view;
@@ -12,10 +12,10 @@ public class SubjectInfoPresenter implements SubjectInfoContract.Presenter {
 
     @Override
     public void loadData() {
-        if(TopicRepository_room.getInstance().getList().size() == 0)
-            view.noTopics();
-        else {
-            view.refresh(TopicRepository_room.getInstance().getList());
-        }
+//        if(TopicRepository_room.getInstance().getList().size() == 0)
+//            view.noTopics();
+//        else {
+//            view.refresh(TopicRepository_room.getInstance().getList());
+//        }
     }
 }

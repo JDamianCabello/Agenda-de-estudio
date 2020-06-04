@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.ui.FocusApplication;
 import es.jdamiancabello.agendadeestudio.ui.dashboard.DashboardActivity;
+import es.jdamiancabello.agendadeestudio.utils.ImageArrayAdapter;
 
 
 public class SubjectManagerFragment extends Fragment implements SubjectManagerContract.View{
@@ -47,6 +49,7 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
     private ColorSlider colorSlider;
     private FloatingActionButton floatingActionButton;
     private TextInputLayout inputLayoutSubjectDate;
+    private Spinner selectIcon;
 
     public static SubjectManagerFragment newInstance(Bundle b) {
         SubjectManagerFragment fragment = new SubjectManagerFragment();
@@ -72,6 +75,19 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
         edsubjectName = view.findViewById(R.id.subjectManager_edSubjectName);
         edSubjectDate = view.findViewById(R.id.subjectManager_edSubjectDate);
         inputLayoutSubjectDate = view.findViewById(R.id.subjectManager_tilSubjectDate);
+        selectIcon = view.findViewById(R.id.subjectManager_spinner_selectIcon);
+
+        ImageArrayAdapter adapter = new ImageArrayAdapter(getContext(),
+                new Integer[]{
+                        0,
+                        R.drawable.back_button_arrow,
+                        R.drawable.checkbox_checked_higprio,
+                        R.drawable.checkbox_unchecked,
+                        R.drawable.ic_book
+                }
+                );
+
+        selectIcon.setAdapter(adapter);
 
         inputLayoutSubjectDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,7 +141,7 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
 
             edsubjectName.setText(subject.getSubject_name());
             edsubjectName.setEnabled(false);
-            edSubjectDate.setText(subject.getDate());
+            edSubjectDate.setText(subject.getExam_date());
             colorSlider.setSelection(searchColor(subject.getColor()));
         }
         colorChange.setTextColor(colorSlider.getSelectedColor());
@@ -216,8 +232,8 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
         Notification.Builder builder = new Notification.Builder(getContext(), FocusApplication.CHANNEL_ID)
                 .setAutoCancel(true)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentText(subject.getName())
-                .setContentTitle(subject.getDate())
+                .setContentText(subject.getSubject_name())
+                .setContentTitle(subject.getExam_date())
                 .setContentIntent(pendingIntent);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getContext());

@@ -21,7 +21,6 @@ import java.util.List;
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.model.Topic;
-import es.jdamiancabello.agendadeestudio.data.repository.TopicRepository_room;
 
 public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectViewHolder> {
     private ArrayList<Subject> list;
@@ -44,11 +43,11 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
     public void onBindViewHolder(@NonNull SubjectViewHolder holder, int position) {
 
         holder.bind(list.get(position), listener);
-        holder.tvSubjectName.setText(list.get(position).getName());
+        holder.tvSubjectName.setText(list.get(position).getSubject_name());
         holder.tvSubjectName.setTextColor(list.get(position).getColor());
-        holder.tvSubjectDate.setText(list.get(position).getDate());
-        holder.tvSubjectProgressNumber.setText(Integer.toString(getProgress(list.get(position).getSubject_name())));
-        holder.progressBar.setProgress(Integer.parseInt(holder.tvSubjectProgressNumber.getText().toString()));
+        holder.tvSubjectDate.setText(list.get(position).getExam_date());
+        holder.tvSubjectProgressNumber.setText(Integer.toString(list.get(position).getPercent()));
+        holder.progressBar.setProgress(list.get(position).getPercent());
 
         holder.expand.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,15 +59,16 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
 
 
     private int getProgress(String subjectName) {
-        List<Topic> topics = TopicRepository_room.getInstance().getListFromSubject(subjectName);
-        if(topics.isEmpty() || topics == null)
-            return 0;
-
-        int aux = 0;
-        for (Topic t:topics) {
-            aux += t.getState();
-        }
-        return (aux * 100) / (topics.size()*TOTALMAXTOPICSTATE);
+//        List<Topic> topics = TopicRepository_room.getInstance().getListFromSubject(subjectName);
+//        if(topics.isEmpty() || topics == null)
+//            return 0;
+//
+//        int aux = 0;
+//        for (Topic t:topics) {
+//            aux += t.getState();
+//        }
+//        return (aux * 100) / (topics.size()*TOTALMAXTOPICSTATE);
+        return 0;
     }
 
     @Override

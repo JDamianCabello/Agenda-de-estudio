@@ -3,7 +3,6 @@ package es.jdamiancabello.agendadeestudio.ui.subjets;
 
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.repository.SubjectRepository;
-import es.jdamiancabello.agendadeestudio.data.repository.SubjectRepository_room;
 
 public class SubjectManagerPresenter implements SubjectManagerContract.Presenter, SubjectRepository.ManageSubject{
     private SubjectManagerContract.View view;
@@ -17,17 +16,18 @@ public class SubjectManagerPresenter implements SubjectManagerContract.Presenter
         view.onSucess();
     }
 
+    //TODO: implementar el add y modify hacia la api
     @Override
     public void addSubject(String name, String examDate, int subjectColor) {
-        if(!notNullString(name) && !notNullString(examDate)) {
-            if (SubjectRepository_room.getInstance().insert(new Subject(name, examDate, subjectColor, 0)) != -1)
-                view.onSucess(new Subject(name, examDate, subjectColor,0));
-            else
-                view.showGenericError("Ya existe esa asignatura, prueba otro nombre");
-        }
-        else{
-            view.showGenericError("Uno de los campos está vacío.");
-        }
+//        if(!notNullString(name) && !notNullString(examDate)) {
+//            if (SubjectRepository_room.getInstance().insert(new Subject(name, examDate, subjectColor, 0)) != -1)
+//                view.onSucess(new Subject(name, examDate, subjectColor,0));
+//            else
+//                view.showGenericError("Ya existe esa asignatura, prueba otro nombre");
+//        }
+//        else{
+//            view.showGenericError("Uno de los campos está vacío.");
+//        }
     }
 
     private boolean notNullString(String s){
@@ -36,7 +36,7 @@ public class SubjectManagerPresenter implements SubjectManagerContract.Presenter
 
     @Override
     public void modifySubject(String name, String examDate, int subjectColor) {
-        SubjectRepository_room.getInstance().update(new Subject(name,examDate,subjectColor,0));
-        view.onSucess(new Subject(name,examDate,subjectColor,0));
+//        SubjectRepository_room.getInstance().update(new Subject(name,examDate,subjectColor,0));
+//        view.onSucess(new Subject(name,examDate,subjectColor,0));
     }
 }

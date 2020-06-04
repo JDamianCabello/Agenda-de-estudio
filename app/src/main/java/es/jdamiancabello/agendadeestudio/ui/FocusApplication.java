@@ -11,7 +11,6 @@ import android.widget.Toast;
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.broadcastReceiver_service.MyBroadcast;
 import es.jdamiancabello.agendadeestudio.data.model.User;
-import es.jdamiancabello.agendadeestudio.data.room_database.Database;
 
 public class FocusApplication extends Application {
     public static final String CHANNEL_ID = "1000";
@@ -31,9 +30,9 @@ public class FocusApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-        Database.create(context);
-        MyBroadcast myBroadcast = new MyBroadcast();
-        Toast.makeText(this,"El broadcast ha sido iniciado. Ya se puede apagar el móvil.", Toast.LENGTH_LONG).show();
+//        Database.create(context);
+//        MyBroadcast myBroadcast = new MyBroadcast();
+//        Toast.makeText(this,"El broadcast ha sido iniciado. Ya se puede apagar el móvil.", Toast.LENGTH_LONG).show();
     }
 
     public static Context getUserContext(){

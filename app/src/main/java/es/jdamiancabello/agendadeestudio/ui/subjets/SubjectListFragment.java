@@ -108,7 +108,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
 
             @Override
             public void onDeleteSubjectListener(final Subject subject) {
-                new AlertDialog.Builder(getContext()).setTitle("ELIMINAR").setMessage("¿Seguro que desea elmininar la asignatura " + subject.getName() + " y TODOS SUS TEMAS de la misma?").setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                new AlertDialog.Builder(getContext()).setTitle("ELIMINAR").setMessage("¿Seguro que desea elmininar la asignatura " + subject.getSubject_name() + " y TODOS SUS TEMAS de la misma?").setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         presenter.delete(subject);
@@ -124,7 +124,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
                 subjectViewHolder.expand.animate().rotation(deg).setInterpolator(new AccelerateInterpolator());
 
                 if(subjectViewHolder.topicList.getChildCount() == 0) {
-                    List<Topic> topics = presenter.getTopicsBySubject(subject.getName());
+                    List<Topic> topics = presenter.getTopicsBySubject(subject.getSubject_name());
 
                     LinearLayout myRoot = subjectViewHolder.topicList;
                     LinearLayout nuevo = new LinearLayout(getContext());
@@ -219,14 +219,14 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
 
     @Override
     public void onSucessUndo(Subject subject) {
-        Toast.makeText(getContext(),subject.getName() + " "+getString(R.string.subjectlist_restoreditem),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),subject.getSubject_name() + " "+getString(R.string.subjectlist_restoreditem),Toast.LENGTH_SHORT).show();
         adapter.addSubject(subject);
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onUndo(Subject subject, List<Topic> subjectTopics) {
-        Snackbar.make(getView(),getString(R.string.subjectlist_undotext)+ " " + subject.getName()+"?",Snackbar.LENGTH_LONG)
+        Snackbar.make(getView(),getString(R.string.subjectlist_undotext)+ " " + subject.getSubject_name()+"?",Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.subjectlist_undobuttontext), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
