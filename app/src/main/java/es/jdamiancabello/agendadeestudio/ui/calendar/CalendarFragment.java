@@ -8,13 +8,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
+import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,7 +29,9 @@ import java.util.List;
 import java.util.Random;
 
 import es.jdamiancabello.agendadeestudio.R;
+import es.jdamiancabello.agendadeestudio.data.adapter.SubjectAdapter;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
+import es.jdamiancabello.agendadeestudio.utils.CommonUtils;
 
 
 public class CalendarFragment extends Fragment implements CalendarContract.View{
@@ -57,11 +63,17 @@ public class CalendarFragment extends Fragment implements CalendarContract.View{
         super.onViewCreated(view, savedInstanceState);
         calendarView = view.findViewById(R.id.calendar_calendarView);
 
-        calendarView.setMinimumDate(Calendar.getInstance());
-
-        //añadirEventosDummy();
+        //calendarView.setMinimumDate(Calendar.getInstance());
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+
+        calendarView.setOnDayClickListener(new OnDayClickListener() {
+            @Override
+            public void onDayClick(EventDay eventDay) {
+                Toast.makeText(getContext(), CommonUtils.dateLongToString(eventDay.getCalendar().getTimeInMillis()),Toast.LENGTH_SHORT).show();
+            }
+        });
+
         presenter.load();
     }
 

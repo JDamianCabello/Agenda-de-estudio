@@ -1,4 +1,4 @@
-package es.jdamiancabello.agendadeestudio.data.model.api_model;
+package es.jdamiancabello.agendadeestudio.data.model.api_model.subject;
 
 import java.util.List;
 

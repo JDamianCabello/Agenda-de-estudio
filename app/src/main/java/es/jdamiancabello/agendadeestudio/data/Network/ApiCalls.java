@@ -2,10 +2,10 @@ package es.jdamiancabello.agendadeestudio.data.Network;
 
 import es.jdamiancabello.agendadeestudio.data.model.api_model.LoginResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.RegisterResponse;
-import es.jdamiancabello.agendadeestudio.data.model.api_model.SubjectAddResponse;
-import es.jdamiancabello.agendadeestudio.data.model.api_model.SubjectDeletedResponse;
-import es.jdamiancabello.agendadeestudio.data.model.api_model.SubjectListResponse;
-import es.jdamiancabello.agendadeestudio.data.model.api_model.SubjectModifyResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.subject.SubjectAddResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.subject.SubjectDeletedResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.subject.SubjectListResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.subject.SubjectModifyResponse;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
