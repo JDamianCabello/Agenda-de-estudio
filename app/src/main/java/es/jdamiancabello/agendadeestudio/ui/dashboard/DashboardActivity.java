@@ -18,22 +18,16 @@ import es.jdamiancabello.agendadeestudio.data.model.Note;
 import es.jdamiancabello.agendadeestudio.data.model.StudyOrganicer;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.model.Topic;
+import es.jdamiancabello.agendadeestudio.ui.calendar.CalendarPresenter;
 import es.jdamiancabello.agendadeestudio.ui.register.RegisterFragment;
 import es.jdamiancabello.agendadeestudio.ui.register.RegisterPresenter;
 import es.jdamiancabello.agendadeestudio.ui.aboutme.AboutMeFragment;
 import es.jdamiancabello.agendadeestudio.ui.calendar.CalendarFragment;
-import es.jdamiancabello.agendadeestudio.ui.dashboard.DashborardFragmentV2;
 import es.jdamiancabello.agendadeestudio.ui.login.LoginContract;
 import es.jdamiancabello.agendadeestudio.ui.login.LoginFragment;
 import es.jdamiancabello.agendadeestudio.ui.login.LoginPresenter;
 import es.jdamiancabello.agendadeestudio.ui.notes.NoteListPresenter;
 import es.jdamiancabello.agendadeestudio.ui.notes.NotesListFragment;
-import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerListContract;
-import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerManageContract;
-import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerManagePresenter;
-import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerManageView;
-import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerPresenter;
-import es.jdamiancabello.agendadeestudio.ui.studyorganicer.StudyOrganicerView;
 import es.jdamiancabello.agendadeestudio.ui.subjectinfo.SubjectInfoFragment;
 import es.jdamiancabello.agendadeestudio.ui.subjectinfo.SubjectInfoPresenter;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListContract;
@@ -46,7 +40,6 @@ import es.jdamiancabello.agendadeestudio.ui.topic.TopicListPresenter;
 import es.jdamiancabello.agendadeestudio.ui.topic.TopicManagerFragment;
 import es.jdamiancabello.agendadeestudio.ui.topic.TopicManagerPresenter;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomeActivity;
-import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomeContract;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomeFragment;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomePresenter;
 
@@ -54,8 +47,6 @@ public class DashboardActivity extends AppCompatActivity implements
         SubjectListFragment.onSubjectListListener,
         SubjectInfoFragment.OnFragmentInteractionListener,
         LoginFragment.onLoginListener,
-        StudyOrganicerView.SectorListViewListener,
-        StudyOrganicerManageView.OnSaveStudyOrganicerManageView,
         WelcomeFragment.OnWelcomeListener,
         NotesListFragment.OnFragmentInteractionListener,
         RegisterFragment.OnFragmentInteractionListener,
@@ -68,8 +59,6 @@ public class DashboardActivity extends AppCompatActivity implements
         {
     private Toolbar toolbar;
 
-    private Fragment welcomeFragment;
-    private WelcomePresenter welcomePresenter;
 
     private Fragment subjectList;
     private SubjectListPresenter subjectListPresenter;
@@ -84,20 +73,13 @@ public class DashboardActivity extends AppCompatActivity implements
     private RegisterFragment registerFragment;
     private RegisterPresenter registerPresenter;
 
-    private Fragment dashboardFragment;
     private Fragment dashboardFragmentv2;
-
-
-    private Fragment eventListFragment;
-    private Fragment eventManageFragment;
-
-    private StudyOrganicerPresenter studyOrganicerPresenter;
-    private StudyOrganicerManagePresenter studyOrganicerManagePresenter;
 
     private NotesListFragment notesListFragment;
     private NoteListPresenter noteListPresenter;
 
     private CalendarFragment calendarFragment;
+    private CalendarPresenter calendarPresenter;
 
     private TopicListFragment topicListFragment;
     private TopicListPresenter topicListPresenter;
@@ -112,7 +94,7 @@ public class DashboardActivity extends AppCompatActivity implements
     protected void onResume() {
         super.onResume();
         if(getIntent().getBooleanExtra("NOTIFICATION", false)){
-            addSubject(getIntent().getExtras().getParcelable(Subject.SUBJECT_KEY));
+            addOrEdditSubject(getIntent().getExtras().getParcelable(Subject.SUBJECT_KEY));
         }
     }
 
@@ -131,6 +113,7 @@ public class DashboardActivity extends AppCompatActivity implements
     }
 
 
+    //TODO: implementar esto mejor
     private void loggout() {
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.sharedUserDataLogin),MODE_PRIVATE);
 
@@ -185,47 +168,7 @@ public class DashboardActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void sectorAddEditFragmentShow(StudyOrganicer studyOrganicer) {
-
-        eventManageFragment = getSupportFragmentManager().findFragmentByTag(StudyOrganicerManageView.TAG);
-
-        if(eventManageFragment == null){
-            Bundle b = null;
-            if(studyOrganicer != null){
-                b = new Bundle();
-                b.putParcelable("event",studyOrganicer);
-            }
-
-            eventManageFragment = StudyOrganicerManageView.newInstance(b);
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.content,eventManageFragment,StudyOrganicerManageView.TAG);
-            fragmentTransaction.commit();
-        }
-
-        studyOrganicerManagePresenter = new StudyOrganicerManagePresenter((StudyOrganicerManageContract.View) eventManageFragment);
-        ((StudyOrganicerManageContract.View) eventManageFragment).setPresenter(studyOrganicerManagePresenter);
-
-    }
-
-    @Override
-    public void onSaveStudyOrganicerManageView() {
-        showSubjects(R.id.dashboard_container);
-    }
-
-    @Override
-    public void onSnackBarActionCreateSubject() {
-        eventListFragment = StudyOrganicerView.newInstance(null);
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.content,eventListFragment,StudyOrganicerView.TAG);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-
-        studyOrganicerPresenter = new StudyOrganicerPresenter((StudyOrganicerListContract.View) eventListFragment);
-        ((StudyOrganicerListContract.View) eventListFragment).setPresenter(studyOrganicerPresenter);
-    }
-
-    @Override
-    public void addSubject(Subject subject) {
+    public void addOrEdditSubject(Subject subject) {
 
         subjectManagerFragment = (SubjectManagerFragment) getSupportFragmentManager().findFragmentByTag(SubjectManagerFragment.TAG);
 
@@ -314,7 +257,7 @@ public class DashboardActivity extends AppCompatActivity implements
 
     @Override
     public void onCreateNewSubject() {
-        addSubject(null);
+        addOrEdditSubject(null);
     }
 
             @Override
@@ -328,6 +271,9 @@ public class DashboardActivity extends AppCompatActivity implements
         fragmentTransaction.replace(containerID, calendarFragment, CalendarFragment.TAG);
 
         fragmentTransaction.commit();
+
+        calendarPresenter = new CalendarPresenter(calendarFragment);
+        calendarFragment.setPresenter(calendarPresenter);
     }
 
             @Override
@@ -337,11 +283,13 @@ public class DashboardActivity extends AppCompatActivity implements
         if(calendarFragment == null) {
             calendarFragment = CalendarFragment.newInstance();
         }
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(containerID, calendarFragment, CalendarFragment.TAG);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(containerID, calendarFragment, CalendarFragment.TAG);
 
-                fragmentTransaction.commit();
-//TODO: implementar el calendario
+        fragmentTransaction.commit();
+
+        calendarPresenter = new CalendarPresenter(calendarFragment);
+        calendarFragment.setPresenter(calendarPresenter);
     }
 
     @Override

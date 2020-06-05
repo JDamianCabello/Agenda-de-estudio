@@ -18,25 +18,26 @@ public class SubjectManagerPresenter implements SubjectManagerContract.Presenter
 
     //TODO: implementar el add y modify hacia la api
     @Override
-    public void addSubject(String name, String examDate, int subjectColor) {
-//        if(!notNullString(name) && !notNullString(examDate)) {
-//            if (SubjectRepository_room.getInstance().insert(new Subject(name, examDate, subjectColor, 0)) != -1)
-//                view.onSucess(new Subject(name, examDate, subjectColor,0));
-//            else
-//                view.showGenericError("Ya existe esa asignatura, prueba otro nombre");
-//        }
-//        else{
-//            view.showGenericError("Uno de los campos está vacío.");
-//        }
+    public void addSubject(Subject newSubject) {
+        if(!notNullString(newSubject.getSubject_name()) && !notNullString(newSubject.getExam_date())) {
+            SubjectRepository.getInstance().addSubject(this,newSubject);
+        }
+        else{
+            view.showGenericError("Uno de los campos está vacío.");
+        }
+    }
+
+    @Override
+    public void modifySubject(Subject updatedSubject) {
+        if(!notNullString(updatedSubject.getSubject_name()) && !notNullString(updatedSubject.getExam_date())) {
+            SubjectRepository.getInstance().modifySubject(this,updatedSubject);
+        }
+        else{
+            view.showGenericError("Uno de los campos está vacío.");
+        }
     }
 
     private boolean notNullString(String s){
         return s.trim().isEmpty();
-    }
-
-    @Override
-    public void modifySubject(String name, String examDate, int subjectColor) {
-//        SubjectRepository_room.getInstance().update(new Subject(name,examDate,subjectColor,0));
-//        view.onSucess(new Subject(name,examDate,subjectColor,0));
     }
 }

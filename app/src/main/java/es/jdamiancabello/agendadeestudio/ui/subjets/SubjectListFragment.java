@@ -5,19 +5,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.ContextMenu;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AccelerateInterpolator;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,7 +28,6 @@ import java.util.List;
 
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.adapter.SubjectAdapter;
-import es.jdamiancabello.agendadeestudio.data.adapter.TopicAdapter;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.model.Topic;
 
@@ -101,7 +93,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
         loadingView = view.findViewById(R.id.loading);
         adapter = new SubjectAdapter(new SubjectAdapter.onManegeSubjectListener() {
             @Override
-            public void onShowTopics(Subject subject) {
+            public void onShowSubjectInfo(Subject subject) {
                 listListener.showSubjectInfo(subject);
             }
 
@@ -117,30 +109,8 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
             }
 
             @Override
-            public void expandCard(Subject subject, View view) {
-                SubjectAdapter.SubjectViewHolder subjectViewHolder = (SubjectAdapter.SubjectViewHolder) recyclerView.getChildViewHolder(view);
-
-                float deg = (subjectViewHolder.expand.getRotation() == 180F) ? 0F : 180F;
-                subjectViewHolder.expand.animate().rotation(deg).setInterpolator(new AccelerateInterpolator());
-
-                if(subjectViewHolder.topicList.getChildCount() == 0) {
-                    List<Topic> topics = presenter.getTopicsBySubject(subject.getSubject_name());
-
-                    LinearLayout myRoot = subjectViewHolder.topicList;
-                    LinearLayout nuevo = new LinearLayout(getContext());
-                    nuevo.setOrientation(LinearLayout.VERTICAL);
-
-                    for (int i = 0; i < topics.size(); i++) {
-                        TextView t = new TextView(getContext());
-                        t.setText(topics.get(i).getName());
-                        t.setGravity(Gravity.CENTER);
-                        t.setTextAppearance(R.style.TextAppearance_AppCompat_Large);
-                        nuevo.addView(t);
-                    }
-                    myRoot.addView(nuevo);
-                }else{
-                    subjectViewHolder.topicList.removeAllViews();
-                }
+            public void onEdditSubject(Subject subject) {
+                listListener.addOrEdditSubject(subject);
             }
         });
 
@@ -149,7 +119,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listListener.addSubject(null);
+                listListener.addOrEdditSubject(null);
             }
         });
 
@@ -211,10 +181,9 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
     }
 
     @Override
-    public void onSuccessDeleted(Subject subject) {
-        presenter.undo(subject);
+    public void onSuccessDeleted(Subject subject, List<Topic> topicList) {
         adapter.removeSubject(subject);
-        adapter.notifyDataSetChanged();
+        presenter.undo(subject, topicList);
     }
 
     @Override
@@ -255,7 +224,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
     }
 
     public interface onSubjectListListener{
-        void addSubject(Subject subject);
+        void addOrEdditSubject(Subject subject);
         void showSubjectInfo(Subject subject);
     }
 }

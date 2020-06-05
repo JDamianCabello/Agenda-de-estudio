@@ -3,10 +3,9 @@ package es.jdamiancabello.agendadeestudio.data.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -14,18 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
-import es.jdamiancabello.agendadeestudio.data.model.Topic;
 
 public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectViewHolder> {
     private ArrayList<Subject> list;
     private onManegeSubjectListener listener;
-    private final int TOTALMAXTOPICSTATE = 3;
 
     public SubjectAdapter(SubjectAdapter.onManegeSubjectListener listener) {
         list = new ArrayList<>();
@@ -48,27 +42,14 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
         holder.tvSubjectDate.setText(list.get(position).getExam_date());
         holder.tvSubjectProgressNumber.setText(Integer.toString(list.get(position).getPercent()));
         holder.progressBar.setProgress(list.get(position).getPercent());
+        holder.icon.setBackgroundResource(list.get(position).getIconId());
 
-        holder.expand.setOnClickListener(new View.OnClickListener() {
+        holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.expandCard(list.get(position), holder.itemView);
+                listener.onEdditSubject(list.get(position));
             }
         });
-    }
-
-
-    private int getProgress(String subjectName) {
-//        List<Topic> topics = TopicRepository_room.getInstance().getListFromSubject(subjectName);
-//        if(topics.isEmpty() || topics == null)
-//            return 0;
-//
-//        int aux = 0;
-//        for (Topic t:topics) {
-//            aux += t.getState();
-//        }
-//        return (aux * 100) / (topics.size()*TOTALMAXTOPICSTATE);
-        return 0;
     }
 
     @Override
@@ -86,7 +67,8 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
     }
 
     public void removeSubject(Subject subject) {
-        list.remove(subject);
+        this.list.remove(subject);
+        this.notifyDataSetChanged();
     }
 
     public void addSubject(Subject subject) {
@@ -112,7 +94,8 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
         private TextView tvSubjectName, tvSubjectDate, tvSubjectProgressNumber;
         private ProgressBar progressBar;
         public LinearLayout topicList;
-        public ImageButton expand;
+        public ImageButton edit;
+        public ImageView icon;
 
         public SubjectViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -121,14 +104,15 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
             tvSubjectProgressNumber = itemView.findViewById(R.id.subjectItem_subjectProgressNumber);
             progressBar = itemView.findViewById(R.id.subjectItem_subjectProgressBar);
             topicList = itemView.findViewById(R.id.subjectItem_topicList);
-            expand = itemView.findViewById(R.id.subjectItem_subjectExpand);
+            edit = itemView.findViewById(R.id.subjectItem_subjectExpand);
+            icon = itemView.findViewById(R.id.subjectItem_imageView_icon);
         }
 
         public void bind(final Subject subject, final onManegeSubjectListener listener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onShowTopics(subject);
+                    listener.onShowSubjectInfo(subject);
                 }
             });
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -142,9 +126,9 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
     }
 
     public interface onManegeSubjectListener {
-        void onShowTopics(Subject subject);
+        void onShowSubjectInfo(Subject subject);
         void onDeleteSubjectListener(Subject subject);
-        void expandCard(Subject subject, View view);
+        void onEdditSubject(Subject subject);
     }
 }
 

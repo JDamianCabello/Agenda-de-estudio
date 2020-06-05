@@ -1,6 +1,7 @@
 package es.jdamiancabello.agendadeestudio.utils;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -28,6 +29,10 @@ public class ImageArrayAdapter extends ArrayAdapter<Integer>{
     private View getImageForPosition(int position) {
         ImageView imageView = new ImageView(getContext());
         imageView.setBackgroundResource(images[position]);
+
+        //Para tener el id del recurso usamos el tag
+        imageView.setTag(images[position]);
+
         imageView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         return imageView;
     }

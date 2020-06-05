@@ -77,15 +77,7 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
         inputLayoutSubjectDate = view.findViewById(R.id.subjectManager_tilSubjectDate);
         selectIcon = view.findViewById(R.id.subjectManager_spinner_selectIcon);
 
-        ImageArrayAdapter adapter = new ImageArrayAdapter(getContext(),
-                new Integer[]{
-                        0,
-                        R.drawable.back_button_arrow,
-                        R.drawable.checkbox_checked_higprio,
-                        R.drawable.checkbox_unchecked,
-                        R.drawable.ic_book
-                }
-                );
+        ImageArrayAdapter adapter = new ImageArrayAdapter(getContext(),iconsList() );
 
         selectIcon.setAdapter(adapter);
 
@@ -116,9 +108,9 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
             @Override
             public void onClick(View v) {
                 if(getArguments() == null)
-                    presenter.addSubject(edsubjectName.getText().toString(), edSubjectDate.getText().toString(), colorSlider.getSelectedColor());
+                    presenter.addSubject(makeNewSubject());
                 else
-                    presenter.modifySubject(edsubjectName.getText().toString(), edSubjectDate.getText().toString(), colorSlider.getSelectedColor());
+                    presenter.modifySubject(makeNewSubject());
             }
         });
 
@@ -140,11 +132,52 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
             subject = getArguments().getParcelable(Subject.SUBJECT_KEY);
 
             edsubjectName.setText(subject.getSubject_name());
-            edsubjectName.setEnabled(false);
             edSubjectDate.setText(subject.getExam_date());
             colorSlider.setSelection(searchColor(subject.getColor()));
+            selectIcon.setSelection(getSelectedIcon(subject.getIconId(), iconsList()));
         }
         colorChange.setTextColor(colorSlider.getSelectedColor());
+    }
+
+    private int getSelectedIcon(int iconId, Integer[] iconsList) {
+        for (int i = 0; i < iconsList.length; i++) {
+            if (iconId == iconsList[i])
+                return i;
+        }
+        return 0;
+    }
+
+    private Integer[] iconsList() {
+        return new Integer[]{
+                R.drawable.ic_subjecticons_01,
+                R.drawable.ic_subjecticons_02,
+                R.drawable.ic_subjecticons_03,
+                R.drawable.ic_subjecticons_04,
+                R.drawable.ic_subjecticons_05,
+                R.drawable.ic_subjecticons_06,
+                R.drawable.ic_subjecticons_07,
+                R.drawable.ic_subjecticons_08,
+                R.drawable.ic_subjecticons_09,
+                R.drawable.ic_subjecticons_10
+        };
+    }
+
+    private Subject makeNewSubject() {
+        Subject subjectAux;
+        if(getArguments() != null){
+            subjectAux = getArguments().getParcelable(Subject.SUBJECT_KEY);
+        }
+        else{
+            subjectAux = new Subject();
+        }
+
+
+        subjectAux.setSubject_name(edsubjectName.getText().toString());
+        subjectAux.setColor(colorSlider.getSelectedColor());
+        subjectAux.setExam_date(edSubjectDate.getText().toString());
+        subjectAux.setIconId((int)selectIcon.getSelectedView().getTag());
+
+        return subjectAux;
     }
 
     private int searchColor(int color) {
@@ -201,11 +234,6 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
     }
 
     @Override
-    public void onSucess() {
-
-    }
-
-    @Override
     public void setPresenter(SubjectManagerContract.Presenter presenter) {
         this.presenter = presenter;
     }
@@ -216,30 +244,30 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
     }
 
     @Override
-    public void onSucess(Subject subject) {
+    public void onSucess() {
 
-        Intent intent = new Intent(getContext(), DashboardActivity.class);
-        intent.putExtra("NOTIFICATION", true);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(Subject.SUBJECT_KEY, subject);
-        intent.putExtras(bundle);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), new Random().nextInt(100), intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
-
-        Notification.Builder builder = new Notification.Builder(getContext(), FocusApplication.CHANNEL_ID)
-                .setAutoCancel(true)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentText(subject.getSubject_name())
-                .setContentTitle(subject.getExam_date())
-                .setContentIntent(pendingIntent);
-
-        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getContext());
-
-        notificationManagerCompat.notify(new Random().nextInt(100), builder.build());
-
+//        Intent intent = new Intent(getContext(), DashboardActivity.class);
+//        intent.putExtra("NOTIFICATION", true);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelable(Subject.SUBJECT_KEY, subject);
+//        intent.putExtras(bundle);
+//
+//        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), new Random().nextInt(100), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//
+//
+//        Notification.Builder builder = new Notification.Builder(getContext(), FocusApplication.CHANNEL_ID)
+//                .setAutoCancel(true)
+//                .setSmallIcon(R.mipmap.ic_launcher)
+//                .setContentText(subject.getSubject_name())
+//                .setContentTitle(subject.getExam_date())
+//                .setContentIntent(pendingIntent);
+//
+//        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getContext());
+//
+//        notificationManagerCompat.notify(new Random().nextInt(100), builder.build());
+//
 
         mListener.onSavedSubject();
     }

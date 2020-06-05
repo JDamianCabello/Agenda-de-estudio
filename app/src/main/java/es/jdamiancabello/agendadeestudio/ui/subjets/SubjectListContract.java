@@ -13,7 +13,7 @@ public interface SubjectListContract{
         void hideProgress();
         void noSubjets();
         void refresh(ArrayList<Subject> subjectArrayList);
-        void onSuccessDeleted(Subject subject);
+        void onSuccessDeleted(Subject deletedSubject, List<Topic> deletedTopics);
         void onSucessUndo(Subject subject);
         void onUndo(Subject subject, List<Topic> subjectsTopics);
     }
@@ -21,9 +21,7 @@ public interface SubjectListContract{
     interface Presenter{
         void delete(Subject subject);
         void load();
-        void undo(Subject subject);
+        void undo(Subject subject, List<Topic> topicList);
         void onSucessUndo(Subject subject, List<Topic> subjectTopics);
-
-        List<Topic> getTopicsBySubject(String subjectName);
     }
 }

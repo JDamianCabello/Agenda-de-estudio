@@ -17,12 +17,13 @@ public class Subject implements Parcelable{
     private int iconId;
     private int percent;
 
-    public Subject(String subject_name, String exam_date, int color, int iconId, int percent) {
+    public Subject(){}
+
+    public Subject(String subject_name, String exam_date, int color, int iconId) {
         this.subject_name = subject_name;
         this.exam_date = exam_date;
         this.color = color;
         this.iconId = iconId;
-        this.percent = percent;
     }
 
     protected Subject(Parcel in) {

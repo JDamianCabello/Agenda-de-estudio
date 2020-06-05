@@ -8,7 +8,7 @@ import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.model.Topic;
 import es.jdamiancabello.agendadeestudio.data.repository.SubjectRepository;
 
-public class SubjectListPresenter implements SubjectListContract.Presenter, SubjectRepository.RepositorySubject {
+public class SubjectListPresenter implements SubjectListContract.Presenter, SubjectRepository.RepositorySubject, SubjectRepository.DeleteSubject, SubjectRepository.RestoreSubject {
     private SubjectListContract.View view;
 
     public SubjectListPresenter(SubjectListContract.View vista) {
@@ -17,9 +17,7 @@ public class SubjectListPresenter implements SubjectListContract.Presenter, Subj
 
     @Override
     public void delete(Subject subject) {
-//        if (SubjectRepository_room.getInstance().delete(subject)) {
-//            view.onSuccessDeleted(subject);
-//        }
+        SubjectRepository.getInstance().deleteSubject(this, subject);
     }
 
     public void load(){
@@ -29,29 +27,28 @@ public class SubjectListPresenter implements SubjectListContract.Presenter, Subj
 
 
     @Override
-    public void undo(Subject subject) {
-//        view.onUndo(subject,TopicRepository_room.getInstance().getListFromSubject(subject.getSubject_name()));
+    public void undo(Subject subject, List<Topic> topicList) {
+        view.onUndo(subject,topicList);
     }
 
     @Override
     public void onSucessUndo(Subject subject, List<Topic> subjectTopics) {
-//        SubjectRepository_room.getInstance().insert(subject);
-//        for (int i = 0; i < subjectTopics.size(); i++) {
-//            TopicRepository_room.getInstance().insert(subjectTopics.get(i));
-//        }
-//        view.onSucessUndo(subject);
+        SubjectRepository.getInstance().restoreSubject(this, subject);
     }
-
-    @Override
-    public List<Topic> getTopicsBySubject(String s) {
-//        return TopicRepository_room.getInstance().getListFromSubject(s);
-        return null;
-    }
-
 
     @Override
     public void onLoaded() {
         view.hideProgress();
         view.refresh((ArrayList<Subject>)SubjectRepository.getInstance().getList());
+    }
+
+    @Override
+    public void onDeleted(Subject deletedSubject, List<Topic> deletedTopicsList) {
+        view.onSuccessDeleted(deletedSubject, deletedTopicsList);
+    }
+
+    @Override
+    public void onRestored(Subject subject) {
+        view.onSucessUndo(subject);
     }
 }
