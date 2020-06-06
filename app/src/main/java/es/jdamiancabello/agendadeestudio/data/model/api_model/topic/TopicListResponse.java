@@ -8,7 +8,7 @@ import es.jdamiancabello.agendadeestudio.data.model.Topic;
 public class TopicListResponse {
     private boolean error;
     private int count;
-    private List<Topic> topics;
+    private List<Topic> topicList;
 
     public boolean isError() {
         return error;
@@ -26,11 +26,11 @@ public class TopicListResponse {
         this.count = count;
     }
 
-    public List<Topic> getTopics() {
-        return topics;
+    public List<Topic> getTopicList() {
+        return topicList;
     }
 
-    public void setTopics(List<Topic> topics) {
-        this.topics = topics;
+    public void setTopicList(List<Topic> topicList) {
+        this.topicList = topicList;
     }
 }

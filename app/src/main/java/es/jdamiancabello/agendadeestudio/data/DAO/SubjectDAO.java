@@ -27,7 +27,6 @@ public class SubjectDAO {
             @Override
             public void onResponse(Call<SubjectListResponse> call, Response<SubjectListResponse> response) {
                 if(response.isSuccessful()) {
-                    Log.d("getSubjectList","ESTA OK");
                     responseSubject.onSucess(response.body().getSubjects());
 
                 }
@@ -35,7 +34,6 @@ public class SubjectDAO {
 
             @Override
             public void onFailure(Call<SubjectListResponse> call, Throwable t) {
-                Log.d("getSubjectList","ESTA MAL");
             }
         });
     }

@@ -55,7 +55,7 @@ public class TopicManagerFragment extends Fragment implements TopicManagerContra
             tiledTopicName.setEnabled(false);
             subjects.setEnabled(false);
 
-            subjects.setSelection(selectSubject(t.getSubject_name()));
+            //subjects.setSelection(selectSubject(t.getSubject_name()));
 
         }
 

@@ -29,7 +29,7 @@ public class SubjectRepository implements SubjectDAO.ResponseSubject, SubjectDAO
     }
 
 
-    public void getSubjectList(SubjectRepository.RepositorySubject repositorySubject) {
+    public void getSubjectList(RepositorySubject repositorySubject) {
         this.repositorySubject = repositorySubject;
         SubjectDAO.getSubjectList(this);
     }
@@ -96,6 +96,7 @@ public class SubjectRepository implements SubjectDAO.ResponseSubject, SubjectDAO
         void onRestored(Subject subject);
     }
 
+    //TODO: con esto se separa el listener del calendario del de la lista de asignaturas (vale de poco pero es separar código)
     public interface CalendarSubjectEvents{
         void onLoaded();
     }

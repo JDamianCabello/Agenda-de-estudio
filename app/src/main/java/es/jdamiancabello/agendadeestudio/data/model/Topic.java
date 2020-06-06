@@ -12,31 +12,46 @@ import androidx.room.PrimaryKey;
 import java.util.Comparator;
 
 
-@Entity(primaryKeys = {"subject_name","name"},foreignKeys = @ForeignKey(entity = Subject.class,
-        parentColumns = "subject_name",
-        childColumns = "subject_name",
-        onDelete = ForeignKey.CASCADE))
-public class Topic implements Parcelable {
-    @Ignore
-    public static final String TOPICTAG = "topic";
-    @NonNull
-    private String subject_name;
-    @NonNull
-    private String name;
-    @NonNull
-    private int state;
 
-    public Topic(String subject_name, String name, int state) {
-        this.subject_name = subject_name;
+public class Topic implements Parcelable {
+    public static final String TOPICTAG = "topic";
+    private int id;
+    private String name;
+    private boolean isTask;
+    private int state;
+    private int priority;
+    private String notes;
+
+    public Topic(String name, boolean isTask, int state, int priority, String notes) {
         this.name = name;
+        this.isTask = isTask;
         this.state = state;
+        this.priority = priority;
+        this.notes = notes;
     }
 
-    @Ignore
     protected Topic(Parcel in) {
-        subject_name = in.readString();
+        id = in.readInt();
         name = in.readString();
+        isTask = in.readByte() != 0;
         state = in.readInt();
+        priority = in.readInt();
+        notes = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeByte((byte) (isTask ? 1 : 0));
+        dest.writeInt(state);
+        dest.writeInt(priority);
+        dest.writeString(notes);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Topic> CREATOR = new Creator<Topic>() {
@@ -51,12 +66,12 @@ public class Topic implements Parcelable {
         }
     };
 
-    public String getSubject_name() {
-        return subject_name;
+    public int getId() {
+        return id;
     }
 
-    public void setSubject_name(String subject_name) {
-        this.subject_name = subject_name;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -67,6 +82,14 @@ public class Topic implements Parcelable {
         this.name = name;
     }
 
+    public boolean isTask() {
+        return isTask;
+    }
+
+    public void setTask(boolean task) {
+        isTask = task;
+    }
+
     public int getState() {
         return state;
     }
@@ -75,36 +98,46 @@ public class Topic implements Parcelable {
         this.state = state;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public int getPriority() {
+        return priority;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(subject_name);
-        dest.writeString(name);
-        dest.writeInt(state);
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        if(notes==null)
+            this.notes="";
+        else
+            this.notes = notes;
     }
 
     public static class SortByName implements Comparator<Topic>{
         @Override
         public int compare(Topic o1, Topic o2) {
-            return o1.getName().compareToIgnoreCase(o2.getName());
+            //return o1.getName().compareToIgnoreCase(o2.getName());
+            return 0;
         }
     }
 
-    public static class SortBySubjectName implements Comparator<Topic>{
+    public static class SortByTopictName implements Comparator<Topic>{
         @Override
         public int compare(Topic o1, Topic o2) {
-            return o1.getSubject_name().compareToIgnoreCase(o2.getSubject_name());
+            //return o1.getSubject_name().compareToIgnoreCase(o2.getSubject_name());
+            return 0;
         }
     }
 
     public static class SortByState implements Comparator<Topic>{
         @Override
         public int compare(Topic o1, Topic o2) {
-            return o1.getState() - o2.getState();
+            //return o1.getState() - o2.getState();
+            return 0;
         }
     }
 }

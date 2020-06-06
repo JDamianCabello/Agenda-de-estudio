@@ -177,8 +177,6 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         Subject subject = getArguments().getParcelable(Subject.SUBJECT_KEY);
         tv_subjectName.setText(subject.getSubject_name());
         tv_subjectName.setTextColor(subject.getColor());
-        //TODO: Eliminar esta mierda es pa pruebas hermano
-        subject.setPercent(subject.getPercent());
 
 
         tv_totalPercentComplete.setText(subject.getPercent()+"%" + " / 100%");
@@ -206,7 +204,7 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
-        presenter.loadData();
+        presenter.loadData(subject.getId());
     }
 
     private void stateFirstLoad() {

@@ -61,7 +61,7 @@ public class TopicListFragment extends Fragment implements TopicListContract.Vie
 
             @Override
             public void onLongClick(Topic topic) {
-                new AlertDialog.Builder(getContext()).setTitle("ELIMINAR").setMessage(getString(R.string.deleteTopic) + " "+topic.getName() + " " + getString(R.string.deleteTopicPrepo)+" " +topic.getSubject_name()+"?").setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                new AlertDialog.Builder(getContext()).setTitle("ELIMINAR").setMessage(getString(R.string.deleteTopic) + " "+topic.getName()+"?").setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         presenter.delete(topic);

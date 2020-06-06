@@ -6,6 +6,10 @@ import es.jdamiancabello.agendadeestudio.data.model.api_model.subject.SubjectAdd
 import es.jdamiancabello.agendadeestudio.data.model.api_model.subject.SubjectDeletedResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.subject.SubjectListResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.subject.SubjectModifyResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.topic.TopicAddResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.topic.TopicDeletedResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.topic.TopicListResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.topic.TopicModifyResponse;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -53,4 +57,29 @@ public interface ApiCalls {
             @Field("date") String date,
             @Field("color") int color,
             @Field("iconId") int iconId);
+
+    @FormUrlEncoded
+    @POST("topic/")
+    Call<TopicAddResponse> addTopic(
+            @Field("subject_name") String subject_name,
+            @Field("date") String date,
+            @Field("color") int color,
+            @Field("iconId") int iconId);
+
+    @DELETE("topic/{idTopic}")
+    Call<TopicDeletedResponse> deleteTopic(@Path("idTopic") int id);
+
+    @FormUrlEncoded
+    @PUT("topic/{idTopic}")
+    Call<TopicModifyResponse> modifyTopic(
+            @Path("idTopic") int id,
+            @Field("subject_name") String subject_name,
+            @Field("date") String date,
+            @Field("color") int color,
+            @Field("iconId") int iconId);
+
+    @GET("topic/{idTopic}")
+    Call<TopicListResponse> getTopicList(@Path("idTopic") int id);
 }
+
+
