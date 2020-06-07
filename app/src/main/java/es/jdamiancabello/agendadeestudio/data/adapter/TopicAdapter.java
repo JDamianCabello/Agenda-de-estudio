@@ -38,7 +38,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
         holder.topicState.setText(getState(topicList.get(position).getState()));
         holder.topicProgress.setProgress((topicList.get(position).getState() * 100) / 3);
         holder.topicPercent.setText(holder.topicProgress.getProgress() + "%");
-        holder.imagePriority.setBackgroundResource(getPriorityImage(topicList.get(position).getPriority()));
+        holder.imagePriority.setImageResource(getPriorityImage(topicList.get(position).getPriority()));
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +60,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
     private int getPriorityImage(int priority) {
         switch (priority){
             case 0:
-                return R.drawable.checkbox_checked_lowprio;
+                return R.drawable.checkbox_checked_lowprio_green;
             case 1:
                 return R.drawable.checkbox_checked_midprio;
             case 2:

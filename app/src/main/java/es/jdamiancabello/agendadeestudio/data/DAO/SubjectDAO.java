@@ -28,12 +28,12 @@ public class SubjectDAO {
             public void onResponse(Call<SubjectListResponse> call, Response<SubjectListResponse> response) {
                 if(response.isSuccessful()) {
                     responseSubject.onSucess(response.body().getSubjects());
-
                 }
             }
 
             @Override
             public void onFailure(Call<SubjectListResponse> call, Throwable t) {
+                Log.d("API", "asñf");
             }
         });
     }

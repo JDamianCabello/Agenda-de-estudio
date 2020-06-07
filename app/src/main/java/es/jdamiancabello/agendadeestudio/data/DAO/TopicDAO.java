@@ -30,7 +30,7 @@ public class TopicDAO {
 
             @Override
             public void onFailure(Call<TopicListResponse> call, Throwable t) {
-                Log.d("APICALL","mal");
+                Log.d("APICALL","mal 2");
             }
         });
     }
