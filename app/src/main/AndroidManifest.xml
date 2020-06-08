@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/welcome">
-        <activity android:name=".ui.aboutme.AboutMeActivity"></activity>
+        <activity android:name=".ui.login.LoginActivity"></activity>
+        <activity android:name=".ui.aboutme.AboutMeActivity" />
         <activity android:name=".ui.dashboard.DashboardActivity" />
         <activity android:name=".ui.register.RegisterActivity" />
 
@@ -27,7 +28,6 @@
 
         <receiver android:name=".data.broadcastReceiver_service.MyBroadcast">
             <intent-filter>
-
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />

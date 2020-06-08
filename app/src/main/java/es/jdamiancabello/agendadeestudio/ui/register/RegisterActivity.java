@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import es.jdamiancabello.agendadeestudio.R;
-import es.jdamiancabello.agendadeestudio.ui.dashboard.DashboardActivity;
+import es.jdamiancabello.agendadeestudio.ui.login.LoginActivity;
 
 public class RegisterActivity extends AppCompatActivity
 implements  RegisterFragment.OnFragmentInteractionListener{
@@ -30,7 +30,7 @@ implements  RegisterFragment.OnFragmentInteractionListener{
 
     @Override
     public void onDoneRegister() {
-        startActivity(new Intent(this, DashboardActivity.class));
+        startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
 }

@@ -13,19 +13,12 @@ public class RegisterPresenter implements RegisterContract.Presenter, UserReposi
     @Override
     public void login(String email, String username, String psw, String confirmPsw) {
         if(checkRegisterUser(email) && validateAll(email,username,psw,confirmPsw))
-            UserRepository.getInstance().userAdd(username, email, psw, this);
+            UserRepository.getInstance().userAdd(this, username, email, psw);
     }
 
     @Override
     public boolean checkRegisterUser(String email) {
-        if(UserRepository.getInstance().existUser(email)) {
-            view.setDuplicateEmailError();
-            return false;
-        }
-        else {
-            view.clearDuplicateEmailError();
-            return true;
-        }
+        return true;
     }
 
     private boolean validateAll(String email, String username, String psw, String confirmPsw){

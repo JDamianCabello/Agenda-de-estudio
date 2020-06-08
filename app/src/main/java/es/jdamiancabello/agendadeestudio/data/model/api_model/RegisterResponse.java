@@ -1,16 +1,20 @@
 package es.jdamiancabello.agendadeestudio.data.model.api_model;
 
+import es.jdamiancabello.agendadeestudio.data.model.User;
+
 public class RegisterResponse {
 
-    private Boolean error;
-    private String message;
-    private String api_token;
+    private String error;
 
-    public Boolean getError() {
+    private String message;
+
+    private User user;
+
+    public String getError() {
         return error;
     }
 
-    public void setError(Boolean error) {
+    public void setError(String error) {
         this.error = error;
     }
 
@@ -22,11 +26,11 @@ public class RegisterResponse {
         this.message = message;
     }
 
-    public String getApi_token() {
-        return api_token;
+    public User getUser() {
+        return user;
     }
 
-    public void setApi_token(String api_token) {
-        this.api_token = api_token;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -127,13 +127,10 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 List<String> options = new ArrayList<>();
                 if(!isChecked){
-                    options.add("1");
-                    options.add("2");
-                    options.add("3");
-                    options.add("4");
+                    options.addAll(loadDefauldData());
                 }else{
-                    options.add("1 task");
-                    options.add("2 task");
+                    options.add(getResources().getString(R.string.SubjectAdapter_task_state_0));
+                    options.add(getResources().getString(R.string.SubjectAdapter_task_state_1));
                 }
                 state.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, options));
             }
@@ -197,7 +194,7 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
             public void onLongClick(Topic topic) {
                 Toast.makeText(getContext(),"LongClickEvent",Toast.LENGTH_SHORT).show();
             }
-        });
+        }, getContext());
 
         recyclerView.setAdapter(topicAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
@@ -208,13 +205,16 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
     }
 
     private void stateFirstLoad() {
-        List<String> options = new ArrayList<>();
-        options.add("1");
-        options.add("2");
-        options.add("3");
-        options.add("4");
+        state.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, loadDefauldData()));
+    }
 
-        state.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, options));
+    private List<String> loadDefauldData() {
+        return new ArrayList<String>(){{
+            add(getResources().getString(R.string.SubjectAdapter_state_0));
+            add(getResources().getString(R.string.SubjectAdapter_state_1));
+            add(getResources().getString(R.string.SubjectAdapter_state_2));
+            add(getResources().getString(R.string.SubjectAdapter_state_3));
+        }};
     }
 
     private void changeCheck(int id) {
@@ -280,8 +280,8 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         topicAdapter.addAll(topicList);
         topicAdapter.notifyDataSetChanged();
 
-        tv_totalTask.setText(Integer.toString(topicList.size()));
         tv_totalTaskDone.setText(Integer.toString(getTaskDone(topicList)));
+        tv_totalTask.setText(Integer.toString(topicList.size()- Integer.parseInt(tv_totalTaskDone.getText().toString())));
     }
 
     private int getTaskDone(List<Topic> topicList) {

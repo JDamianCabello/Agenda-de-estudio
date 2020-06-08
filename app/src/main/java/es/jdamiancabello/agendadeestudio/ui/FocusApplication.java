@@ -39,7 +39,7 @@ public class FocusApplication extends Application {
         return context;
     }
 
-    public User getUser() {
+    public static User getUser() {
         return user;
     }
 

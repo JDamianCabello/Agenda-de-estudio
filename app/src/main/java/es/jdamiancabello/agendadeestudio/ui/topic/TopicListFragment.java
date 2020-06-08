@@ -68,7 +68,7 @@ public class TopicListFragment extends Fragment implements TopicListContract.Vie
                     }
                 }).setNegativeButton(android.R.string.no,null).show();
             }
-        });
+        },getContext());
 
 
         contenido = view.findViewById(R.id.topicList_content);

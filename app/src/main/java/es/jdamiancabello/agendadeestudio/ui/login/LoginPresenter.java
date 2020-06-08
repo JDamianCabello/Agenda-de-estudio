@@ -17,13 +17,15 @@ public class LoginPresenter implements LoginContract.Presenter, UserRepository.U
 
     @Override
     public void loginUser(String user, String pass, boolean persistLogin) {
-        UserRepository.getInstance().UserLogin(user,pass, this, persistLogin);
+        UserRepository.getInstance().userLogin(this, user,pass, persistLogin);
     }
 
-
     @Override
-    public void onSucessLogin() {
-        view.onSucess();
+    public void onSucessLogin(User user,String password, boolean persistLogin) {
+        if(persistLogin)
+            view.saveUSerData(user,password);
+        else
+            view.onSucess();
     }
 
     @Override

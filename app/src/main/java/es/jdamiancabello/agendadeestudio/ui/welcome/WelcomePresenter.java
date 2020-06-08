@@ -24,7 +24,7 @@ public class WelcomePresenter implements WelcomeContract.Presenter, UserReposito
         String username = sharedPreferences.getString(User.userKey,"");
         String password = sharedPreferences.getString(User.passwordKey,"");
 
-        UserRepository.getInstance().getUser(username,password,this);
+        UserRepository.getInstance().userSavedData(this, username,password);
     }
 
     @Override

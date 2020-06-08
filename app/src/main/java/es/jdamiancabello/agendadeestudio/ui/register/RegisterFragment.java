@@ -86,7 +86,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         backstack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().popBackStack();
+                mListener.onDoneRegister();
             }
         });
 

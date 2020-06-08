@@ -3,16 +3,15 @@ package es.jdamiancabello.agendadeestudio.data.model.api_model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import es.jdamiancabello.agendadeestudio.data.model.User;
+
 public class LoginResponse {
-    @SerializedName("error")
-    @Expose
+
     private String error;
-    @SerializedName("message")
-    @Expose
+
     private String message;
-    @SerializedName("api_token")
-    @Expose
-    private String apiToken;
+
+    private User user;
 
     public String getError() {
         return error;
@@ -30,11 +29,11 @@ public class LoginResponse {
         this.message = message;
     }
 
-    public String getApiToken() {
-        return apiToken;
+    public User getUser() {
+        return user;
     }
 
-    public void setApiToken(String apiToken) {
-        this.apiToken = apiToken;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Agenda de estudio-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Agenda de estudio-app.iml" group="Agenda de estudio/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Agenda-de-estudio-Agenda_de_estudio.iml" filepath="$PROJECT_DIR$/.idea/modules/Agenda-de-estudio-Agenda_de_estudio.iml" group="Agenda_de_estudio" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Agenda_de_estudio.iml" filepath="$PROJECT_DIR$/.idea/modules/Agenda_de_estudio.iml" group="Agenda_de_estudio" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Agenda de estudio/app" />
     </modules>

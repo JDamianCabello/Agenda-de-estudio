@@ -41,9 +41,6 @@ public class AboutMeFragment extends Fragment {
             ((AppCompatActivity) getActivity()).getSupportActionBar().show();
             setHasOptionsMenu(true);
         }
-        else {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-        }
 
         AboutView aboutView = AboutBuilder.with(getContext())
                 .setPhoto(android.R.mipmap.sym_def_app_icon)

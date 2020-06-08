@@ -52,10 +52,15 @@
     <string name="login_recoverPassword">Recover password</string>
     <string name="subject_manager_hintSubjectName">Subject name</string>
     <string name="subjectlist_noSubjects">No subjects to show, try create one :D</string>
+
     <string name="SubjectAdapter_state_0">Ignored</string>
     <string name="SubjectAdapter_state_1">Summarized</string>
     <string name="SubjectAdapter_state_2">To review</string>
     <string name="SubjectAdapter_state_3">Dominated</string>
+
+    <string name="SubjectAdapter_task_state_0">Not completed</string>
+    <string name="SubjectAdapter_task_state_1">Done</string>
+
     <string name="dashboard_callendar">Calendar</string>
     <string name="dashboard_organicer">Organicer</string>
     <string name="dashboard_today">Today</string>
@@ -79,4 +84,12 @@
     <string name="channel_description" translatable="false">Focus description</string>
     <string name="SubjectInfoAddTaskHint">Add task or topic...</string>
     <string name="subject_manager_tv_selectIcon">Select subject icon:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="verifyemail_tv">Please verify your email to continue.</string>
+    <string name="verifyemail_code_hint">Verify code</string>
+    <string name="verifyemail_verifybutton">Verify</string>
+    <string name="verifyemail_resendmail">Resend email</string>
+    <string name="verifyemail_btn_returnlogin">Return to login</string>
+    <string name="err_verifyCode_notLenght">"Validation code lenght must be 8 characters "</string>
 </resources>

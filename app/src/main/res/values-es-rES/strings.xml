@@ -41,6 +41,9 @@
     <string name="SubjectAdapter_state_2">A repasar</string>
     <string name="SubjectAdapter_state_3">Dominado</string>
 
+    <string name="SubjectAdapter_task_state_0">Sin completar</string>
+    <string name="SubjectAdapter_task_state_1">Acabada</string>
+
     <!--    Add Subjects strings-->
     <string name="subject_manager_hintSubjectDate">Fecha de examen</string>
     <string name="subject_manager_tv_selectcolor">Elige el color de la asignatura:</string>

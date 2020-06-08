@@ -2,21 +2,19 @@ package es.jdamiancabello.agendadeestudio.ui.login;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -36,6 +34,8 @@ import org.json.JSONObject;
 import java.util.Arrays;
 
 import es.jdamiancabello.agendadeestudio.R;
+import es.jdamiancabello.agendadeestudio.data.model.User;
+import es.jdamiancabello.agendadeestudio.ui.FocusApplication;
 
 public class LoginFragment extends Fragment implements LoginContract.View{
     private TextView tvRegister;
@@ -87,7 +87,7 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.activity_login,container,false);
+        return inflater.inflate(R.layout.fragment_login,container,false);
     }
 
     @Override
@@ -170,9 +170,27 @@ public class LoginFragment extends Fragment implements LoginContract.View{
 
     @Override
     public void showWrongLogin(String msg) {
-        Snackbar.make(getView(),R.string.login_wrongLoginText,Snackbar.LENGTH_SHORT).show();
-        //Snackbar.make(getView(),msg,Snackbar.LENGTH_SHORT).show();
+        //Snackbar.make(getView(),R.string.login_wrongLoginText,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(getView(),msg,Snackbar.LENGTH_SHORT).show();
         //Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT).show();
+    }
+
+
+
+
+    @Override
+    public void saveUSerData(User user,String password) {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(getContext().getString(R.string.sharedUserDataLogin), Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(User.userKey,user.getEmail());
+        editor.putString(User.passwordKey,password);
+        editor.putString(User.userToken,user.getApi_token());
+
+        editor.apply();
+
+        activityListener.onSuccesLogin();
     }
 
     @Override

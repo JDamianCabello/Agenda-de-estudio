@@ -5,8 +5,10 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import es.jdamiancabello.agendadeestudio.R;
+import es.jdamiancabello.agendadeestudio.data.DAO.UserDAO;
 import es.jdamiancabello.agendadeestudio.data.Network.ApiRestClient;
 import es.jdamiancabello.agendadeestudio.data.Network.ApiRestClientToken;
+import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.LoginResponse;
 import es.jdamiancabello.agendadeestudio.data.model.User;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.RegisterResponse;
@@ -15,8 +17,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserRepository {
+public class UserRepository implements UserDAO.LoginUser, UserDAO.GetSavedUserData, UserDAO.RegisterUser {
     private static UserRepository userRepository;
+    private static UserRepositoryListener userRepositoryListener;
+    private static WelcomeListener welcomeListener;
+    private static RegisterListener registerListener;
 
     static {
         userRepository = new UserRepository();
@@ -26,114 +31,55 @@ public class UserRepository {
         return userRepository;
     }
 
-    public void UserLogin(String user, String pass, UserRepositoryListener userRepositoryListener, boolean persistLogin) {
-        Call<LoginResponse> call = ApiRestClient
-                .getInstance()
-                .login(user,pass);
-
-       call.enqueue(new Callback<LoginResponse>() {
-           @Override
-           public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-               if(response.isSuccessful()) {
-
-                   if(persistLogin)
-                       saveUserData(user,pass);
-
-                   ApiRestClientToken.APITOKEN = response.body().getApiToken();
-
-                   saveToken(response.body().getApiToken());
-                   userRepositoryListener.onSucessLogin();
-
-
-               }
-               else{
-                   userRepositoryListener.onFailLogin("");
-               }
-           }
-
-           @Override
-           public void onFailure(Call<LoginResponse> call, Throwable t) {
-               Log.d("TESTEO fail", t.getMessage());
-               userRepositoryListener.onFailLogin(t.getMessage());
-           }
-       });
+    public void userLogin(UserRepositoryListener userRepositoryListener, String user, String pass, boolean persistLogin){
+        this.userRepositoryListener = userRepositoryListener;
+        UserDAO.UserLogin(this,user,pass,persistLogin);
     }
 
-    private void saveUserData(String user, String pass) {
-        SharedPreferences sharedPreferences = FocusApplication.getUserContext().getSharedPreferences(FocusApplication.getUserContext().getString(R.string.sharedUserDataLogin), Context.MODE_PRIVATE);
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putString(User.userKey,user);
-        editor.putString(User.passwordKey,pass);
-
-        editor.apply();
+    public void userSavedData(WelcomeListener welcomeListener, String user, String pass){
+        this.welcomeListener = welcomeListener;
+        UserDAO.getUser(this,user,pass);
     }
 
-    private void saveToken(String token) {
-        SharedPreferences sharedPreferences = FocusApplication.getUserContext().getSharedPreferences(FocusApplication.getUserContext().getString(R.string.sharedUserDataLogin), Context.MODE_PRIVATE);
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putString(User.userToken,token);
-
-        editor.apply();
+    public void userAdd(RegisterListener registerListener, String username, String email, String psw) {
+        this.registerListener = registerListener;
+        UserDAO.addUser(this,username,email,psw);
     }
 
-    public void userAdd(String username, String email, String psw, RegisterListener registerListener) {
-        Call<RegisterResponse> call = ApiRestClient
-                .getInstance()
-                .register(username,email,psw);
-
-        call.enqueue(new Callback<RegisterResponse>() {
-            @Override
-            public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
-                if(response.isSuccessful())
-                    if(!response.body().getMessage().equals("duplicate email"))
-                        registerListener.onSucessRegister();
-                    else
-                        registerListener.onDuplicateEmail();
-            }
-
-            @Override
-            public void onFailure(Call<RegisterResponse> call, Throwable t) {
-
-            }
-        });
-
+    @Override
+    public void onSucessLogin(User user,String password, boolean persistLogin) {
+        ApiRestClientToken.APITOKEN = user.getApi_token();
+        FocusApplication.setUser(user);
+        userRepositoryListener.onSucessLogin(user, password,persistLogin);
     }
 
-    public boolean existUser(String email) {
-        return false;
+    @Override
+    public void onFailedLogin(String mesage) {
+        userRepositoryListener.onFailLogin(mesage);
     }
 
-    public void getUser(String username, String password, WelcomeListener welcomeListener) {
-
-        if(username == "" || password == "")
+    @Override
+    public void savedUserData(User user) {
+        if(!user.isVerified())
             return;
+        ApiRestClientToken.APITOKEN = user.getApi_token();
+        welcomeListener.onLoggedUser();
+    }
 
-        Call<LoginResponse> call = ApiRestClient
-                .getInstance()
-                .login(username,password);
+    @Override
+    public void onDoneRegister(User user) {
+        ApiRestClientToken.APITOKEN = user.getApi_token();
+        FocusApplication.setUser(user);
+        registerListener.onSucessRegister();
+    }
 
-        call.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-
-                if(response.isSuccessful()) {
-                    ApiRestClientToken.APITOKEN = response.body().getApiToken();
-                    welcomeListener.onLoggedUser();
-                }
-                            }
-
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-            }
-        });
+    @Override
+    public void onDuplicateEmail() {
+        registerListener.onDuplicateEmail();
     }
 
     public interface UserRepositoryListener{
-        void onSucessLogin();
+        void onSucessLogin(User user,String password, boolean persistLogin);
         void onFailLogin(String message);
     }
 

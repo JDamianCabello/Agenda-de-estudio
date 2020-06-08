@@ -1,5 +1,6 @@
 package es.jdamiancabello.agendadeestudio.data.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +20,12 @@ import es.jdamiancabello.agendadeestudio.data.model.Topic;
 public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> {
     private List<Topic> topicList;
     private ItemActions itemActions;
+    private Context context;
 
-    public TopicAdapter(ItemActions actions) {
-
+    public TopicAdapter(ItemActions actions, Context context) {
         this.topicList = new ArrayList<>();
         itemActions = actions;
+        this.context = context;
     }
 
     @NonNull
@@ -34,7 +36,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.topicName.setText(topicList.get(position).getName()+": "+topicList.get(position).getName());
+        holder.topicName.setText(topicList.get(position).getName());
         holder.topicState.setText(getState(topicList.get(position).getState()));
         holder.topicProgress.setProgress((topicList.get(position).getState() * 100) / 3);
         holder.topicPercent.setText(holder.topicProgress.getProgress() + "%");
@@ -60,11 +62,11 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
     private int getPriorityImage(int priority) {
         switch (priority){
             case 0:
-                return R.drawable.checkbox_checked_lowprio_green;
+                return R.drawable.ic_warninglow;
             case 1:
-                return R.drawable.checkbox_checked_midprio;
+                return R.drawable.ic_warningmed;
             case 2:
-                return R.drawable.checkbox_checked_higprio;
+                return R.drawable.ic_warningred;
         }
         return R.drawable.checkbox_unchecked;
     }

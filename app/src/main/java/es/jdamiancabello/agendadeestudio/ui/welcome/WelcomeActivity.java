@@ -11,22 +11,20 @@ import com.facebook.AccessToken;
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.ui.aboutme.AboutMeActivity;
 import es.jdamiancabello.agendadeestudio.ui.dashboard.DashboardActivity;
+import es.jdamiancabello.agendadeestudio.ui.login.LoginActivity;
 import es.jdamiancabello.agendadeestudio.ui.login.LoginFragment;
 import es.jdamiancabello.agendadeestudio.ui.login.LoginPresenter;
 import es.jdamiancabello.agendadeestudio.ui.register.RegisterActivity;
 
 public class WelcomeActivity extends AppCompatActivity
-implements WelcomeFragment.OnWelcomeListener,
-LoginFragment.onLoginListener{
+implements WelcomeFragment.OnWelcomeListener{
 
     private WelcomeFragment welcomeFragment;
     private WelcomePresenter welcomePresenter;
-    private LoginFragment loginFragment;
-    protected LoginPresenter loginPresenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //TODO: Arreglar error al cerrar sesion se queda la toolbar
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
@@ -41,46 +39,20 @@ LoginFragment.onLoginListener{
 
     @Override
     public void onGoLogin() {
-        loginFragment = LoginFragment.newInstance();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.welcomeContainer,loginFragment,LoginFragment.TAG);
-        fragmentTransaction.commit();
-
-        loginPresenter = new LoginPresenter(loginFragment);
-        loginFragment.setPresenter(loginPresenter);
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     @Override
     public void onGoRegister() {
-        startActivity(new Intent(this,RegisterActivity.class));
+        startActivity(new Intent(this,LoginActivity.class));
         finish();
+        startActivity(new Intent(this, RegisterActivity.class));
     }
 
     @Override
     public void onGoDashboard() {
         startActivity(new Intent(this, DashboardActivity.class));
-        finish();
-    }
-
-    @Override
-    public void showHelp() {
-        startActivity(new Intent(this, AboutMeActivity.class));
-        finish();
-    }
-
-    @Override
-    public void onSuccesLogin() {
-        onGoDashboard();
-    }
-
-    @Override
-    public void showRegister() {
-        startActivity(new Intent(this,RegisterActivity.class));
-        finish();
-    }
-
-    @Override
-    public void showFacebookRegister(AccessToken accessToken) {
-        //TODO: Implementar login con FB
+        finishAffinity();
     }
 }
