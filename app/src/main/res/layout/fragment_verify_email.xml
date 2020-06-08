@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView21"
+        android:id="@+id/verifyEmail_tv_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -32,9 +32,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView21"
-        app:layout_constraintStart_toStartOf="@+id/textView21"
-        app:layout_constraintTop_toBottomOf="@+id/textView21">
+        app:layout_constraintEnd_toEndOf="@+id/verifyEmail_tv_header"
+        app:layout_constraintStart_toStartOf="@+id/verifyEmail_tv_header"
+        app:layout_constraintTop_toBottomOf="@+id/verifyEmail_tv_header">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/verifyEmail_tied_code"

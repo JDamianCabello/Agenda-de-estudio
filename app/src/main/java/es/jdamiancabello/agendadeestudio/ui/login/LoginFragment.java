@@ -143,9 +143,6 @@ public class LoginFragment extends Fragment implements LoginContract.View{
                 presenter.loginUser(tiedEmail.getText().toString(),tiedPassword.getText().toString(),swMantenerSesion.isChecked());
             }
         });
-
-
-        //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
 

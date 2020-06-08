@@ -2,6 +2,8 @@ package es.jdamiancabello.agendadeestudio.data.Network;
 
 import es.jdamiancabello.agendadeestudio.data.model.api_model.LoginResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.RegisterResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.email.EmailResendResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.email.EmailVerifyCodeResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.subject.SubjectAddResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.subject.SubjectDeletedResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.subject.SubjectListResponse;
@@ -80,6 +82,14 @@ public interface ApiCalls {
 
     @GET("topic/{idTopic}")
     Call<TopicListResponse> getTopicList(@Path("idTopic") int id);
+
+    @GET("resend")
+    Call<EmailResendResponse> resendEmail();
+
+    @FormUrlEncoded
+    @POST("verify")
+    Call<EmailVerifyCodeResponse> validateCode(
+            @Field("verification_code") String validationCode);
 }
 
 

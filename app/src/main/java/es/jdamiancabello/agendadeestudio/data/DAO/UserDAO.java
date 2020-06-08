@@ -20,7 +20,6 @@ public class UserDAO {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful()) {
-
                     loginUser.onSucessLogin(response.body().getUser(),pass,persistLogin);
                 }
                 else{

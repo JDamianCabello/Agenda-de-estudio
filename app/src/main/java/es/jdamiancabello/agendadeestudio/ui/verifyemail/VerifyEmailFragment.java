@@ -11,12 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import es.jdamiancabello.agendadeestudio.R;
+import es.jdamiancabello.agendadeestudio.ui.FocusApplication;
 
 
 public class VerifyEmailFragment extends Fragment implements VerifyEmailContract.View{
@@ -27,11 +29,10 @@ public class VerifyEmailFragment extends Fragment implements VerifyEmailContract
     private TextInputEditText tiedVerifyCode;
     private Button btnResendMail, btnVerifyCode, btnGoLogin;
     private TextInputLayout tilVerifyCode;
+    private TextView tvHeader;
 
-    public static VerifyEmailFragment newInstance(Bundle userData) {
-        VerifyEmailFragment fragment = new VerifyEmailFragment();
-        fragment.setArguments(userData);
-        return fragment;
+    public static VerifyEmailFragment newInstance() {
+        return new VerifyEmailFragment();
     }
 
     @Override
@@ -97,13 +98,30 @@ public class VerifyEmailFragment extends Fragment implements VerifyEmailContract
         this.presenter = presenter;
     }
 
+
     @Override
-    public void onFailVerify(int errorCode) {
+    public void onFailVerify() {
         Toast.makeText(getContext(), "Wrong validate code", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showSendEmailToast() {
+        Toast.makeText(getContext(), "Email was send to " + FocusApplication.getUser().getEmail()+" email", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSucessValidate() {
+        mListener.onVerified();
+    }
+
+    @Override
+    public void showChangePassFragment() {
+        mListener.onChangePass();
     }
 
     public interface OnFragmentInteractions{
         void onVerified();
         void onReturnLoginView();
+        void onChangePass();
     }
 }
