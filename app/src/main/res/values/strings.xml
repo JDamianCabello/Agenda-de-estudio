@@ -92,4 +92,6 @@
     <string name="verifyemail_resendmail">Resend email</string>
     <string name="verifyemail_btn_returnlogin">Return to login</string>
     <string name="err_verifyCode_notLenght">"Validation code lenght must be 8 characters "</string>
+    <string name="subjectInfo_toast_topicCreated">Topic created sucefully.</string>
+    <string name="topicInfo_tv_notes">Notes:</string>
 </resources>

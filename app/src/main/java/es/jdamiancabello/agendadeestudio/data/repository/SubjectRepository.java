@@ -8,13 +8,11 @@ import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.model.Topic;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListPresenter;
 
-public class SubjectRepository implements SubjectDAO.ResponseSubject, SubjectDAO.ResponseSubjectAddOrModify, SubjectDAO.ResponseDeleteSubject, SubjectDAO.ResponseSubjectRestore{
+public class SubjectRepository implements SubjectDAO.ResponseSubject, SubjectDAO.ResponseSubjectAddOrModify, SubjectDAO.ResponseDeleteSubject{
     public RepositorySubject repositorySubject;
-    private List<Subject> subjectList;
     private static SubjectRepository subjectRepository;
     private static ManageSubject manageSubject;
     private static DeleteSubject deleteSubject;
-    private static RestoreSubject restoreSubject;
 
     static {
         subjectRepository = new SubjectRepository();
@@ -22,10 +20,6 @@ public class SubjectRepository implements SubjectDAO.ResponseSubject, SubjectDAO
 
     public static SubjectRepository getInstance(){
         return  subjectRepository;
-    }
-
-    private SubjectRepository() {
-        subjectList = new ArrayList<>();
     }
 
 
@@ -49,20 +43,10 @@ public class SubjectRepository implements SubjectDAO.ResponseSubject, SubjectDAO
         SubjectDAO.modifySubject(this,subject);
     }
 
-    public void restoreSubject(SubjectRepository.RestoreSubject restoreSubject, Subject subject) {
-        this.restoreSubject = restoreSubject;
-        SubjectDAO.restoreSubject(this,subject);
-    }
-
-    public List<Subject> getList(){
-        return this.subjectList;
-    }
 
     @Override
     public void onSucess(List<Subject> subjectList) {
-        this.subjectList.clear();
-        this.subjectList.addAll(subjectList);
-        repositorySubject.onLoaded();
+        repositorySubject.onLoaded(subjectList);
     }
 
     @Override
@@ -71,17 +55,11 @@ public class SubjectRepository implements SubjectDAO.ResponseSubject, SubjectDAO
     }
 
     @Override
-    public void onDeleted(Subject deletedSubject, List<Topic> deletedTopicsList) {
-        deleteSubject.onDeleted(deletedSubject,deletedTopicsList);
+    public void onDeleted() {
+        deleteSubject.onDeleted();
     }
-
-    @Override
-    public void onRestored(Subject subject) {
-        restoreSubject.onRestored(subject);
-    }
-
     public interface RepositorySubject{
-        void onLoaded();
+        void onLoaded(List<Subject> subjectList);
     }
 
     public interface ManageSubject{
@@ -89,15 +67,11 @@ public class SubjectRepository implements SubjectDAO.ResponseSubject, SubjectDAO
     }
 
     public interface DeleteSubject{
-        void onDeleted(Subject deletedSubject, List<Topic> deletedTopicsList);
-    }
-
-    public interface RestoreSubject{
-        void onRestored(Subject subject);
+        void onDeleted();
     }
 
     //TODO: con esto se separa el listener del calendario del de la lista de asignaturas (vale de poco pero es separar código)
     public interface CalendarSubjectEvents{
-        void onLoaded();
+        void onLoaded(List<Subject> subjectList);
     }
 }

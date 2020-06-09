@@ -20,7 +20,7 @@ public class CalendarPresenter implements CalendarContract.Presenter, SubjectRep
     }
 
     @Override
-    public void onLoaded() {
-        view.putEvents(SubjectRepository.getInstance().getList());
+    public void onLoaded(List<Subject> subjectList) {
+        view.putEvents(subjectList);
     }
 }

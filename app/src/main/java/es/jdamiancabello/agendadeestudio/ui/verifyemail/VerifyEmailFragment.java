@@ -114,14 +114,8 @@ public class VerifyEmailFragment extends Fragment implements VerifyEmailContract
         mListener.onVerified();
     }
 
-    @Override
-    public void showChangePassFragment() {
-        mListener.onChangePass();
-    }
-
     public interface OnFragmentInteractions{
         void onVerified();
         void onReturnLoginView();
-        void onChangePass();
     }
 }

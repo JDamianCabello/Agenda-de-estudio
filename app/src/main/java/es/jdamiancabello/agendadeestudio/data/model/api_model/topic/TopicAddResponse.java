@@ -5,6 +5,7 @@ import es.jdamiancabello.agendadeestudio.data.model.Topic;
 public class TopicAddResponse {
     private boolean error;
     private String message;
+    private int percent;
     private Topic topic;
 
     public boolean isError() {
@@ -29,5 +30,13 @@ public class TopicAddResponse {
 
     public void setTopic(Topic topic) {
         this.topic = topic;
+    }
+
+    public int getPercent() {
+        return percent;
+    }
+
+    public void setPercent(int percent) {
+        this.percent = percent;
     }
 }

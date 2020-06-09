@@ -22,6 +22,8 @@ public class Topic implements Parcelable {
     private int priority;
     private String notes;
 
+    public Topic(){}
+
     public Topic(String name, boolean isTask, int state, int priority, String notes) {
         this.name = name;
         this.isTask = isTask;

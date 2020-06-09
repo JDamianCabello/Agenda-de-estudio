@@ -63,16 +63,19 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
     }
 
     public void addAll(ArrayList<Subject> subjectArrayList) {
+        list.clear();
         list.addAll(subjectArrayList);
+        notifyDataSetChanged();
     }
 
     public void removeSubject(Subject subject) {
-        this.list.remove(subject);
-        this.notifyDataSetChanged();
+        list.remove(subject);
+        notifyDataSetChanged();
     }
 
     public void addSubject(Subject subject) {
         list.add(subject);
+        notifyDataSetChanged();
     }
 
     public void sortByName() {

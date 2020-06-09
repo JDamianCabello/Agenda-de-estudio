@@ -1,5 +1,8 @@
 package es.jdamiancabello.agendadeestudio.data.Network;
 
+import java.util.List;
+
+import es.jdamiancabello.agendadeestudio.data.model.Topic;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.LoginResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.RegisterResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.email.EmailResendResponse;
@@ -27,8 +30,7 @@ public interface ApiCalls {
     @POST("login")
     Call<LoginResponse> login(
             @Field("email") String email,
-            @Field("password") String password
-            );
+            @Field("password") String password);
 
     @FormUrlEncoded
     @POST("register/")
@@ -48,6 +50,15 @@ public interface ApiCalls {
             @Field("color") int color,
             @Field("iconId") int iconId);
 
+    @FormUrlEncoded
+    @POST("subject/restore")
+    Call<SubjectAddResponse> restoreSubject(
+            @Field("subject_name") String subject_name,
+            @Field("date") String date,
+            @Field("color") int color,
+            @Field("iconId") int iconId,
+            @Field("topics") List<Topic> deletedTopics);
+
     @DELETE("subject/{idSubject}")
     Call<SubjectDeletedResponse> deleteSubject(@Path("idSubject") int id);
 
@@ -61,12 +72,13 @@ public interface ApiCalls {
             @Field("iconId") int iconId);
 
     @FormUrlEncoded
-    @POST("topic/")
+    @POST("topic/{idTopic}")
     Call<TopicAddResponse> addTopic(
-            @Field("subject_name") String subject_name,
-            @Field("date") String date,
-            @Field("color") int color,
-            @Field("iconId") int iconId);
+            @Path("idTopic") int subjectId,
+            @Field("name") String name,
+            @Field("isTask") boolean isTask,
+            @Field("state") int state,
+            @Field("priority") int priority);
 
     @DELETE("topic/{idTopic}")
     Call<TopicDeletedResponse> deleteTopic(@Path("idTopic") int id);
@@ -74,7 +86,6 @@ public interface ApiCalls {
     @FormUrlEncoded
     @PUT("topic/{idTopic}")
     Call<TopicModifyResponse> modifyTopic(
-            @Path("idTopic") int id,
             @Field("subject_name") String subject_name,
             @Field("date") String date,
             @Field("color") int color,

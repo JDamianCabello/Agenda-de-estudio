@@ -40,6 +40,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
     private SubjectAdapter adapter;
     private SubjectListContract.Presenter presenter;
     private View loadingView;
+    private boolean stopDelete = false;
 
     public static SubjectListFragment newInstance() {
         return new SubjectListFragment();
@@ -103,7 +104,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
                 new AlertDialog.Builder(getContext()).setTitle("ELIMINAR").setMessage("¿Seguro que desea elmininar la asignatura " + subject.getSubject_name() + " y TODOS SUS TEMAS de la misma?").setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        presenter.delete(subject);
+                        presenter.startDelete(subject);
                     }
                 }).setNegativeButton(android.R.string.no,null).show();
             }
@@ -175,33 +176,47 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
 
     @Override
     public void refresh(ArrayList<Subject> subjectArrayList) {
-        adapter.clear();
         adapter.addAll(subjectArrayList);
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onSuccessDeleted(Subject subject, List<Topic> topicList) {
-        adapter.removeSubject(subject);
-        presenter.undo(subject, topicList);
     }
 
     @Override
     public void onSucessUndo(Subject subject) {
-        Toast.makeText(getContext(),subject.getSubject_name() + " "+getString(R.string.subjectlist_restoreditem),Toast.LENGTH_SHORT).show();
         adapter.addSubject(subject);
         adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onUndo(Subject subject, List<Topic> subjectTopics) {
-        Snackbar.make(getView(),getString(R.string.subjectlist_undotext)+ " " + subject.getSubject_name()+"?",Snackbar.LENGTH_LONG)
-                .setAction(getString(R.string.subjectlist_undobuttontext), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        presenter.onSucessUndo(subject, subjectTopics);
-                    }
-                }).show();
+    public void startDeleteView(Subject subject) {
+        adapter.removeSubject(subject);
+        Snackbar snackbar = Snackbar.make(getView(), getString(R.string.subjectlist_undotext) + " " + subject.getSubject_name() + "?", Snackbar.LENGTH_LONG);
+        snackbar.setAction(getString(R.string.subjectlist_undobuttontext), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.addSubject(subject);
+                stopDelete = true;
+                Toast.makeText(getContext(), subject.getSubject_name() + " " + getString(R.string.subjectlist_restoreditem), Toast.LENGTH_SHORT).show();
+                snackbar.dismiss();
+            }
+        });
+        snackbar.addCallback(new Snackbar.Callback() {
+            @Override
+            public void onDismissed(Snackbar snackbar, int event) {
+                switch (event) {
+                    case Snackbar.Callback.DISMISS_EVENT_TIMEOUT:
+                        if (stopDelete) {
+                            stopDelete = false;
+                        } else
+                            presenter.onDelete(subject);
+                        break;
+                }
+            }
+
+            @Override
+            public void onShown(Snackbar snackbar) {
+            }
+        });
+
+        snackbar.show();
     }
 
     @Override

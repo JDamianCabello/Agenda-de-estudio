@@ -78,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/buttonAddTaskOrTopic"
         android:layout_width="0dp"
         android:layout_height="25dp"
         android:layout_marginStart="50dp"

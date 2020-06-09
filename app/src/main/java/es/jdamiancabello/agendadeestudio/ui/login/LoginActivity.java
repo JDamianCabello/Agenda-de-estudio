@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.on
     private void showVerifyFragment() {
         Bundle bundle = new Bundle();
         bundle.putParcelable(Subject.SUBJECT_KEY,FocusApplication.getUser());
-        verifyEmailFragment = VerifyEmailFragment.newInstance(false);
+        verifyEmailFragment = VerifyEmailFragment.newInstance();
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.loginContainer,verifyEmailFragment,VerifyEmailFragment.TAG);
@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.on
     private void showChangePassFragment() {
         Bundle bundle = new Bundle();
         bundle.putParcelable(Subject.SUBJECT_KEY,FocusApplication.getUser());
-        verifyEmailFragment = VerifyEmailFragment.newInstance(true);
+        verifyEmailFragment = VerifyEmailFragment.newInstance();
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.loginContainer,verifyEmailFragment,VerifyEmailFragment.TAG);
@@ -111,8 +111,4 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.on
         onBackPressed();
     }
 
-    @Override
-    public void onChangePass() {
-
-    }
 }

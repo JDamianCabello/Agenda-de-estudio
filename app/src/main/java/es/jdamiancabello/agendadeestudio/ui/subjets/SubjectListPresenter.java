@@ -8,7 +8,7 @@ import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.model.Topic;
 import es.jdamiancabello.agendadeestudio.data.repository.SubjectRepository;
 
-public class SubjectListPresenter implements SubjectListContract.Presenter, SubjectRepository.RepositorySubject, SubjectRepository.DeleteSubject, SubjectRepository.RestoreSubject {
+public class SubjectListPresenter implements SubjectListContract.Presenter, SubjectRepository.RepositorySubject,SubjectRepository.DeleteSubject{
     private SubjectListContract.View view;
 
     public SubjectListPresenter(SubjectListContract.View vista) {
@@ -16,8 +16,8 @@ public class SubjectListPresenter implements SubjectListContract.Presenter, Subj
     }
 
     @Override
-    public void delete(Subject subject) {
-        SubjectRepository.getInstance().deleteSubject(this, subject);
+    public void startDelete(Subject subject) {
+        view.startDeleteView(subject);
     }
 
     public void load(){
@@ -27,28 +27,22 @@ public class SubjectListPresenter implements SubjectListContract.Presenter, Subj
 
 
     @Override
-    public void undo(Subject subject, List<Topic> topicList) {
-        view.onUndo(subject,topicList);
+    public void onDelete(Subject subject) {
+        SubjectRepository.getInstance().deleteSubject(this, subject);
     }
 
     @Override
-    public void onSucessUndo(Subject subject, List<Topic> subjectTopics) {
-        SubjectRepository.getInstance().restoreSubject(this, subject);
+    public void onSucessUndo(Subject subject) {
     }
 
     @Override
-    public void onLoaded() {
+    public void onLoaded(List<Subject> subjectList) {
         view.hideProgress();
-        view.refresh((ArrayList<Subject>)SubjectRepository.getInstance().getList());
+        view.refresh((ArrayList<Subject>) subjectList);
     }
 
     @Override
-    public void onDeleted(Subject deletedSubject, List<Topic> deletedTopicsList) {
-        view.onSuccessDeleted(deletedSubject, deletedTopicsList);
-    }
-
-    @Override
-    public void onRestored(Subject subject) {
-        view.onSucessUndo(subject);
+    public void onDeleted() {
+        //Evento que notifica cuando se ha eliminado una asignatura, no se usa en la vista
     }
 }

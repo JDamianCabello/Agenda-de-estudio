@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 import es.jdamiancabello.agendadeestudio.utils.CommonUtils;
 
@@ -125,5 +126,18 @@ public class Subject implements Parcelable{
         public int compare(Subject o1, Subject o2) {
             return (int) (CommonUtils.dateStringToLong(o1.getExam_date()) - CommonUtils.dateStringToLong(o2.getExam_date()));
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Subject subject = (Subject) o;
+        return id == subject.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

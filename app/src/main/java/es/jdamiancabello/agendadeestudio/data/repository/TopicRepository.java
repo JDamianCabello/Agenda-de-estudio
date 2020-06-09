@@ -6,38 +6,40 @@ import java.util.List;
 import es.jdamiancabello.agendadeestudio.data.DAO.TopicDAO;
 import es.jdamiancabello.agendadeestudio.data.model.Topic;
 
-public class TopicRepository implements TopicDAO.ResponseGET_TopicList {
+public class TopicRepository implements TopicDAO.ResponseGET_TopicList, TopicDAO.ResponsePost_Topic {
     public static TopicRepository topicRepository;
-    private List<Topic> topicsList;
     public static TopicRepository getInstance(){
         return topicRepository;
     }
-    public static GetTopicListListener getTopicListListener;
+    public static TopicRepositoryListener getTopicListListener;
 
 
     static {
         topicRepository = new TopicRepository();
     }
 
-    private TopicRepository(){ topicsList = new ArrayList<>(); }
-
-    public List<Topic> getDataList(){
-        return topicsList;
-    }
-
-    public void startLoadData(GetTopicListListener getTopicListListener, int idSubject){
+    public void startLoadData(TopicRepositoryListener getTopicListListener, int idSubject){
         this.getTopicListListener = getTopicListListener;
         TopicDAO.getTopicList(this, idSubject);
     }
 
-    @Override
-    public void onSucess(List<Topic> list) {
-        topicsList.clear();
-        topicsList.addAll(list);
-        getTopicListListener.onDataLoaded();
+    public void addTopic(TopicRepositoryListener getTopicListListener, int idSubject, Topic topic){
+        this.getTopicListListener = getTopicListListener;
+        TopicDAO.addTopic(this, idSubject, topic);
     }
 
-    public interface GetTopicListListener{
-        void onDataLoaded();
+    @Override
+    public void onSucess(List<Topic> list) {
+        getTopicListListener.onDataLoaded(list);
+    }
+
+    @Override
+    public void onSuccessAdd(Topic topic, int newPercent) {
+        getTopicListListener.onTopicAdded(topic, newPercent);
+    }
+
+    public interface TopicRepositoryListener {
+        void onDataLoaded(List<Topic> list);
+        void onTopicAdded(Topic topic, int newPercent);
     }
 }

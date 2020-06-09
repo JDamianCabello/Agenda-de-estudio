@@ -33,7 +33,6 @@ public class SubjectDAO {
 
             @Override
             public void onFailure(Call<SubjectListResponse> call, Throwable t) {
-                Log.d("API", "asñf");
             }
         });
     }
@@ -58,27 +57,6 @@ public class SubjectDAO {
         });
     }
 
-    public static void restoreSubject(ResponseSubjectRestore responseSubjectRestore,Subject newSubject) {
-        Call<SubjectAddResponse> call = ApiRestClientToken
-                .getInstance()
-                .addSubject(newSubject.getSubject_name(), newSubject.getExam_date(), newSubject.getColor(), newSubject.getIconId());
-
-        call.enqueue(new Callback<SubjectAddResponse>() {
-            @Override
-            public void onResponse(Call<SubjectAddResponse> call, Response<SubjectAddResponse> response) {
-                if(response.isSuccessful()) {
-                    responseSubjectRestore.onRestored(response.body().getSubject());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<SubjectAddResponse> call, Throwable t) {
-
-            }
-        });
-    }
-
-
     public static void deleteSubject(ResponseDeleteSubject responseDeleteSubject, Subject subject) {
         Call<SubjectDeletedResponse> call = ApiRestClientToken
                 .getInstance()
@@ -88,7 +66,7 @@ public class SubjectDAO {
             @Override
             public void onResponse(Call<SubjectDeletedResponse> call, Response<SubjectDeletedResponse> response) {
                 if(response.isSuccessful()) {
-                    responseDeleteSubject.onDeleted(subject,response.body().getTopicsDeleted());
+                    responseDeleteSubject.onDeleted();
                 }
             }
 
@@ -127,12 +105,8 @@ public class SubjectDAO {
         void onSave();
     }
 
-    public interface ResponseSubjectRestore{
-        void onRestored(Subject subject);
-    }
-
     public interface ResponseDeleteSubject{
-        void onDeleted(Subject deletedSubject, List<Topic> deletedTopicsList);
+        void onDeleted();
     }
 }
 

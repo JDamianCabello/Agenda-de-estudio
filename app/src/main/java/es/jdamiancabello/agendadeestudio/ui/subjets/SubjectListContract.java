@@ -13,15 +13,14 @@ public interface SubjectListContract{
         void hideProgress();
         void noSubjets();
         void refresh(ArrayList<Subject> subjectArrayList);
-        void onSuccessDeleted(Subject deletedSubject, List<Topic> deletedTopics);
         void onSucessUndo(Subject subject);
-        void onUndo(Subject subject, List<Topic> subjectsTopics);
+        void startDeleteView(Subject subject);
     }
 
     interface Presenter{
-        void delete(Subject subject);
+        void startDelete(Subject subject);
         void load();
-        void undo(Subject subject, List<Topic> topicList);
-        void onSucessUndo(Subject subject, List<Topic> subjectTopics);
+        void onDelete(Subject subject);
+        void onSucessUndo(Subject subject);
     }
 }

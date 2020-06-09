@@ -13,15 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -57,6 +55,7 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
     private TextInputEditText tiedAddTask;
     private CheckBox checkBoxHigPrio, checkBoxMidPrio, checkBoxLowPrio, isTask;
     private Spinner state;
+    private Button saveTopic;
 
     private SubjectInfoContract.Presenter presenter;
 
@@ -80,6 +79,9 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Subject subject = getArguments().getParcelable(Subject.SUBJECT_KEY);
+
         iv_backArrow = view.findViewById(R.id.subjectInfo_iv_backArrow);
         ibt_contextMenu = view.findViewById(R.id.subjectInfo_ibt_contextMenu);
         tv_subjectName = view.findViewById(R.id.subjectInfo_tv_subjectName);
@@ -97,6 +99,14 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         state = view.findViewById(R.id.spinnerAddTaskOrTopic);
         stateFirstLoad();
         isTask = view.findViewById(R.id.checkbox_ChangeStateContent);
+        saveTopic = view.findViewById(R.id.buttonAddTaskOrTopic);
+
+        saveTopic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.addTopic(makeTopic(),subject.getId());
+            }
+        });
 
         checkBoxHigPrio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -171,7 +181,6 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         });
 
         //Get the current subject
-        Subject subject = getArguments().getParcelable(Subject.SUBJECT_KEY);
         tv_subjectName.setText(subject.getSubject_name());
         tv_subjectName.setTextColor(subject.getColor());
 
@@ -202,6 +211,36 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
         presenter.loadData(subject.getId());
+    }
+
+    private Topic makeTopic() {
+        Topic topic = new Topic();
+        topic.setName(tiedAddTask.getText().toString());
+        topic.setPriority(getPriority());
+        topic.setTask(isTask.isChecked());
+        topic.setState(getTopicState());
+
+        return topic;
+    }
+
+    private int getTopicState() {
+        if(isTask.isChecked()){
+            if(state.getSelectedItemPosition() == 1)
+                return 3;
+            else
+                return 0;
+        }
+        else
+        return state.getSelectedItemPosition();
+    }
+
+    private int getPriority() {
+        if(checkBoxHigPrio.isChecked())
+            return 2;
+        if(checkBoxMidPrio.isChecked())
+            return 1;
+        return 0;
+
     }
 
     private void stateFirstLoad() {
@@ -282,6 +321,23 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
 
         tv_totalTaskDone.setText(Integer.toString(getTaskDone(topicList)));
         tv_totalTask.setText(Integer.toString(topicList.size()- Integer.parseInt(tv_totalTaskDone.getText().toString())));
+    }
+
+    @Override
+    public void onNewTopicAdd(Topic newTopic, int newPercent) {
+        Toast.makeText(getContext(), R.string.subjectInfo_toast_topicCreated, Toast.LENGTH_SHORT).show();
+        progressBarPercent.setProgress(newPercent);
+        tv_totalPercentComplete.setText(newPercent + "% / 100%");
+
+        //state == 3 significa que la tarea o tema está al 100%
+        if(newTopic.getState() ==3 ) {
+            tv_totalTaskDone.setText(Integer.toString(Integer.parseInt(tv_totalTaskDone.getText().toString()) + 1));
+        }
+        else{
+            tv_totalTask.setText(Integer.toString(Integer.parseInt(tv_totalTask.getText().toString()) + 1));
+        }
+        tiedAddTask.getText().clear();
+        topicAdapter.add(newTopic);
     }
 
     private int getTaskDone(List<Topic> topicList) {

@@ -95,6 +95,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
 
     public void add(Topic t){
         topicList.add(t);
+        notifyDataSetChanged();
     }
 
     public void addAll(List<Topic> topics){
