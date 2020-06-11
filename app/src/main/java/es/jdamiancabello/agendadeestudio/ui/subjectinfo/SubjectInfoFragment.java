@@ -196,7 +196,7 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         topicAdapter = new TopicAdapter(new TopicAdapter.ItemActions() {
             @Override
             public void onClick(Topic topic) {
-                Toast.makeText(getContext(),"ClickEvent",Toast.LENGTH_SHORT).show();
+                mListener.onTopicInfo(topic);
             }
 
             @Override
@@ -330,6 +330,7 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         tv_totalPercentComplete.setText(newPercent + "% / 100%");
 
         //state == 3 significa que la tarea o tema está al 100%
+        //Si es un task los estados serian 0 o 3 (hecho / no hecho)
         if(newTopic.getState() ==3 ) {
             tv_totalTaskDone.setText(Integer.toString(Integer.parseInt(tv_totalTaskDone.getText().toString()) + 1));
         }
@@ -373,5 +374,6 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
 
     public interface OnFragmentInteractionListener{
         void onSubjectInfoBack();
+        void onTopicInfo(Topic topic);
     }
 }

@@ -1,6 +1,8 @@
 package es.jdamiancabello.agendadeestudio.data.repository;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -50,12 +52,31 @@ public class UserRepository implements UserDAO.LoginUser, UserDAO.GetSavedUserDa
     public void onSucessLogin(User user,String password, boolean persistLogin) {
         ApiRestClientToken.APITOKEN = user.getApi_token();
         FocusApplication.setUser(user);
+
+        SharedPreferences sharedPreferences = FocusApplication.getUserContext().getSharedPreferences(FocusApplication.getUserContext().getString(R.string.sharedUserDataLogin), Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(User.userToken,user.getApi_token());
+
+        editor.apply();
+
         userRepositoryListener.onSucessLogin(user, password,persistLogin);
     }
 
     @Override
-    public void onFailedLogin(String mesage) {
-        userRepositoryListener.onFailLogin(mesage);
+    public void onWrongUserPass() {
+        userRepositoryListener.onWrongUserPass();
+    }
+
+    @Override
+    public void onNoExistEmailFail() {
+        userRepositoryListener.onDontExistEmail();
+    }
+
+    @Override
+    public void unknowError() {
+        userRepository.unknowError();
     }
 
     @Override
@@ -80,7 +101,9 @@ public class UserRepository implements UserDAO.LoginUser, UserDAO.GetSavedUserDa
 
     public interface UserRepositoryListener{
         void onSucessLogin(User user,String password, boolean persistLogin);
-        void onFailLogin(String message);
+        void onWrongUserPass();
+        void onDontExistEmail();
+        void onUnknowError();
     }
 
     public  interface WelcomeListener{

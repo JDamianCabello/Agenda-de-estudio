@@ -2,15 +2,9 @@ package es.jdamiancabello.agendadeestudio.ui.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
-
-import com.facebook.AccessToken;
-
 import es.jdamiancabello.agendadeestudio.R;
-import es.jdamiancabello.agendadeestudio.data.Network.ApiRestClientToken;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.ui.FocusApplication;
 import es.jdamiancabello.agendadeestudio.ui.aboutme.AboutMeActivity;
@@ -94,11 +88,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.on
     public void showRegister() {
         startActivity(new Intent(this, RegisterActivity.class));
         finish();
-    }
-
-    @Override
-    public void showFacebookRegister(AccessToken accessToken) {
-        //TODO: Implementar login con FB
     }
 
     @Override

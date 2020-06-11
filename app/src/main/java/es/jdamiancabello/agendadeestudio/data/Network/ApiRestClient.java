@@ -5,10 +5,14 @@ import com.google.gson.GsonBuilder;
 import com.ihsanbal.logging.Level;
 import com.ihsanbal.logging.LoggingInterceptor;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import es.jdamiancabello.agendadeestudio.BuildConfig;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.internal.platform.Platform;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

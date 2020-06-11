@@ -5,15 +5,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.facebook.AccessToken;
-
 import es.jdamiancabello.agendadeestudio.R;
-import es.jdamiancabello.agendadeestudio.ui.aboutme.AboutMeActivity;
 import es.jdamiancabello.agendadeestudio.ui.dashboard.DashboardActivity;
 import es.jdamiancabello.agendadeestudio.ui.login.LoginActivity;
-import es.jdamiancabello.agendadeestudio.ui.login.LoginFragment;
-import es.jdamiancabello.agendadeestudio.ui.login.LoginPresenter;
 import es.jdamiancabello.agendadeestudio.ui.register.RegisterActivity;
 
 public class WelcomeActivity extends AppCompatActivity

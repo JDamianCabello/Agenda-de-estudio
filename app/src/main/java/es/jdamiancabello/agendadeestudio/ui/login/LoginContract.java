@@ -5,7 +5,9 @@ import es.jdamiancabello.agendadeestudio.ui.base.BaseView;
 
 public class LoginContract {
     public interface View extends BaseView<Presenter> {
-        void showWrongLogin(String msg);
+        void showWrongUserPassMessage();
+        void showDontExistEmail();
+        void showUnknowError();
         void saveUSerData(User user, String password);
     }
 

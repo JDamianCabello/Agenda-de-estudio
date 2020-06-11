@@ -43,7 +43,7 @@
                 android:id="@+id/login_edtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/fbLogin_email"
+                android:hint="@string/Register_hint_email"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -57,7 +57,7 @@
                 android:id="@+id/login_edtUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/fbLogin_username" />
+                android:hint="@string/Register_hint_username" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -71,7 +71,7 @@
                 android:id="@+id/login_edtpsw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/fbLogin_password"
+                android:hint="@string/Register_hint_password"
                 android:inputType="textPassword"
                 android:password="true" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -87,7 +87,7 @@
                 android:id="@+id/login_edtConfirmPsw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/fbLogin_confirmPassword"
+                android:hint="@string/Register_hint_confirmPassword"
                 android:inputType="textPassword"
                 android:password="true" />
         </com.google.android.material.textfield.TextInputLayout>

@@ -8,14 +8,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-
-import com.facebook.AccessToken;
-
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.Network.ApiRestClientToken;
 import es.jdamiancabello.agendadeestudio.data.model.Note;
-import es.jdamiancabello.agendadeestudio.data.model.StudyOrganicer;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.model.Topic;
 import es.jdamiancabello.agendadeestudio.ui.calendar.CalendarPresenter;
@@ -35,13 +30,10 @@ import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListFragment;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListPresenter;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectManagerFragment;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectManagerPresenter;
-import es.jdamiancabello.agendadeestudio.ui.topic.TopicListFragment;
-import es.jdamiancabello.agendadeestudio.ui.topic.TopicListPresenter;
-import es.jdamiancabello.agendadeestudio.ui.topic.TopicManagerFragment;
-import es.jdamiancabello.agendadeestudio.ui.topic.TopicManagerPresenter;
+import es.jdamiancabello.agendadeestudio.ui.topicinfo.TopicInfoFragment;
+import es.jdamiancabello.agendadeestudio.ui.utils.stopwatch.StopWatchFragment;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomeActivity;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomeFragment;
-import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomePresenter;
 
 public class DashboardActivity extends AppCompatActivity implements
         SubjectListFragment.onSubjectListListener,
@@ -53,9 +45,8 @@ public class DashboardActivity extends AppCompatActivity implements
         SubjectManagerFragment.OnFragmentInteractionListener,
         DashborardFragmentV2.OnFragmentInteractionListener,
         CalendarFragment.OnFragmentInteractionListener,
-        TopicListFragment.OnFragmentInteractionListener,
-        TopicManagerFragment.OnFragmentInteractionListener,
-        AboutMeFragment.OnFragmentInteractionListener
+        AboutMeFragment.OnFragmentInteractionListener,
+        TopicInfoFragment.OnfragmentIntercationsListener
         {
     private Toolbar toolbar;
 
@@ -81,14 +72,12 @@ public class DashboardActivity extends AppCompatActivity implements
     private CalendarFragment calendarFragment;
     private CalendarPresenter calendarPresenter;
 
-    private TopicListFragment topicListFragment;
-    private TopicListPresenter topicListPresenter;
-
-    private TopicManagerFragment topicManagerFragment;
-    private TopicManagerPresenter topicManagerPresenter;
+    private TopicInfoFragment topicInfoFragment;
 
     private SubjectInfoFragment subjectInfoFragment;
     private SubjectInfoPresenter subjectInfoPresenter;
+
+    private StopWatchFragment stopWatchFragment;
 
     @Override
     protected void onResume() {
@@ -159,11 +148,6 @@ public class DashboardActivity extends AppCompatActivity implements
         registerPresenter = new RegisterPresenter(registerFragment);
         registerFragment.setPresenter(registerPresenter);
 
-
-    }
-
-    @Override
-    public void showFacebookRegister(AccessToken accessToken) {
 
     }
 
@@ -255,11 +239,6 @@ public class DashboardActivity extends AppCompatActivity implements
         onBackPressed();
     }
 
-    @Override
-    public void onCreateNewSubject() {
-        addOrEdditSubject(null);
-    }
-
             @Override
     public void dashboardv2FirstLoad(int containerID) {
         calendarFragment = (CalendarFragment) getSupportFragmentManager().findFragmentByTag(CalendarFragment.TAG);
@@ -334,18 +313,12 @@ public class DashboardActivity extends AppCompatActivity implements
 
     @Override
     public void showTools(int containerID) {
-        topicListFragment = (TopicListFragment) getSupportFragmentManager().findFragmentByTag(TopicListFragment.TAG);
+        stopWatchFragment = StopWatchFragment.newInstance();
 
-        if(topicListFragment == null){
-            topicListFragment = TopicListFragment.newInstance();
-        }
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.dashboard_container,topicListFragment,TopicListFragment.TAG)
+                .replace(R.id.dashboard_container,stopWatchFragment,StopWatchFragment.TAG)
                 .commit();
-
-        topicListPresenter = new TopicListPresenter(topicListFragment);
-        topicListFragment.setPresenter(topicListPresenter);
     }
 
     @Override
@@ -368,41 +341,22 @@ public class DashboardActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onAddOrModify(Topic topic) {
-        topicManagerFragment = (TopicManagerFragment) getSupportFragmentManager().findFragmentByTag(TopicManagerFragment.TAG);
+    public void onTopicInfo(Topic topic) {
+        topicInfoFragment = (TopicInfoFragment) getSupportFragmentManager().findFragmentByTag(TopicInfoFragment.TAG);
 
             Bundle bundle = null;
             if(topic != null) {
                 bundle = new Bundle();
                 bundle.putParcelable(Topic.TOPICTAG, topic);
             }
-            topicManagerFragment = TopicManagerFragment.newInstance(bundle);
+            topicInfoFragment = TopicInfoFragment.newInstance(bundle);
 
 
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.dashboard_container,topicManagerFragment,TopicManagerFragment.TAG);
-        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.dashboard_container,topicInfoFragment,TopicInfoFragment.TAG);
+        fragmentTransaction.addToBackStack(SubjectInfoFragment.TAG);
         fragmentTransaction.commit();
-
-        topicManagerPresenter = new TopicManagerPresenter(topicManagerFragment);
-        topicManagerFragment.setPresenter(topicManagerPresenter);
-    }
-
-    @Override
-    public void onSaved() {
-        topicListFragment = (TopicListFragment) getSupportFragmentManager().findFragmentByTag(TopicListFragment.TAG);
-
-        if(topicListFragment == null){
-            topicListFragment = TopicListFragment.newInstance();
-        }
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.dashboard_container,topicListFragment,TopicListFragment.TAG)
-                .commit();
-
-        topicListPresenter = new TopicListPresenter(topicListFragment);
-        topicListFragment.setPresenter(topicListPresenter);
     }
 
     @Override
@@ -422,6 +376,11 @@ public class DashboardActivity extends AppCompatActivity implements
     public void onSubjectInfoBack() {
         onBackPressed();
     }
-}
+
+            @Override
+            public void onBack() {
+                onBackPressed();
+            }
+        }
 
 

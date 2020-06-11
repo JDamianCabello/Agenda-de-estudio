@@ -1,15 +1,24 @@
 package es.jdamiancabello.agendadeestudio.data.Network;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ihsanbal.logging.Level;
 import com.ihsanbal.logging.LoggingInterceptor;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import es.jdamiancabello.agendadeestudio.BuildConfig;
+import es.jdamiancabello.agendadeestudio.R;
+import es.jdamiancabello.agendadeestudio.data.model.User;
 import es.jdamiancabello.agendadeestudio.ui.FocusApplication;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.internal.platform.Platform;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -32,7 +41,7 @@ public class ApiRestClientToken {
             okHttpBuilder.addInterceptor(new LoggingInterceptor.Builder()
                     .loggable(BuildConfig.DEBUG)
                     .setLevel(Level.BASIC)
-                    .addHeader("Api-Token", APITOKEN)
+                    .addHeader("Api-Token", getPreferencesApiToken())
                     .log(Platform.INFO).build());
 
             Gson gson = new GsonBuilder()
@@ -48,6 +57,13 @@ public class ApiRestClientToken {
             API_SERVICE = retrofit.create(ApiCalls.class);
         }
         return API_SERVICE;
+    }
+
+    private static String getPreferencesApiToken() {
+        SharedPreferences sharedPreferences = FocusApplication.getUserContext().getSharedPreferences(
+                FocusApplication.getUserContext().getString(R.string.sharedUserDataLogin), Context.MODE_PRIVATE);
+
+        return sharedPreferences.getString(User.userToken,"");
     }
 
     public static void loggout(){

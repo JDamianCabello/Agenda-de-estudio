@@ -4,9 +4,11 @@
 
     <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- <uses-permission android:name="android.permission.RECEIVE_SMS" /> -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Permiso para recibir aviso de inicio completo del sistema -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <uses-permission-sdk-23 android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- Permiso para ejecutar servicios en foreground -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".ui.FocusApplication"
@@ -16,43 +18,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/welcome">
-        <activity android:name=".ui.login.LoginActivity"></activity>
+        <receiver
+            android:name=".data.service.FocusBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="es.jdamiancabello.agendadeestudio.data.Service.FOCUS_RUNSERVICE"/>
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".data.service.FocusService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <activity android:name=".ui.login.LoginActivity" />
         <activity android:name=".ui.aboutme.AboutMeActivity" />
         <activity android:name=".ui.dashboard.DashboardActivity" />
         <activity android:name=".ui.register.RegisterActivity" />
-
-        <service
-            android:name=".data.broadcastReceiver_service.MyService"
-            android:enabled="true"
-            android:exported="true" />
-
-        <receiver android:name=".data.broadcastReceiver_service.MyBroadcast">
-            <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-            </intent-filter>
-        </receiver> <!-- Fb login -->
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
-
-        <activity
-            android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
-        <activity
-            android:name="com.facebook.CustomTabActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="@string/fb_login_protocol_scheme" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".ui.welcome.WelcomeActivity"
             android:screenOrientation="fullSensor">

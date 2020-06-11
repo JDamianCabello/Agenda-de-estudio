@@ -59,10 +59,10 @@
     <string name="errDuplicateEmail">El correo está en uso, prueba otro distinto o recupera este</string>
     <string name="errNotMatchPass">Las contraseñas no coinciden</string>
     <string name="errVoidField">Este campo no puede esta vacio</string>
-    <string name="fbLogin_confirmPassword">Confirmar contraseña</string>
-    <string name="fbLogin_email">Correo</string>
-    <string name="fbLogin_password">Contraseña</string>
-    <string name="fbLogin_username">Usuario</string>
+    <string name="Register_hint_confirmPassword">Confirmar contraseña</string>
+    <string name="Register_hint_email">Correo</string>
+    <string name="Register_hint_password">Contraseña</string>
+    <string name="Register_hint_username">Usuario</string>
     <string name="loadingData">Cargando, por favor espere...</string>
     <string name="login_recoverPassword">Recuperar contraseña</string>
     <string name="login_wrongLoginText">El correo o la contraseña son incorrectos</string>

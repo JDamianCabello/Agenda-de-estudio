@@ -8,7 +8,6 @@
     <string name="login_signInButtonText">Sign in</string>
     <string name="login_tittle">¡Welcome!</string>
     <string name="login_subtittle">Start organizing your study form</string>
-    <string name="login_noRegisterButtonText">Enter as a guest</string>
 
     <!--    RegisterFragment strings-->
     <string name="register_goBackText">Go back</string>
@@ -30,22 +29,22 @@
     <string name="studyOrganicerList_NoEvents">Don\'t have events to show</string>
 
 
+    <string name="Register_hint_email">email</string>
+    <string name="Register_hint_username">Username</string>
+    <string name="Register_hint_password">Password</string>
+    <string name="Register_hint_confirmPassword">Confirm password</string>
     <string name="loadingData">Loading data, please wait...</string>
     <string name="subjectlist_deleteditem">has been deleted</string>
     <string name="subjectlist_undotext">Restore the subject</string>
     <string name="subjectlist_undobuttontext">UNDO</string>
     <string name="subjectlist_restoreditem">has been successfully restored</string>
-    <string name="login_wrongLoginText">email or password entered is incorrect . please check</string>
+    <string name="login_err_wrongLoginText">email or password entered is incorrect . please check</string>
+    <string name="login_err_dontExistEmail">These email dont exist, please do a new acount</string>
+    <string name="login_err_unknow">Unknow error, contact with the dev</string>
     <string name="sharedUserDataLogin" translatable="false">sharedUserData</string>
 
 
     <!--    Not translated-->
-    <string name="facebook_app_id" translatable="false">462499357788675</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb462499357788675</string>
-    <string name="fbLogin_email">email</string>
-    <string name="fbLogin_username">Username</string>
-    <string name="fbLogin_password">Password</string>
-    <string name="fbLogin_confirmPassword">Confirm password</string>
     <string name="errDuplicateEmail">This email is in use, try another diferent or recover the password</string>
     <string name="errNotMatchPass">Passwords do not match</string>
     <string name="errVoidField">This field can not be blank</string>
@@ -82,7 +81,7 @@
     <string name="logout">Logout</string>
     <string name="channel_name" translatable="false">Focus</string>
     <string name="channel_description" translatable="false">Focus description</string>
-    <string name="SubjectInfoAddTaskHint">Add task or topic...</string>
+    <string name="SubjectInfoAddTaskHint">Add new task or topic...</string>
     <string name="subject_manager_tv_selectIcon">Select subject icon:</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -94,4 +93,5 @@
     <string name="err_verifyCode_notLenght">"Validation code lenght must be 8 characters "</string>
     <string name="subjectInfo_toast_topicCreated">Topic created sucefully.</string>
     <string name="topicInfo_tv_notes">Notes:</string>
+    <string name="subjectInfo_cbx_isTask">Is a task?</string>
 </resources>

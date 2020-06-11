@@ -29,7 +29,18 @@ public class LoginPresenter implements LoginContract.Presenter, UserRepository.U
     }
 
     @Override
-    public void onFailLogin(String message) {
-        view.showWrongLogin(message);
+    public void onWrongUserPass() {
+        view.showWrongUserPassMessage();
     }
+
+    @Override
+    public void onDontExistEmail() {
+        view.showDontExistEmail();
+    }
+
+    @Override
+    public void onUnknowError() {
+        view.showUnknowError();
+    }
+
 }

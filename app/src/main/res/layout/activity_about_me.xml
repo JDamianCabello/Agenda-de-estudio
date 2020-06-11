@@ -5,6 +5,4 @@
     android:id="@+id/aboutMeContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.aboutme.AboutMeActivity">
-
-</FrameLayout>
+    tools:context=".ui.aboutme.AboutMeActivity"/>

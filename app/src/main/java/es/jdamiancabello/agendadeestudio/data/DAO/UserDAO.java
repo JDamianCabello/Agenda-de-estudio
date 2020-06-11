@@ -23,7 +23,13 @@ public class UserDAO {
                     loginUser.onSucessLogin(response.body().getUser(),pass,persistLogin);
                 }
                 else{
-                    loginUser.onFailedLogin(response.body().getMessage());
+                    if(response.code() == 401)
+                        loginUser.onWrongUserPass();
+                    else if(response.code() == 402)
+                        loginUser.onNoExistEmailFail();
+                    else
+                        loginUser.unknowError();
+
                 }
             }
 
@@ -80,7 +86,9 @@ public class UserDAO {
 
     public interface LoginUser{
         void onSucessLogin(User user,String password, boolean persistLogin);
-        void onFailedLogin(String mesage);
+        void onWrongUserPass();
+        void onNoExistEmailFail();
+        void unknowError();
     }
 
     public interface GetSavedUserData{

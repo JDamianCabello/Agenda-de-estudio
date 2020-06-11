@@ -1,19 +1,17 @@
 package es.jdamiancabello.agendadeestudio.ui.calendar;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.applandeo.materialcalendarview.CalendarView;
@@ -26,10 +24,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import es.jdamiancabello.agendadeestudio.R;
-import es.jdamiancabello.agendadeestudio.data.adapter.SubjectAdapter;
+import es.jdamiancabello.agendadeestudio.data.service.FocusBroadcastReceiver;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.utils.CommonUtils;
 
@@ -40,6 +37,7 @@ public class CalendarFragment extends Fragment implements CalendarContract.View{
     private CalendarView calendarView;
     private OnFragmentInteractionListener mListener;
     private CalendarPresenter presenter;
+    private Button service;
 
 
     public static CalendarFragment newInstance() {
@@ -74,43 +72,18 @@ public class CalendarFragment extends Fragment implements CalendarContract.View{
             }
         });
 
+        service = view.findViewById(R.id.pruevaDeService);
+        service.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         presenter.load();
     }
 
-    private void añadirEventosDummy() {
-        List<EventDay> events = new ArrayList<>();
 
-
-
-//        Random rnd = new Random();
-//        for (int i = 1; i <= 20; i++) {
-//            Calendar a = Calendar.getInstance();
-//            a.add(Calendar.DAY_OF_YEAR,i);
-//            events.add(new EventDay(a, randomIcon(),Color.rgb(rnd.nextInt(255),rnd.nextInt(255),rnd.nextInt(255))));
-//        }
-
-        calendarView.setEvents(events);
-
-    }
-
-    private int randomIcon() {
-        Random rnd = new Random();
-        switch (rnd.nextInt(5)){
-            case 0:
-                return R.drawable.ic_book;
-            case 1:
-                return R.drawable.ic_exit_to_app;
-            case 2:
-                return R.drawable.ic_logout;
-            case 3:
-                return R.drawable.com_facebook_button_icon_blue;
-            case 4:
-                return R.drawable.ic_nota;
-            case 5:
-                return R.drawable.back_button_arrow;
-        }
-        return R.drawable.ic_action_add;
-    }
 
     @Override
     public void onAttach(Context context) {
