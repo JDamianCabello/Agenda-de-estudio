@@ -77,6 +77,7 @@
     <string name="deleteTopic">Delete the topic</string>
     <string name="deleteTopicPrepo">from</string>
     <string name="topiclist_undotext">Restore the topic</string>
+    <string name="topiclist_task_undotext">Restore the task</string>
     <string name="topicList_Restored">" has been sucefully restored"</string>
     <string name="logout">Logout</string>
     <string name="channel_name" translatable="false">Focus</string>
@@ -94,4 +95,18 @@
     <string name="subjectInfo_toast_topicCreated">Topic created sucefully.</string>
     <string name="topicInfo_tv_notes">Notes:</string>
     <string name="subjectInfo_cbx_isTask">Is a task?</string>
+    <string name="topic_item_task_state_0">No finished</string>
+    <string name="topic_item_task_state_3">Finished</string>
+    <string name="topic_item_topic_state_0">Ignored</string>
+    <string name="topic_item_topic_state_1">Read</string>
+    <string name="topic_item_topic_state_2">Summarized</string>
+    <string name="topic_item_topic_state_3">Dominated</string>
+    <string name="topic_item_isTask">Task</string>
+    <string name="topic_item_topic_priorityText">Priority:</string>
+    <string name="subjectInfo_selectState">Select initial state:</string>
+    <string name="subjectInfo_saveButton">Save</string>
+    <string name="SubjectInfo_chxLow">Low</string>
+    <string name="SubjectInfo_chxMed">Medium</string>
+    <string name="SubjectInfo_chxHig">Hig</string>
+    <string name="SubjectInfo_selectPriority">Select priority:</string>
 </resources>

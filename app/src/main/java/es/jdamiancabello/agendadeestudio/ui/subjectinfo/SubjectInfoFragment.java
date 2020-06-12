@@ -1,6 +1,8 @@
 package es.jdamiancabello.agendadeestudio.ui.subjectinfo;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -44,6 +46,7 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
 
 
     public static final String TAG = "SubjectInfoFragment";
+    private static final int TOTALMAXTOPICSSTATE = 3;
     private OnFragmentInteractionListener mListener;
     private ImageView iv_backArrow;
     private TextView tv_subjectName, tv_totalTask, tv_totalTaskDone, tv_totalPercentComplete;
@@ -56,6 +59,7 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
     private CheckBox checkBoxHigPrio, checkBoxMidPrio, checkBoxLowPrio, isTask;
     private Spinner state;
     private Button saveTopic;
+    private boolean stopDelete = false;
 
     private SubjectInfoContract.Presenter presenter;
 
@@ -189,7 +193,6 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         progressBarPercent.setProgress(subject.getPercent());
 
 
-        //TODO: tareas completadas / a completar
         tv_totalTaskDone.setText("0");
         tv_totalTask.setText("0");
 
@@ -201,12 +204,19 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
 
             @Override
             public void onLongClick(Topic topic) {
-                Toast.makeText(getContext(),"LongClickEvent",Toast.LENGTH_SHORT).show();
+                new AlertDialog.Builder(getContext()).setTitle("ELIMINAR").setMessage("¿Seguro que desea elmininar " + topic.getName() + "?").setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        presenter.startDeleted(topic);
+                    }
+                }).setNegativeButton(android.R.string.no,null).show();
             }
         }, getContext());
 
         recyclerView.setAdapter(topicAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+
+
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
@@ -240,7 +250,6 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         if(checkBoxMidPrio.isChecked())
             return 1;
         return 0;
-
     }
 
     private void stateFirstLoad() {
@@ -319,8 +328,53 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         topicAdapter.addAll(topicList);
         topicAdapter.notifyDataSetChanged();
 
+        int sumState = 0;
+        for (Topic t: topicList)
+            sumState+=t.getState();
+
+        progressBarPercent.setProgress((sumState*100)/(topicList.size() * TOTALMAXTOPICSSTATE));
+        tv_totalPercentComplete.setText(progressBarPercent.getProgress() +"% / 100%");
         tv_totalTaskDone.setText(Integer.toString(getTaskDone(topicList)));
         tv_totalTask.setText(Integer.toString(topicList.size()- Integer.parseInt(tv_totalTaskDone.getText().toString())));
+    }
+
+    @Override
+    public void onDeleted(Topic topic) {
+        String topicOrTask;
+        if (topic.isTask())
+            topicOrTask = getString(R.string.topiclist_task_undotext);
+        else
+            topicOrTask = getString(R.string.topiclist_undotext);
+
+        topicAdapter.removeTopic(topic);
+        Snackbar snackbar = Snackbar.make(getView(), topicOrTask + " " + topic.getName() + "?", Snackbar.LENGTH_LONG);
+        snackbar.setAction(getString(R.string.subjectlist_undobuttontext), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                topicAdapter.add(topic);
+                stopDelete = true;
+                Toast.makeText(getContext(), topic.getName() + " " + getString(R.string.subjectlist_restoreditem), Toast.LENGTH_SHORT).show();
+                snackbar.dismiss();
+            }
+        });
+        snackbar.addCallback(new Snackbar.Callback() {
+            @Override
+            public void onDismissed(Snackbar snackbar, int event) {
+                switch (event) {
+                    case Snackbar.Callback.DISMISS_EVENT_TIMEOUT:
+                        if (stopDelete) {
+                            stopDelete = false;
+                        } else
+                            presenter.onConfirmDelete(topic);
+                        break;
+                }
+            }
+
+            @Override
+            public void onShown(Snackbar snackbar) {}
+        });
+
+        snackbar.show();
     }
 
     @Override
@@ -355,6 +409,21 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
     @Override
     public void noTopics() {
         Snackbar.make(getView(),"No hay temas",Snackbar.LENGTH_INDEFINITE).show();
+    }
+
+    @Override
+    public void onSuccessDelete(Topic topic, int newPercent) {
+        progressBarPercent.setProgress(newPercent);
+        tv_totalPercentComplete.setText(newPercent + "% / 100%");
+
+        //state == 3 significa que la tarea o tema está al 100%
+        //Si es un task los estados serian 0 o 3 (hecho / no hecho)
+        if(topic.getState() ==3 ) {
+            tv_totalTaskDone.setText(Integer.toString(Integer.parseInt(tv_totalTaskDone.getText().toString()) - 1));
+        }
+        else{
+            tv_totalTask.setText(Integer.toString(Integer.parseInt(tv_totalTask.getText().toString()) - 1));
+        }
     }
 
     @Override

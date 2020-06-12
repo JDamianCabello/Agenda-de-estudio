@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/stopwatch_background"
     tools:context=".ui.utils.stopwatch.StopWatchFragment">
+
+
 
     <ImageView
         android:id="@+id/imageView4"
@@ -13,7 +14,7 @@
         android:layout_height="247dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="72dp"
-        android:src="@drawable/bgcircle"
+        android:src="@drawable/bgstopwatchcircle_witebackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.464"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,34 +25,11 @@
         android:layout_width="358dp"
         android:layout_height="357dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/icanchor"
+        android:src="@drawable/icanchorcyan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/stopWatchAnchorReverse"
-        android:layout_width="358dp"
-        android:layout_height="357dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/icanchor_mirror"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/stopWatch_btn_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <Chronometer
         android:id="@+id/stopWatch_time"
@@ -59,19 +37,35 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:fontFamily="@font/digital"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:textSize="62sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stopWatchAnchor" />
 
-    <CheckBox
-        android:id="@+id/stopWatch_cbx_reverse"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="CheckBox"
-        app:layout_constraintBottom_toTopOf="@+id/imageView4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginTop="48dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/imageView4"
+        app:layout_constraintStart_toStartOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/stopWatch_time">
+
+        <ImageView
+            android:id="@+id/stopWatch_iv_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_play_button_filled" />
+
+
+
+        <ImageView
+            android:id="@+id/stopWatch_iv_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_stop_outline" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -72,9 +72,9 @@ public interface ApiCalls {
             @Field("iconId") int iconId);
 
     @FormUrlEncoded
-    @POST("topic/{idTopic}")
+    @POST("topic/{idSubject}")
     Call<TopicAddResponse> addTopic(
-            @Path("idTopic") int subjectId,
+            @Path("idSubject") int subjectId,
             @Field("name") String name,
             @Field("isTask") boolean isTask,
             @Field("state") int state,
@@ -86,10 +86,12 @@ public interface ApiCalls {
     @FormUrlEncoded
     @PUT("topic/{idTopic}")
     Call<TopicModifyResponse> modifyTopic(
-            @Field("subject_name") String subject_name,
-            @Field("date") String date,
-            @Field("color") int color,
-            @Field("iconId") int iconId);
+            @Path("idTopic") int idTopic,
+            @Field("name") String name,
+            @Field("isTask") boolean isTask,
+            @Field("state") int state,
+            @Field("priority") int priority,
+            @Field("notes") String notes);
 
     @GET("topic/{idTopic}")
     Call<TopicListResponse> getTopicList(@Path("idTopic") int id);

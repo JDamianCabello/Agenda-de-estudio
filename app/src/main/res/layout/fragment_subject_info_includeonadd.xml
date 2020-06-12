@@ -97,7 +97,7 @@
         android:id="@+id/checkbox_ChangeStateContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="is a task"
+        android:text="@string/subjectInfo_cbx_isTask"
         app:layout_constraintBottom_toBottomOf="@+id/textView16"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
         app:layout_constraintTop_toTopOf="@+id/textView16" />

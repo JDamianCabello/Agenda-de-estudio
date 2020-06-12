@@ -36,8 +36,11 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.topicName.setText(topicList.get(position).getName());
-        holder.topicState.setText(getState(topicList.get(position).getState()));
+        if(topicList.get(position).isTask())
+            holder.topicName.setText(context.getResources().getString(R.string.topic_item_isTask)+ ": "+topicList.get(position).getName());
+        else
+            holder.topicName.setText(topicList.get(position).getName());
+        holder.topicState.setText(getState(topicList.get(position).getState(), topicList.get(position).isTask()));
         holder.topicProgress.setProgress((topicList.get(position).getState() * 100) / 3);
         holder.topicPercent.setText(holder.topicProgress.getProgress() + "%");
         holder.imagePriority.setImageResource(getPriorityImage(topicList.get(position).getPriority()));
@@ -71,16 +74,26 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
         return R.drawable.checkbox_unchecked;
     }
 
-    private String getState(int state) {
-        switch (state){
-            case 0:
-                return "Ignorado";
-            case 1:
-                return "Leido";
-            case 2:
-                return "Resumido";
-            case 3:
-                return "Dominado";
+    private String getState(int state, boolean isTask) {
+        if(isTask){
+            switch (state){
+                case 0:
+                    return context.getResources().getString(R.string.topic_item_task_state_0);
+                case 3:
+                    return context.getResources().getString(R.string.topic_item_task_state_3);
+            }
+        }
+        else {
+            switch (state) {
+                case 0:
+                    return context.getResources().getString(R.string.topic_item_topic_state_0);
+                case 1:
+                    return context.getResources().getString(R.string.topic_item_topic_state_1);
+                case 2:
+                    return context.getResources().getString(R.string.topic_item_topic_state_2);
+                case 3:
+                    return context.getResources().getString(R.string.topic_item_topic_state_3);
+            }
         }
         return "";
     }
@@ -120,6 +133,11 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
     public void sortBySubjectName() {
         this.topicList.sort(new Topic.SortByTopictName());
         this.notifyDataSetChanged();
+    }
+
+    public void removeTopic(Topic topic) {
+        topicList.remove(topic);
+        notifyDataSetChanged();
     }
 
 

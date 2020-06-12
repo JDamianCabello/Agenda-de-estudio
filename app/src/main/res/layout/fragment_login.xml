@@ -80,10 +80,10 @@
             android:layout_weight="0.5"
             android:background="@drawable/welcome_button"
             android:fontFamily="@font/regular"
-            android:text="Login"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="22sp"
+            android:text="Login"
             app:layout_constraintStart_toStartOf="@+id/login_tilPassword"
             app:layout_constraintTop_toBottomOf="@+id/login_mantenerSesion" />
 

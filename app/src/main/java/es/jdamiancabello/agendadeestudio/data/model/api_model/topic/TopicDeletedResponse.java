@@ -8,7 +8,8 @@ import es.jdamiancabello.agendadeestudio.data.model.Topic;
 public class TopicDeletedResponse {
     private boolean error;
     private String message;
-    private Topic topicsDeleted;
+    private Topic topicDeleted;
+    private int newPercent;
 
     public boolean isError() {
         return error;
@@ -26,11 +27,19 @@ public class TopicDeletedResponse {
         this.message = message;
     }
 
-    public Topic getTopicsDeleted() {
-        return topicsDeleted;
+    public Topic getTopicDeleted() {
+        return topicDeleted;
     }
 
-    public void setTopicsDeleted(Topic topicsDeleted) {
-        this.topicsDeleted = topicsDeleted;
+    public void setTopicDeleted(Topic topicDeleted) {
+        this.topicDeleted = topicDeleted;
+    }
+
+    public int getNewPercent() {
+        return newPercent;
+    }
+
+    public void setNewPercent(int newPercent) {
+        this.newPercent = newPercent;
     }
 }

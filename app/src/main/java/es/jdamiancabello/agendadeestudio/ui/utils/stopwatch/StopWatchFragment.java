@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,21 +21,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
 import es.jdamiancabello.agendadeestudio.R;
+import es.jdamiancabello.agendadeestudio.utils.CountDownTimer;
+import es.jdamiancabello.agendadeestudio.utils.PausableChronometer;
 
 
 public class StopWatchFragment extends Fragment {
 
     public static final String TAG = "StopWatchFragment";
-    private ImageView icAnchor, icAnchorReverse;
-    private Button btnStart;
+    private ImageView icAnchor, stop, play, pause;
     private Animation roundAnchor;
     private Chronometer time;
-    private CountDownTimer countDownTimer;
-    private CheckBox isCountDown;
-    private CountDownTimer countDown;
+
+    private boolean started = false;
+
 
     public static StopWatchFragment newInstance() {
         StopWatchFragment fragment = new StopWatchFragment();
@@ -48,65 +51,87 @@ public class StopWatchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
         icAnchor = view.findViewById(R.id.stopWatchAnchor);
-        btnStart = view.findViewById(R.id.stopWatch_btn_start);
-        time = view.findViewById(R.id.stopWatch_time);
-        icAnchorReverse = view.findViewById(R.id.stopWatchAnchorReverse);
-
-        isCountDown = view.findViewById(R.id.stopWatch_cbx_reverse);
-
         roundAnchor = AnimationUtils.loadAnimation(getContext(),R.anim.roundanimation);
+        time = view.findViewById(R.id.stopWatch_time);
 
-        isCountDown.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    icAnchor.setVisibility(View.GONE);
-                    icAnchorReverse.setVisibility(View.VISIBLE);
-                    roundAnchor = AnimationUtils.loadAnimation(getContext(),R.anim.roundanimation_reverse);
-                }
-                else{
-                    icAnchor.setVisibility(View.VISIBLE);
-                    icAnchorReverse.setVisibility(View.GONE);
-                    roundAnchor = AnimationUtils.loadAnimation(getContext(),R.anim.roundanimation);
-                }
-            }
-        });
+        play = view.findViewById(R.id.stopWatch_iv_play);
+        stop = view.findViewById(R.id.stopWatch_iv_stop);
 
-        btnStart.setOnClickListener(new View.OnClickListener() {
+        stop.setEnabled(false);
+
+        play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isCountDown.isChecked()){
-                    icAnchorReverse.startAnimation(roundAnchor);
-                    countDown = new CountDownTimer(10000, 1000) {
-                        @Override
-                        public void onTick(long millisUntilFinished) {
-                            long min = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
-                            long sec = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
-                        }
+                play.setEnabled(false);
+                stop.setEnabled(true);
+                play.setImageDrawable(getResources().getDrawable(R.drawable.ic_play_button_outlined,null));
+                stop.setImageDrawable(getResources().getDrawable(R.drawable.ic_stop_button_filled,null));
 
-                        @Override
-                        public void onFinish() {
-
-                        }
-                    }.start();
-                }
-                else{
-                    icAnchor.startAnimation(roundAnchor);
-                    time.setBase(SystemClock.elapsedRealtime());
-                    time.start();
-                }
-
+                icAnchor.startAnimation(roundAnchor);
+                time.setBase(SystemClock.elapsedRealtime());
+                time.start();
             }
         });
+
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                play.setEnabled(true);
+                stop.setEnabled(false);
+                play.setImageDrawable(getResources().getDrawable(R.drawable.ic_play_button_filled,null));
+                stop.setImageDrawable(getResources().getDrawable(R.drawable.ic_stop_outline,null));
+
+                icAnchor.clearAnimation();
+                time.stop();
+            }
+        });
+
+//        isCountDown.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if(isChecked){
+//                    icAnchor.setVisibility(View.GONE);
+//                    icAnchorReverse.setVisibility(View.VISIBLE);
+//                    roundAnchor = AnimationUtils.loadAnimation(getContext(),R.anim.roundanimation_reverse);
+//                }
+//                else{
+//                    icAnchor.setVisibility(View.VISIBLE);
+//                    icAnchorReverse.setVisibility(View.GONE);
+//                    roundAnchor = AnimationUtils.loadAnimation(getContext(),R.anim.roundanimation);
+//                }
+//            }
+//        });
+
+
+
+        //                if(isCountDown.isChecked()){
+//                    icAnchorReverse.startAnimation(roundAnchor);
+//                    countDown = new CountDownTimer(10000, 1000) {
+//                        @Override
+//                        public void onTick(long millisUntilFinished) {
+//                            long min = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
+//                            long sec = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
+//                        }
+//
+//                        @Override
+//                        public void onFinish() {
+//
+//                        }
+//                    }.start();
+//                }
+    }
+
+    private String getFormedTime(long base) {
+        return (new SimpleDateFormat("hh:mm:ss")).format(new Date(base));
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(countDownTimer != null)
-            countDownTimer.cancel();
-        if(time != null)
-            time.stop();
+//        if(countDownTimer != null)
+//            countDownTimer.cancel();
+//        if(time != null)
+//            time.stop();
     }
 
     @Override

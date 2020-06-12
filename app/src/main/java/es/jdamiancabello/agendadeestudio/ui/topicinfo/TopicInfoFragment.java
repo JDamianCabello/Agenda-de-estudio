@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -27,14 +28,16 @@ import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.model.Topic;
 
 
-public class TopicInfoFragment extends Fragment {
+public class TopicInfoFragment extends Fragment implements TopicInfoContract.View{
     public static final String TAG = "TopicInfoFragment";
+    private TopicInfoContract.Presenter presenter;
     private OnfragmentIntercationsListener mListener;
     private EditText topicName;
     private CheckBox cbxHigPrio, cbxMidPrio, cbxLowPrio, isTask;
     private EditText notes;
     private ImageView goBack;
     private Spinner topicState;
+    private Button btnUpdateTopic;
 
     public static TopicInfoFragment newInstance(Bundle bundle) {
         TopicInfoFragment fragment = new TopicInfoFragment();
@@ -56,6 +59,7 @@ public class TopicInfoFragment extends Fragment {
         notes = view.findViewById(R.id.topicInfo_ed_notes);
         goBack = view.findViewById(R.id.topicInfo_iv_goBack);
         topicState = view.findViewById(R.id.topicInfo_spinner_state);
+        btnUpdateTopic = view.findViewById(R.id.topicInfo_btn_update);
         topicState.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, loadDefauldData()));
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +120,51 @@ public class TopicInfoFragment extends Fragment {
 
         setSpinnerSelection(topic.getState());
 
+        btnUpdateTopic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.updateTopicData(makeTopic());
+            }
+        });
+
+    }
+
+    private Topic makeTopic() {
+        Topic newTopic = getArguments().getParcelable(Topic.TOPICTAG);
+        newTopic.setName(topicName.getText().toString());
+        newTopic.setTask(isTask.isChecked());
+        newTopic.setState(getTopicState());
+        newTopic.setPriority(getPriority());
+        newTopic.setNotes(notes.getText().toString());
+
+        return newTopic;
+    }
+
+    private int getPriority() {
+        if(cbxHigPrio.isChecked())
+            return 2;
+        if(cbxMidPrio.isChecked())
+            return 1;
+        return 0;
+    }
+
+    private int getTopicState() {
+        if(isTask.isChecked()){
+            if(topicState.getSelectedItemPosition() == 1)
+                return 3;
+            else
+                return 0;
+        }
+        else
+            return topicState.getSelectedItemPosition();
+    }
+
+    private void showEmptyNameError() {
+        try {
+            throw new Exception();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setSpinnerSelection(int state) {
@@ -173,6 +222,21 @@ public class TopicInfoFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void setPresenter(TopicInfoContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void onUpdated() {
+        mListener.onBack();
+    }
+
+    @Override
+    public void onErrorInUpdated() {
+
     }
 
     public interface OnfragmentIntercationsListener{

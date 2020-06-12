@@ -31,6 +31,7 @@ import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectListPresenter;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectManagerFragment;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectManagerPresenter;
 import es.jdamiancabello.agendadeestudio.ui.topicinfo.TopicInfoFragment;
+import es.jdamiancabello.agendadeestudio.ui.topicinfo.TopicInfoPresenter;
 import es.jdamiancabello.agendadeestudio.ui.utils.stopwatch.StopWatchFragment;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomeActivity;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomeFragment;
@@ -73,6 +74,7 @@ public class DashboardActivity extends AppCompatActivity implements
     private CalendarPresenter calendarPresenter;
 
     private TopicInfoFragment topicInfoFragment;
+    private TopicInfoPresenter topicInfoPresenter;
 
     private SubjectInfoFragment subjectInfoFragment;
     private SubjectInfoPresenter subjectInfoPresenter;
@@ -357,6 +359,9 @@ public class DashboardActivity extends AppCompatActivity implements
         fragmentTransaction.replace(R.id.dashboard_container,topicInfoFragment,TopicInfoFragment.TAG);
         fragmentTransaction.addToBackStack(SubjectInfoFragment.TAG);
         fragmentTransaction.commit();
+
+        topicInfoPresenter = new TopicInfoPresenter(topicInfoFragment);
+        topicInfoFragment.setPresenter(topicInfoPresenter);
     }
 
     @Override
@@ -377,10 +382,12 @@ public class DashboardActivity extends AppCompatActivity implements
         onBackPressed();
     }
 
-            @Override
-            public void onBack() {
-                onBackPressed();
-            }
+    @Override
+    public void onBack() {
+        onBackPressed();
+    }
+
         }
+
 
 
