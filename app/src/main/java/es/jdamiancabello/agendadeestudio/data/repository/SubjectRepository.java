@@ -28,9 +28,9 @@ public class SubjectRepository implements SubjectDAO.ResponseSubject, SubjectDAO
         SubjectDAO.getSubjectList(this);
     }
 
-    public void addSubject(SubjectRepository.ManageSubject manageSubject, Subject newSubject) {
+    public void addSubject(ManageSubject manageSubject, Subject newSubject, boolean makeEvent) {
         this.manageSubject = manageSubject;
-        SubjectDAO.addNewSubject(this,newSubject);
+        SubjectDAO.addNewSubject(this,newSubject, makeEvent);
     }
 
     public void deleteSubject(SubjectRepository.DeleteSubject deleteSubject, Subject subject) {
@@ -38,9 +38,9 @@ public class SubjectRepository implements SubjectDAO.ResponseSubject, SubjectDAO
         SubjectDAO.deleteSubject(this,subject);
     }
 
-    public void modifySubject(SubjectRepository.ManageSubject manageSubject, Subject subject) {
+    public void modifySubject(ManageSubject manageSubject, Subject subject, boolean makeUpdateEvent) {
         this.manageSubject = manageSubject;
-        SubjectDAO.modifySubject(this,subject);
+        SubjectDAO.modifySubject(this,subject, makeUpdateEvent);
     }
 
 

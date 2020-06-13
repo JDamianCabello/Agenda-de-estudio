@@ -16,11 +16,11 @@ public class SubjectManagerPresenter implements SubjectManagerContract.Presenter
         view.onSucess();
     }
 
-    //TODO: implementar el add y modify hacia la api
+
     @Override
-    public void addSubject(Subject newSubject) {
+    public void addSubject(Subject newSubject, boolean makeEvent) {
         if(!notNullString(newSubject.getSubject_name()) && !notNullString(newSubject.getExam_date())) {
-            SubjectRepository.getInstance().addSubject(this,newSubject);
+            SubjectRepository.getInstance().addSubject(this,newSubject,makeEvent);
         }
         else{
             view.showGenericError("Uno de los campos está vacío.");
@@ -28,9 +28,9 @@ public class SubjectManagerPresenter implements SubjectManagerContract.Presenter
     }
 
     @Override
-    public void modifySubject(Subject updatedSubject) {
+    public void modifySubject(Subject updatedSubject, boolean makeUpdateEvent) {
         if(!notNullString(updatedSubject.getSubject_name()) && !notNullString(updatedSubject.getExam_date())) {
-            SubjectRepository.getInstance().modifySubject(this,updatedSubject);
+            SubjectRepository.getInstance().modifySubject(this,updatedSubject, makeUpdateEvent);
         }
         else{
             view.showGenericError("Uno de los campos está vacío.");

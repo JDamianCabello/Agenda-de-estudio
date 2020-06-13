@@ -60,6 +60,7 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
     private Spinner state;
     private Button saveTopic;
     private boolean stopDelete = false;
+    private Topic topicAux;
 
     private SubjectInfoContract.Presenter presenter;
 
@@ -322,6 +323,12 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         mListener = null;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(!stopDelete && topicAux != null)
+            presenter.onConfirmDelete(topicAux);
+    }
 
     @Override
     public void refresh(List<Topic> topicList) {
@@ -331,8 +338,11 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         int sumState = 0;
         for (Topic t: topicList)
             sumState+=t.getState();
+        if(topicList.isEmpty())
+            progressBarPercent.setProgress(0);
+        else
+            progressBarPercent.setProgress((sumState*100)/(topicList.size() * TOTALMAXTOPICSSTATE));
 
-        progressBarPercent.setProgress((sumState*100)/(topicList.size() * TOTALMAXTOPICSSTATE));
         tv_totalPercentComplete.setText(progressBarPercent.getProgress() +"% / 100%");
         tv_totalTaskDone.setText(Integer.toString(getTaskDone(topicList)));
         tv_totalTask.setText(Integer.toString(topicList.size()- Integer.parseInt(tv_totalTaskDone.getText().toString())));
@@ -347,6 +357,7 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
             topicOrTask = getString(R.string.topiclist_undotext);
 
         topicAdapter.removeTopic(topic);
+        topicAux = topic;
         Snackbar snackbar = Snackbar.make(getView(), topicOrTask + " " + topic.getName() + "?", Snackbar.LENGTH_LONG);
         snackbar.setAction(getString(R.string.subjectlist_undobuttontext), new View.OnClickListener() {
             @Override
@@ -373,9 +384,9 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
             @Override
             public void onShown(Snackbar snackbar) {}
         });
-
         snackbar.show();
     }
+
 
     @Override
     public void onNewTopicAdd(Topic newTopic, int newPercent) {

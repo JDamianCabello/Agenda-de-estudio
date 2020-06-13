@@ -15,15 +15,16 @@ import androidx.core.content.ContextCompat;
 import java.util.List;
 
 import es.jdamiancabello.agendadeestudio.R;
+import es.jdamiancabello.agendadeestudio.data.DAO.EventDAO;
 import es.jdamiancabello.agendadeestudio.data.DAO.SubjectDAO;
+import es.jdamiancabello.agendadeestudio.data.model.Event;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.ui.FocusApplication;
 
-public class FocusService extends IntentService implements SubjectDAO.ResponseSubject{
+public class FocusService extends IntentService implements EventDAO.EventDaoNotificationListener{
 
     private static final String name = "FocusService";
     private Notification notificationSuccess;
-    private Notification notificationError;
     private NotificationManagerCompat notificationManager;
     private boolean error = true;
 
@@ -35,7 +36,6 @@ public class FocusService extends IntentService implements SubjectDAO.ResponseSu
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
@@ -54,7 +54,7 @@ public class FocusService extends IntentService implements SubjectDAO.ResponseSu
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         notificationManager = NotificationManagerCompat.from(this);
-        SubjectDAO.getSubjectList(this);
+        EventDAO.getNotificationEvents(this);
     }
 
 
@@ -70,20 +70,22 @@ public class FocusService extends IntentService implements SubjectDAO.ResponseSu
     }
 
     @Override
-    public void onSucess(List<Subject> subjectList) {
-        if (subjectList.isEmpty())
+    public void onSuccess(List<Event> eventList) {
+        if (eventList.isEmpty())
             return;
 
         int id= 0;
-        for (Subject s: subjectList) {
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, FocusApplication.CHANNEL_ID)
-                    .setSmallIcon(R.drawable.logo)
-                    .setContentTitle("Focus")
-                    .setContentText("Tienes un examen de: " + s.getSubject_name())
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setAutoCancel(true);
-            notificationSuccess = builder.build();
-
+        for (Event todayEvent : eventList) {
+            if(todayEvent.isAppnotification()) {
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(this, FocusApplication.CHANNEL_ID)
+                        .setSmallIcon(R.drawable.logo)
+                        .setColor(todayEvent.getEvent_color())
+                        .setContentTitle("Focus: " + todayEvent.getEvent_name())
+                        .setContentText(todayEvent.getEvent_resume())
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setAutoCancel(true);
+                notificationSuccess = builder.build();
+            }
             notificationManager.notify(id++, notificationSuccess);
         }
     }

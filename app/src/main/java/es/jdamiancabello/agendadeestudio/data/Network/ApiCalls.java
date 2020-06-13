@@ -7,6 +7,8 @@ import es.jdamiancabello.agendadeestudio.data.model.api_model.LoginResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.RegisterResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.email.EmailResendResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.email.EmailVerifyCodeResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.event.DayEventsListResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.event.EventAddResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.subject.SubjectAddResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.subject.SubjectDeletedResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.subject.SubjectListResponse;
@@ -48,16 +50,8 @@ public interface ApiCalls {
             @Field("subject_name") String subject_name,
             @Field("date") String date,
             @Field("color") int color,
-            @Field("iconId") int iconId);
-
-    @FormUrlEncoded
-    @POST("subject/restore")
-    Call<SubjectAddResponse> restoreSubject(
-            @Field("subject_name") String subject_name,
-            @Field("date") String date,
-            @Field("color") int color,
             @Field("iconId") int iconId,
-            @Field("topics") List<Topic> deletedTopics);
+            @Field("makeEvent") boolean makeEvent);
 
     @DELETE("subject/{idSubject}")
     Call<SubjectDeletedResponse> deleteSubject(@Path("idSubject") int id);
@@ -69,7 +63,8 @@ public interface ApiCalls {
             @Field("subject_name") String subject_name,
             @Field("date") String date,
             @Field("color") int color,
-            @Field("iconId") int iconId);
+            @Field("iconId") int iconId,
+            @Field("makeEvent") boolean makeEvent);
 
     @FormUrlEncoded
     @POST("topic/{idSubject}")
@@ -103,6 +98,27 @@ public interface ApiCalls {
     @POST("verify")
     Call<EmailVerifyCodeResponse> validateCode(
             @Field("verification_code") String validationCode);
+
+    @GET("event/{date}")
+    Call<DayEventsListResponse> getDateEvents(@Path("date") String date);
+
+    @GET("event/")
+    Call<DayEventsListResponse> getAllUserEvents();
+
+    @GET("event/today/notifications")
+    Call<DayEventsListResponse> getNotifications();
+
+    @FormUrlEncoded
+    @POST("event/")
+    Call<EventAddResponse> addEvent(
+            @Field("event_name") String event_name,
+            @Field("event_resume") String event_resume,
+            @Field("event_date") String event_date,
+            @Field("idSubject") int idSubject,
+            @Field("event_color") int event_color,
+            @Field("event_iconId") int event_iconId,
+            @Field("appnotification") boolean appnotification,
+            @Field("event_notes") String event_notes);
 }
 
 

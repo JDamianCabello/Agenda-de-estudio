@@ -15,6 +15,7 @@ import android.widget.Toast;
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.model.User;
 import es.jdamiancabello.agendadeestudio.data.service.FocusBroadcastReceiver;
+import es.jdamiancabello.agendadeestudio.ui.dashboard.DashboardActivity;
 
 public class FocusApplication extends Application {
     public static final String CHANNEL_ID = "1000";
@@ -38,22 +39,9 @@ public class FocusApplication extends Application {
 
     public static void setUser(User u) {
         FocusBroadcastReceiver broadcastReceiver = new FocusBroadcastReceiver();
-        broadcastReceiver.onReceive(context, new Intent(context, FocusApplication.class));
+        broadcastReceiver.onReceive(context, new Intent(context, DashboardActivity.class));
         user = u;
     }
-
-//    private void createNotificationChannel() {
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            CharSequence name = getString(R.string.channel_name);
-//            String description = getString(R.string.channel_description);
-//            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-//            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-//            channel.setDescription(description);
-//            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-//            notificationManager.createNotificationChannel(channel);
-//        }
-//    }
 
     @TargetApi(Build.VERSION_CODES.O)
     private void createNotificationChannel() {

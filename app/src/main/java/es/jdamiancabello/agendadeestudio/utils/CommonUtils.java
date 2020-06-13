@@ -99,4 +99,15 @@ public final class CommonUtils {
 
         return simpleDateFormat.format(calendar.getTime());
     }
+
+    public static Long toFormatDate(Date fecha){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String result = simpleDateFormat.format(fecha);
+        try {
+            return simpleDateFormat.parse(result).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0L;
+    }
 }

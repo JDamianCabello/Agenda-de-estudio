@@ -37,7 +37,7 @@ public class StopWatchFragment extends Fragment {
     private ImageView icAnchor, stop, play, pause;
     private Animation roundAnchor;
     private Chronometer time;
-
+    private long pauseTimer;
     private boolean started = false;
 
 
@@ -56,20 +56,28 @@ public class StopWatchFragment extends Fragment {
 
         play = view.findViewById(R.id.stopWatch_iv_play);
         stop = view.findViewById(R.id.stopWatch_iv_stop);
+        pause = view.findViewById(R.id.stopWatch_iv_pause);
 
         stop.setEnabled(false);
+        pause.setEnabled(false);
 
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 play.setEnabled(false);
                 stop.setEnabled(true);
+                pause.setEnabled(true);
+                pause.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause_button_filled,null));
                 play.setImageDrawable(getResources().getDrawable(R.drawable.ic_play_button_outlined,null));
                 stop.setImageDrawable(getResources().getDrawable(R.drawable.ic_stop_button_filled,null));
 
-                icAnchor.startAnimation(roundAnchor);
-                time.setBase(SystemClock.elapsedRealtime());
-                time.start();
+                if(!started) {
+                    icAnchor.startAnimation(roundAnchor);
+                    time.setBase(SystemClock.elapsedRealtime() - pauseTimer);
+                    time.start();
+
+                    started = true;
+                }
             }
         });
 
@@ -78,11 +86,35 @@ public class StopWatchFragment extends Fragment {
             public void onClick(View v) {
                 play.setEnabled(true);
                 stop.setEnabled(false);
+                pause.setEnabled(false);
+                pause.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause_button_filled,null));
                 play.setImageDrawable(getResources().getDrawable(R.drawable.ic_play_button_filled,null));
                 stop.setImageDrawable(getResources().getDrawable(R.drawable.ic_stop_outline,null));
 
+                time.setBase(SystemClock.elapsedRealtime());
                 icAnchor.clearAnimation();
+                pauseTimer = 0;
+                started = false;
                 time.stop();
+            }
+        });
+
+        pause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                play.setEnabled(true);
+                stop.setEnabled(true);
+                pause.setEnabled(false);
+                pause.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause_button_outline,null));
+                play.setImageDrawable(getResources().getDrawable(R.drawable.ic_play_button_filled,null));
+                stop.setImageDrawable(getResources().getDrawable(R.drawable.ic_stop_button_filled,null));
+
+                if(started) {
+                    icAnchor.clearAnimation();
+                    time.stop();
+                    started = false;
+                    pauseTimer = SystemClock.elapsedRealtime() - time.getBase();
+                }
             }
         });
 

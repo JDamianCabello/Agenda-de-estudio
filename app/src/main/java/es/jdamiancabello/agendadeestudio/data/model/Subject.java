@@ -17,14 +17,16 @@ public class Subject implements Parcelable{
     private int color;
     private int iconId;
     private int percent;
+    private boolean haveEvent;
 
     public Subject(){}
 
-    public Subject(String subject_name, String exam_date, int color, int iconId) {
+    public Subject(String subject_name, String exam_date, int color, int iconId, boolean haveEvent) {
         this.subject_name = subject_name;
         this.exam_date = exam_date;
         this.color = color;
         this.iconId = iconId;
+        this.haveEvent = haveEvent;
     }
 
     protected Subject(Parcel in) {
@@ -44,6 +46,7 @@ public class Subject implements Parcelable{
         dest.writeInt(color);
         dest.writeInt(iconId);
         dest.writeInt(percent);
+        dest.writeByte((byte) (haveEvent ? 1 : 0));
     }
 
     @Override
@@ -65,6 +68,10 @@ public class Subject implements Parcelable{
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getSubject_name() {
@@ -105,6 +112,14 @@ public class Subject implements Parcelable{
 
     public void setPercent(int percent) {
         this.percent = percent;
+    }
+
+    public boolean isHaveEvent() {
+        return haveEvent;
+    }
+
+    public void setHaveEvent(boolean haveEvent) {
+        this.haveEvent = haveEvent;
     }
 
     public static class SortByName implements Comparator<Subject> {

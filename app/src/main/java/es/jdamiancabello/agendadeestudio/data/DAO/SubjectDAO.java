@@ -37,10 +37,10 @@ public class SubjectDAO {
         });
     }
 
-    public static void addNewSubject(ResponseSubjectAddOrModify responseSubjectAddOrModify,Subject newSubject) {
+    public static void addNewSubject(ResponseSubjectAddOrModify responseSubjectAddOrModify, Subject newSubject, boolean makeEvent) {
         Call<SubjectAddResponse> call = ApiRestClientToken
                 .getInstance()
-                .addSubject(newSubject.getSubject_name(), newSubject.getExam_date(), newSubject.getColor(), newSubject.getIconId());
+                .addSubject(newSubject.getSubject_name(), newSubject.getExam_date(), newSubject.getColor(), newSubject.getIconId(),makeEvent);
 
         call.enqueue(new Callback<SubjectAddResponse>() {
             @Override
@@ -77,10 +77,10 @@ public class SubjectDAO {
         });
     }
 
-    public static void modifySubject(ResponseSubjectAddOrModify responseSubjectAddOrModify, Subject newSubject) {
+    public static void modifySubject(ResponseSubjectAddOrModify responseSubjectAddOrModify, Subject newSubject, boolean makeUpdateEvent) {
         Call<SubjectModifyResponse> call = ApiRestClientToken
                 .getInstance()
-                .modifySubject(newSubject.getId(), newSubject.getSubject_name(), newSubject.getExam_date(), newSubject.getColor(), newSubject.getIconId());
+                .modifySubject(newSubject.getId(), newSubject.getSubject_name(), newSubject.getExam_date(), newSubject.getColor(), newSubject.getIconId(),makeUpdateEvent);
 
         call.enqueue(new Callback<SubjectModifyResponse>() {
             @Override

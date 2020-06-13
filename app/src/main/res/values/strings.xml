@@ -109,4 +109,13 @@
     <string name="SubjectInfo_chxMed">Medium</string>
     <string name="SubjectInfo_chxHig">Hig</string>
     <string name="SubjectInfo_selectPriority">Select priority:</string>
+    <string name="subjectManajer_cbx_makeEventCalendar">Make event in calendar</string>
+    <string name="calendar_manage_hint_eventName">Event name</string>
+    <string name="calendar_manage_hint_eventResume">Event resume</string>
+    <string name="calendar_manage_tv_eventIcon">Icon:</string>
+    <string name="calendar_manage_hint_eventNotes">Event notes</string>
+    <string name="calendar_manage_cbx_eventAppNotify">Send me a notification</string>
+    <string name="calendarManage_save">Save event</string>
+    <string name="calendarManage_dontSave">Go back</string>
+    <string name="calendar_manage_title">New event</string>
 </resources>

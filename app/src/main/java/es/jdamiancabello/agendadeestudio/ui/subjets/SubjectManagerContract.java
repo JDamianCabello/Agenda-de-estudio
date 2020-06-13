@@ -8,7 +8,7 @@ public class SubjectManagerContract {
     }
 
     public interface Presenter{
-        void addSubject(Subject newSubject);
-        void modifySubject(Subject updatedSubject);
+        void addSubject(Subject newSubject, boolean makeEvent);
+        void modifySubject(Subject updatedSubject, boolean makeEvent);
     }
 }

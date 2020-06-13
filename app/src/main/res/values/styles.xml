@@ -14,5 +14,9 @@
         <item name="windowActionBar">false</item>
     </style>
 
+    <style name="calendarAlertBuilder" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">#0F6EA4CD</item>
+    </style>
+
 
 </resources>

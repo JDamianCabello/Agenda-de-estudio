@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -50,6 +51,7 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
     private FloatingActionButton floatingActionButton;
     private TextInputLayout inputLayoutSubjectDate;
     private Spinner selectIcon;
+    private CheckBox makeEvent;
 
     public static SubjectManagerFragment newInstance(Bundle b) {
         SubjectManagerFragment fragment = new SubjectManagerFragment();
@@ -76,15 +78,15 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
         edSubjectDate = view.findViewById(R.id.subjectManager_edSubjectDate);
         inputLayoutSubjectDate = view.findViewById(R.id.subjectManager_tilSubjectDate);
         selectIcon = view.findViewById(R.id.subjectManager_spinner_selectIcon);
+        makeEvent = view.findViewById(R.id.subjectManager_cbx_makeEvent);
 
-        ImageArrayAdapter adapter = new ImageArrayAdapter(getContext(),iconsList() );
+        ImageArrayAdapter adapter = new ImageArrayAdapter(getContext(),iconsList());
 
         selectIcon.setAdapter(adapter);
 
         inputLayoutSubjectDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar actualDate = Calendar.getInstance();
                 DatePickerDialog picker = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -108,9 +110,9 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
             @Override
             public void onClick(View v) {
                 if(getArguments() == null)
-                    presenter.addSubject(makeNewSubject());
+                    presenter.addSubject(makeNewSubject(), makeEvent.isChecked());
                 else
-                    presenter.modifySubject(makeNewSubject());
+                    presenter.modifySubject(makeNewSubject(), makeEvent.isChecked());
             }
         });
 
@@ -135,6 +137,7 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
             edSubjectDate.setText(subject.getExam_date());
             colorSlider.setSelection(searchColor(subject.getColor()));
             selectIcon.setSelection(getSelectedIcon(subject.getIconId(), iconsList()));
+            makeEvent.setChecked(subject.isHaveEvent());
         }
         colorChange.setTextColor(colorSlider.getSelectedColor());
     }
@@ -245,30 +248,6 @@ public class SubjectManagerFragment extends Fragment implements SubjectManagerCo
 
     @Override
     public void onSucess() {
-
-//        Intent intent = new Intent(getContext(), DashboardActivity.class);
-//        intent.putExtra("NOTIFICATION", true);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        Bundle bundle = new Bundle();
-//        bundle.putParcelable(Subject.SUBJECT_KEY, subject);
-//        intent.putExtras(bundle);
-//
-//        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), new Random().nextInt(100), intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//
-//
-//        Notification.Builder builder = new Notification.Builder(getContext(), FocusApplication.CHANNEL_ID)
-//                .setAutoCancel(true)
-//                .setSmallIcon(R.mipmap.ic_launcher)
-//                .setContentText(subject.getSubject_name())
-//                .setContentTitle(subject.getExam_date())
-//                .setContentIntent(pendingIntent);
-//
-//        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getContext());
-//
-//        notificationManagerCompat.notify(new Random().nextInt(100), builder.build());
-//
-
         mListener.onSavedSubject();
     }
 

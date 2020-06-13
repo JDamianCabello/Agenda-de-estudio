@@ -42,6 +42,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
     private SubjectListContract.Presenter presenter;
     private View loadingView;
     private boolean stopDelete = false;
+    private Subject subjectAux;
 
     public static SubjectListFragment newInstance() {
         return new SubjectListFragment();
@@ -169,6 +170,13 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(!stopDelete && subjectAux != null)
+            presenter.onDelete(subjectAux);
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         listListener = null;
@@ -203,6 +211,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
     @Override
     public void startDeleteView(Subject subject) {
         adapter.removeSubject(subject);
+        subjectAux = subject;
         Snackbar snackbar = Snackbar.make(getView(), getString(R.string.subjectlist_undotext) + " " + subject.getSubject_name() + "?", Snackbar.LENGTH_LONG);
         snackbar.setAction(getString(R.string.subjectlist_undobuttontext), new View.OnClickListener() {
             @Override
@@ -221,6 +230,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
                         if (stopDelete) {
                             stopDelete = false;
                         } else
+                            subjectAux = null;
                             presenter.onDelete(subject);
                         break;
                 }
