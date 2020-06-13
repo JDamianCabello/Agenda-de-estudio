@@ -85,8 +85,8 @@ public class FocusService extends IntentService implements EventDAO.EventDaoNoti
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setAutoCancel(true);
                 notificationSuccess = builder.build();
+                notificationManager.notify(id++, notificationSuccess);
             }
-            notificationManager.notify(id++, notificationSuccess);
         }
     }
 }

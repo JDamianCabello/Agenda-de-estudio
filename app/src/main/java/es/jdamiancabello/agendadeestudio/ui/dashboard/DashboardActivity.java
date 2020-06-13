@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.Network.ApiRestClientToken;
 import es.jdamiancabello.agendadeestudio.data.model.Note;
@@ -81,14 +83,6 @@ public class DashboardActivity extends AppCompatActivity implements
 
     private StopWatchFragment stopWatchFragment;
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(getIntent().getBooleanExtra("NOTIFICATION", false)){
-            addOrEdditSubject(getIntent().getExtras().getParcelable(Subject.SUBJECT_KEY));
-        }
-    }
-
             @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +98,6 @@ public class DashboardActivity extends AppCompatActivity implements
     }
 
 
-    //TODO: implementar esto mejor
     private void loggout() {
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.sharedUserDataLogin),MODE_PRIVATE);
 
