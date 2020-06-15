@@ -81,6 +81,7 @@
                     android:id="@+id/topicitem_topicState"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
                     android:text="TextView"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
             </LinearLayout>
@@ -97,7 +98,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="right|center_vertical"
                     android:text="@string/topic_item_topic_priorityText"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 

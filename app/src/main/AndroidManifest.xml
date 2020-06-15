@@ -35,13 +35,22 @@
             android:enabled="true"
             android:exported="false" />
 
-        <activity android:name=".ui.login.LoginActivity" />
-        <activity android:name=".ui.aboutme.AboutMeActivity" />
-        <activity android:name=".ui.dashboard.DashboardActivity" />
-        <activity android:name=".ui.register.RegisterActivity" />
+        <activity android:name=".ui.login.LoginActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".ui.aboutme.AboutMeActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".ui.dashboard.DashboardActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".ui.register.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize"/>
         <activity
-            android:name=".ui.welcome.WelcomeActivity"
-            android:screenOrientation="fullSensor">
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:name=".ui.welcome.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

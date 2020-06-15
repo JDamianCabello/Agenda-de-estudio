@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@android:color/white"
     android:layout_height="match_parent"
-    tools:context=".ui.utils.timer.StopWatchFragment">
-
+    android:background="@android:color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.utils.countdown.CountDownFragment">
 
 
     <ImageView
@@ -22,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/stopWatchAnchor"
+        android:id="@+id/countDownAnchor"
         android:layout_width="358dp"
         android:layout_height="357dp"
         android:layout_marginTop="16dp"
@@ -32,46 +31,60 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Chronometer
-        android:id="@+id/stopWatch_time"
+    <TextView
+        android:id="@+id/countDown_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:fontFamily="@font/digital"
         android:textColor="@android:color/black"
         android:textSize="62sp"
+        android:text="00:00:00"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stopWatchAnchor" />
+        app:layout_constraintTop_toBottomOf="@+id/countDownAnchor" />
+
 
     <LinearLayout
+        android:id="@+id/linearLayout7"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@+id/imageView4"
         app:layout_constraintStart_toStartOf="@+id/imageView4"
-        app:layout_constraintTop_toBottomOf="@+id/stopWatch_time">
+        app:layout_constraintTop_toBottomOf="@+id/countDown_time">
 
         <ImageView
-            android:id="@+id/stopWatch_iv_play"
+            android:id="@+id/countDown_iv_play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/ic_play_button_filled" />
 
         <ImageView
-            android:id="@+id/stopWatch_iv_pause"
+            android:id="@+id/countDown_iv_pause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/ic_pause_button_filled" />
 
         <ImageView
-            android:id="@+id/stopWatch_iv_stop"
+            android:id="@+id/countDown_iv_stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/ic_stop_outline" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/countDown_iv_SelectTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_tool_countdown_selecttime"
+        app:layout_constraintBottom_toBottomOf="@+id/countDown_time"
+        app:layout_constraintEnd_toEndOf="@+id/countDownAnchor"
+        app:layout_constraintStart_toEndOf="@+id/countDown_time"
+        app:layout_constraintTop_toTopOf="@+id/countDown_time" />
 </androidx.constraintlayout.widget.ConstraintLayout>

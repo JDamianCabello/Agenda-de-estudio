@@ -34,6 +34,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.eventIcon.setBackgroundResource(todayEventList.get(position).getEvent_iconId());
         holder.eventName.setText(todayEventList.get(position).getEvent_name());
+        holder.eventName.setTextColor(todayEventList.get(position).getEvent_color());
         holder.eventResume.setText(todayEventList.get(position).getEvent_resume());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

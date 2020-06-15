@@ -9,9 +9,15 @@ public class LoginContract {
         void showDontExistEmail();
         void showUnknowError();
         void saveUSerData(User user, String password);
+        void onDoneRecoverPassEmailSend();
+        void onFailRecoverPassEmailSend();
+        void onSuccesPassUpdated();
+        void onFailedPassupdated();
     }
 
     interface Presenter{
         void loginUser(String user, String pass, boolean persistLogin);
+        void sendRecoverPassMail(String email);
+        void updatePass(String password, String verifyCode);
     }
 }

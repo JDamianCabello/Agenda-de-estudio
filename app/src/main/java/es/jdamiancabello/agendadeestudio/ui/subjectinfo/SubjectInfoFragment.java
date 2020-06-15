@@ -298,13 +298,16 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.subjectinfo_menu_orderby_name:
-                        Toast.makeText(getContext(),"name",Toast.LENGTH_SHORT).show();
+                        topicAdapter.sortByName();
                         return true;
                     case R.id.subjectinfo_menu_orderby_priority:
-                        Toast.makeText(getContext(),"priority",Toast.LENGTH_SHORT).show();
+                        topicAdapter.sortByPriority();
                         return true;
                     case R.id.subjectinfo_menu_orderby_state:
-                        Toast.makeText(getContext(),"state",Toast.LENGTH_SHORT).show();
+                        topicAdapter.sortByState();
+                        return true;
+                    case R.id.subjectinfo_menu_orderby_Task:
+                        topicAdapter.sortByTask();
                         return true;
                 }
                 return false;

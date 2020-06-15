@@ -3,11 +3,14 @@
 
     <item
         android:id="@+id/subjectinfo_menu_orderby_priority"
-        android:title="order by priority" />
+        android:title="@string/subjectInfo_menu_orderBy_priority" />
     <item
         android:id="@+id/subjectinfo_menu_orderby_state"
-        android:title="order by state" />
+        android:title="@string/subjectInfo_menu_orderBy_state" />
     <item
         android:id="@+id/subjectinfo_menu_orderby_name"
-        android:title="order by name" />
+        android:title="@string/subjectInfo_menu_orderBy_name" />
+    <item
+        android:id="@+id/subjectinfo_menu_orderby_Task"
+        android:title="@string/subjectInfo_menu_orderBy_task" />
 </menu>

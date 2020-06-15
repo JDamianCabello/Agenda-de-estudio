@@ -130,8 +130,13 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
         this.notifyDataSetChanged();
     }
 
-    public void sortBySubjectName() {
-        this.topicList.sort(new Topic.SortByTopictName());
+    public void sortByPriority() {
+        this.topicList.sort(new Topic.SortByPriority());
+        this.notifyDataSetChanged();
+    }
+
+    public void sortByTask() {
+        this.topicList.sort(new Topic.SortByTask());
         this.notifyDataSetChanged();
     }
 

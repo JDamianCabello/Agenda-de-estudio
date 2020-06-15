@@ -1,10 +1,7 @@
 package es.jdamiancabello.agendadeestudio.data.Network;
 
-import java.util.List;
-
-import es.jdamiancabello.agendadeestudio.data.model.Topic;
-import es.jdamiancabello.agendadeestudio.data.model.api_model.LoginResponse;
-import es.jdamiancabello.agendadeestudio.data.model.api_model.RegisterResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.user.LoginResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.user.RegisterResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.email.EmailResendResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.email.EmailVerifyCodeResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.event.DayEventsListResponse;
@@ -19,6 +16,7 @@ import es.jdamiancabello.agendadeestudio.data.model.api_model.topic.TopicAddResp
 import es.jdamiancabello.agendadeestudio.data.model.api_model.topic.TopicDeletedResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.topic.TopicListResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.topic.TopicModifyResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.user.UserUpdatedPassword;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -100,6 +98,17 @@ public interface ApiCalls {
     @POST("verify")
     Call<EmailVerifyCodeResponse> validateCode(
             @Field("verification_code") String validationCode);
+
+
+    @GET("forgotpassword/{email}")
+    Call<UserUpdatedPassword> resetPass(
+            @Path("email") String email);
+
+    @FormUrlEncoded
+    @POST("forgotpassword/")
+    Call<UserUpdatedPassword> updatePass(
+            @Field("verification_code") String verifyCode,
+            @Field("password") String password);
 
     @GET("event/{date}")
     Call<DayEventsListResponse> getDateEvents(@Path("date") String date);

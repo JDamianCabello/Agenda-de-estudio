@@ -1,4 +1,4 @@
-package es.jdamiancabello.agendadeestudio.ui.utils.stopwatch;
+package es.jdamiancabello.agendadeestudio.ui.utils.timer;
 
 import android.os.Bundle;
 
@@ -13,22 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.Chronometer;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Timer;
-import java.util.concurrent.TimeUnit;
 
 import es.jdamiancabello.agendadeestudio.R;
-import es.jdamiancabello.agendadeestudio.utils.CountDownTimer;
-import es.jdamiancabello.agendadeestudio.utils.PausableChronometer;
 
 
 public class StopWatchFragment extends Fragment {

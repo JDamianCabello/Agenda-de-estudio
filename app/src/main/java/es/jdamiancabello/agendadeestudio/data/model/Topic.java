@@ -122,24 +122,28 @@ public class Topic implements Parcelable {
     public static class SortByName implements Comparator<Topic>{
         @Override
         public int compare(Topic o1, Topic o2) {
-            //return o1.getName().compareToIgnoreCase(o2.getName());
-            return 0;
+            return o1.getName().compareToIgnoreCase(o2.getName());
         }
     }
 
-    public static class SortByTopictName implements Comparator<Topic>{
+    public static class SortByPriority implements Comparator<Topic>{
         @Override
         public int compare(Topic o1, Topic o2) {
-            //return o1.getSubject_name().compareToIgnoreCase(o2.getSubject_name());
-            return 0;
+            return Integer.compare(o2.getPriority(),o1.getPriority());
         }
     }
 
     public static class SortByState implements Comparator<Topic>{
         @Override
         public int compare(Topic o1, Topic o2) {
-            //return o1.getState() - o2.getState();
-            return 0;
+            return o1.getState() - o2.getState();
+        }
+    }
+
+    public static class SortByTask implements Comparator<Topic>{
+        @Override
+        public int compare(Topic o1, Topic o2) {
+            return Boolean.compare(o2.isTask(),o1.isTask());
         }
     }
 }

@@ -43,8 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/login_emailHint"
-                android:inputType="textEmailAddress"
-                android:text="damian1@damian.damian" />
+                android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -66,8 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/login_passwordHint"
-                android:inputType="textPassword"
-                android:text="Cabello.1" />
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -100,9 +98,25 @@
             android:text="@string/loginFragment_tv_needhelp"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/registerBtLogin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/registerBtLogin"
+            app:layout_constraintTop_toTopOf="@+id/registerBtLogin" />
+
+        <TextView
+            android:id="@+id/tvForgotPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:fontFamily="@font/regular"
+            android:gravity="end"
+            android:text="@string/loginFragment_tv_forgotPass"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/registerBtLogin"
+            app:layout_constraintEnd_toEndOf="@+id/login_mantenerSesion"
             app:layout_constraintTop_toTopOf="@+id/registerBtLogin" />
 
         <Switch

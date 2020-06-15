@@ -1,21 +1,16 @@
 package es.jdamiancabello.agendadeestudio.ui.dashboard;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.view.Menu;
-import android.view.View;
-import android.widget.FrameLayout;
+import android.view.Gravity;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.github.naz013.smoothbottombar.SmoothBottomBar;
 import com.github.naz013.smoothbottombar.Tab;
@@ -36,7 +31,6 @@ import es.jdamiancabello.agendadeestudio.ui.calendar.CalendarFragment;
 import es.jdamiancabello.agendadeestudio.ui.login.LoginContract;
 import es.jdamiancabello.agendadeestudio.ui.login.LoginFragment;
 import es.jdamiancabello.agendadeestudio.ui.login.LoginPresenter;
-import es.jdamiancabello.agendadeestudio.ui.notes.NoteListPresenter;
 import es.jdamiancabello.agendadeestudio.ui.notes.NotesListFragment;
 import es.jdamiancabello.agendadeestudio.ui.subjectinfo.SubjectInfoFragment;
 import es.jdamiancabello.agendadeestudio.ui.subjectinfo.SubjectInfoPresenter;
@@ -47,7 +41,9 @@ import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectManagerFragment;
 import es.jdamiancabello.agendadeestudio.ui.subjets.SubjectManagerPresenter;
 import es.jdamiancabello.agendadeestudio.ui.topicinfo.TopicInfoFragment;
 import es.jdamiancabello.agendadeestudio.ui.topicinfo.TopicInfoPresenter;
-import es.jdamiancabello.agendadeestudio.ui.utils.stopwatch.StopWatchFragment;
+import es.jdamiancabello.agendadeestudio.ui.utils.ToolsSelector;
+import es.jdamiancabello.agendadeestudio.ui.utils.countdown.CountDownFragment;
+import es.jdamiancabello.agendadeestudio.ui.utils.timer.StopWatchFragment;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomeActivity;
 import es.jdamiancabello.agendadeestudio.ui.welcome.WelcomeFragment;
 
@@ -60,7 +56,8 @@ public class DashboardActivity extends AppCompatActivity implements
         RegisterFragment.OnFragmentInteractionListener,
         SubjectManagerFragment.OnFragmentInteractionListener,
         AboutMeFragment.OnFragmentInteractionListener,
-        TopicInfoFragment.OnfragmentIntercationsListener
+        TopicInfoFragment.OnfragmentIntercationsListener,
+        ToolsSelector.OnFragmentInteractionListener
         {
     private Toolbar toolbar;
     private SmoothBottomBar menu;
@@ -89,7 +86,9 @@ public class DashboardActivity extends AppCompatActivity implements
     private SubjectInfoFragment subjectInfoFragment;
     private SubjectInfoPresenter subjectInfoPresenter;
 
+    private ToolsSelector toolsSelector;
     private StopWatchFragment stopWatchFragment;
+    private CountDownFragment countDowntFragment;
 
             @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -324,11 +323,11 @@ public class DashboardActivity extends AppCompatActivity implements
     }
 
     public void showTools() {
-        stopWatchFragment = StopWatchFragment.newInstance();
+        toolsSelector = ToolsSelector.newInstance();
 
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.dashboardcontent,stopWatchFragment,StopWatchFragment.TAG)
+                .replace(R.id.dashboardcontent,toolsSelector,ToolsSelector.TAG)
                 .commit();
     }
 
@@ -391,6 +390,53 @@ public class DashboardActivity extends AppCompatActivity implements
         onBackPressed();
     }
 
+    @Override
+    public void onGoTimerTool() {
+        stopWatchFragment = StopWatchFragment.newInstance();
+
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.dashboardcontent,stopWatchFragment,StopWatchFragment.TAG)
+                .addToBackStack(ToolsSelector.TAG)
+                .commit();
+    }
+
+    @Override
+    public void onGoToDoListTool() {
+                notImplementedToast();
+    }
+
+    @Override
+    public void onGoCountDownTool() {
+        countDowntFragment = CountDownFragment.newInstance();
+
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.dashboardcontent,countDowntFragment,CountDownFragment.TAG)
+                .addToBackStack(ToolsSelector.TAG)
+                .commit();
+    }
+
+    @Override
+    public void onGoNotesTool() {
+        notImplementedToast();
+    }
+
+    @Override
+    public void onGoFlashCardsTool() {
+        notImplementedToast();
+    }
+
+    @Override
+    public void onGoScheduleTool() {
+        notImplementedToast();
+    }
+
+            private void notImplementedToast() {
+                Toast toast = Toast.makeText(this, R.string.notImplemented, Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.BOTTOM,0,300);
+                toast.show();
+            }
         }
 
 

@@ -2,8 +2,8 @@ package es.jdamiancabello.agendadeestudio.data.DAO;
 
 import es.jdamiancabello.agendadeestudio.data.Network.ApiRestClient;
 import es.jdamiancabello.agendadeestudio.data.model.User;
-import es.jdamiancabello.agendadeestudio.data.model.api_model.LoginResponse;
-import es.jdamiancabello.agendadeestudio.data.model.api_model.RegisterResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.user.LoginResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.user.RegisterResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;

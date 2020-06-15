@@ -42,6 +42,11 @@ public class CalendarPresenter implements CalendarContract.Presenter, EventRepos
     }
 
     @Override
+    public void StartUndo(Event event) {
+        view.showUndo(event);
+    }
+
+    @Override
     public void onGetData(List<Event> eventList) {
         if(eventList.isEmpty())
             view.noTodayEvents();

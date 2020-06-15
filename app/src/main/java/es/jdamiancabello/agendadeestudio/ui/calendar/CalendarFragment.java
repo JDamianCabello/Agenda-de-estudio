@@ -1,39 +1,33 @@
 package es.jdamiancabello.agendadeestudio.ui.calendar;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.github.naz013.colorslider.ColorSlider;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
+import com.google.android.material.snackbar.Snackbar;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -41,12 +35,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.adapter.EventAdapter;
 import es.jdamiancabello.agendadeestudio.data.model.Event;
-import es.jdamiancabello.agendadeestudio.data.service.FocusBroadcastReceiver;
-import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.utils.CommonUtils;
 import es.jdamiancabello.agendadeestudio.utils.ImageArrayAdapter;
 
@@ -61,7 +52,6 @@ public class CalendarFragment extends Fragment implements CalendarContract.View{
     private EventAdapter todayAdapter;
     private FloatingActionButton calendarManage;
     private String calendarSelectDate;
-    private Event eventToDelete = null;
 
 
     public static CalendarFragment newInstance() {
@@ -108,7 +98,13 @@ public class CalendarFragment extends Fragment implements CalendarContract.View{
 
             @Override
             public void onDeleteEvent(Event event) {
-                presenter.deleteEvent(event);
+                new AlertDialog.Builder(getContext()).setTitle(getString(R.string.calendar_deleteAlertDialogTitle)).setMessage(getString(R.string.calendar_deleteMessage)+" " + event.getEvent_name() + " ?" )
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        presenter.deleteEvent(event);
+                    }
+                }).setNegativeButton(android.R.string.no,null).show();
             }
         });
 
@@ -358,5 +354,22 @@ public class CalendarFragment extends Fragment implements CalendarContract.View{
         else
             noData.setVisibility(View.GONE);
         presenter.load();
+        presenter.StartUndo(event);
+    }
+
+    @Override
+    public void showUndo(Event event) {
+        Snackbar snackbar = Snackbar.make(getView(), getString(R.string.calendarRestoreText) + " " + event.getEvent_name() + "?", Snackbar.LENGTH_LONG);
+        snackbar.setBackgroundTint(ContextCompat.getColor(getContext(),R.color.colorPrimary));
+        snackbar.setActionTextColor(ContextCompat.getColor(getContext(),R.color.colorPrimaryDark));
+        snackbar.setAnchorView(R.id.dashboard_menu);
+        snackbar.setAction(getString(R.string.subjectlist_undobuttontext), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.addEvent(event);
+            }
+        });
+
+        snackbar.show();
     }
 }

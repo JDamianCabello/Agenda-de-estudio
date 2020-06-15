@@ -1,11 +1,8 @@
-package es.jdamiancabello.agendadeestudio.data.model.api_model;
-
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+package es.jdamiancabello.agendadeestudio.data.model.api_model.user;
 
 import es.jdamiancabello.agendadeestudio.data.model.User;
 
-public class LoginResponse {
+public class RegisterResponse {
 
     private String error;
 

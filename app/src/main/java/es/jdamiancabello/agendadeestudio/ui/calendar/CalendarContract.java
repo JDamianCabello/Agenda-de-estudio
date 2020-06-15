@@ -14,6 +14,7 @@ public class CalendarContract {
         void noTodayEvents();
         void updateEvents(Event event);
         void deleteEvent(Event event);
+        void showUndo(Event event);
     }
 
     interface Presenter{
@@ -22,5 +23,6 @@ public class CalendarContract {
         void updateEvent(Event event);
         void addEvent(Event event);
         void getTodayEvents(String date);
+        void StartUndo(Event event);
     }
 }

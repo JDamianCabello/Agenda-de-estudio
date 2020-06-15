@@ -2,10 +2,12 @@ package es.jdamiancabello.agendadeestudio.ui.aboutme;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -43,11 +45,10 @@ public class AboutMeFragment extends Fragment {
         }
 
         AboutView aboutView = AboutBuilder.with(getContext())
-                .setPhoto(android.R.mipmap.sym_def_app_icon)
+                .setPhoto(R.drawable.logo)
                 .setCover(R.mipmap.profile_cover)
                 .setName("Damián Cabello")
-                .setSubTitle("Mobile Developer")
-                .setBrief("Aprobando DEINT desde tiempos inmemoriables")
+                .setSubTitle("Focus team Developer")
                 .setAppName(R.string.app_name)
                 .addGooglePlayStoreLink("")
                 .addGitHubLink("jdamiancabello/agenda-de-estudio")
@@ -75,7 +76,13 @@ public class AboutMeFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.logoutMenuButton:
-                mListener.onLogout();
+                new AlertDialog.Builder(getContext()).setTitle(getString(R.string.logout)).setMessage(getString(R.string.logoutText))
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mListener.onLogout();
+                            }
+                        }).setNegativeButton(android.R.string.no,null).show();
                 break;
         }
 
