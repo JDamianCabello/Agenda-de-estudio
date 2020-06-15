@@ -12,10 +12,14 @@ public class CalendarContract {
         void onSuccesAdded(Event event);
         void loadTodayEvent(List<Event> eventList);
         void noTodayEvents();
+        void updateEvents(Event event);
+        void deleteEvent(Event event);
     }
 
     interface Presenter{
         void load();
+        void deleteEvent(Event event);
+        void updateEvent(Event event);
         void addEvent(Event event);
         void getTodayEvents(String date);
     }

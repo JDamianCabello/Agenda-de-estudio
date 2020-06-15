@@ -22,6 +22,16 @@ public class CalendarPresenter implements CalendarContract.Presenter, EventRepos
     }
 
     @Override
+    public void deleteEvent(Event event) {
+        EventRepository.getInstance().deleteEvent(this,event);
+    }
+
+    @Override
+    public void updateEvent(Event event) {
+        EventRepository.getInstance().updateEvent(this,event);
+    }
+
+    @Override
     public void addEvent(Event event) {
         EventRepository.getInstance().addEvent(this,event);
     }
@@ -47,5 +57,15 @@ public class CalendarPresenter implements CalendarContract.Presenter, EventRepos
     @Override
     public void onGetAllEvents(List<Event> eventList) {
         view.putEvents(eventList);
+    }
+
+    @Override
+    public void onSuccesUpdated(Event event) {
+        view.updateEvents(event);
+    }
+
+    @Override
+    public void onSuccesDelete(Event event) {
+        view.deleteEvent(event);
     }
 }

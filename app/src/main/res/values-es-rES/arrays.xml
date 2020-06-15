@@ -1,24 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="quantifier" >
-        <item>Minutos</item>
-        <item>Horas</item>
-    </string-array>
-    <string-array name="subject_manager_spinnerEntries" >
-        <item>Ignorada</item>
-        <item>Resumida</item>
-        <item>A repasar</item>
-        <item>Dominada</item>
-    </string-array>
 
-
-    <string name="material_calendar_monday">lun</string>
-    <string name="material_calendar_tuesday">mart</string>
-    <string name="material_calendar_wednesday">miérc</string>
-    <string name="material_calendar_thursday">juev</string>
-    <string name="material_calendar_friday">vier</string>
-    <string name="material_calendar_saturday">sáb</string>
-    <string name="material_calendar_sunday">dom</string>
+    <string name="material_calendar_monday">L</string>
+    <string name="material_calendar_tuesday">M</string>
+    <string name="material_calendar_wednesday">X</string>
+    <string name="material_calendar_thursday">J</string>
+    <string name="material_calendar_friday">V</string>
+    <string name="material_calendar_saturday">S</string>
+    <string name="material_calendar_sunday">D</string>
 
     <array name="material_calendar_months_array">
         <item>Enero</item>

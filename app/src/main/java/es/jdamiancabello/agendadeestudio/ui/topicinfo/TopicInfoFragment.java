@@ -11,17 +11,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import es.jdamiancabello.agendadeestudio.R;
@@ -35,9 +35,10 @@ public class TopicInfoFragment extends Fragment implements TopicInfoContract.Vie
     private EditText topicName;
     private CheckBox cbxHigPrio, cbxMidPrio, cbxLowPrio, isTask;
     private EditText notes;
-    private ImageView goBack;
     private Spinner topicState;
     private Button btnUpdateTopic;
+    private ProgressBar progressBar;
+    private TextView tv_progress;
 
     public static TopicInfoFragment newInstance(Bundle bundle) {
         TopicInfoFragment fragment = new TopicInfoFragment();
@@ -57,19 +58,27 @@ public class TopicInfoFragment extends Fragment implements TopicInfoContract.Vie
         cbxLowPrio = view.findViewById(R.id.topicInfo_checkBoxLow);
         isTask = view.findViewById(R.id.topicInfo_checkBoxIsTask);
         notes = view.findViewById(R.id.topicInfo_ed_notes);
-        goBack = view.findViewById(R.id.topicInfo_iv_goBack);
         topicState = view.findViewById(R.id.topicInfo_spinner_state);
         btnUpdateTopic = view.findViewById(R.id.topicInfo_btn_update);
+        progressBar = view.findViewById(R.id.topicInfo_progress);
+        tv_progress = view.findViewById(R.id.topicInfo_tv_progress);
         topicState.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, loadDefauldData()));
-        goBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.onBack();
-            }
-        });
+
+
         Topic topic = getArguments().getParcelable(Topic.TOPICTAG);
         topicName.setText(topic.getName());
         selectPrio(topic.getPriority());
+        progressBar.setProgress(calcProgress());
+        if(topic.isTask()) {
+            tv_progress.setText(getResources().getString(R.string.topicInfo_task_percentText) + " " + progressBar.getProgress() + "% / 100%");
+            topicName.setHint(getResources().getString(R.string.topicInfo_edHint_taskName));
+            btnUpdateTopic.setText(getResources().getString(R.string.topicInfo_btn_UpdateTask));
+        }
+        else {
+            tv_progress.setText(getResources().getString(R.string.topicInfo_topic_percentText) + " " + progressBar.getProgress() + "% / 100%");
+            topicName.setHint(getResources().getString(R.string.topicInfo_edHint_TopicName));
+            btnUpdateTopic.setText(getResources().getString(R.string.topicInfo_btn_UpdateTopic));
+        }
 
         isTask.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -77,11 +86,31 @@ public class TopicInfoFragment extends Fragment implements TopicInfoContract.Vie
                 List<String> options = new ArrayList<>();
                 if(!isChecked){
                     options.addAll(loadDefauldData());
+                    tv_progress.setText(getResources().getString(R.string.topicInfo_topic_percentText) + " " + progressBar.getProgress() + "% / 100%");
+                    btnUpdateTopic.setText(getResources().getString(R.string.topicInfo_btn_UpdateTopic));
                 }else{
                     options.add(getResources().getString(R.string.SubjectAdapter_task_state_0));
                     options.add(getResources().getString(R.string.SubjectAdapter_task_state_1));
+                    tv_progress.setText(getResources().getString(R.string.topicInfo_task_percentText) + " " + progressBar.getProgress() + "% / 100%");
+                    btnUpdateTopic.setText(getResources().getString(R.string.topicInfo_btn_UpdateTask));
                 }
                 topicState.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, options));
+            }
+        });
+
+        topicState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                progressBar.setProgress(calcProgress());
+                if(isTask.isChecked())
+                    tv_progress.setText(getResources().getString(R.string.topicInfo_task_percentText) + " " +progressBar.getProgress()+"% / 100%");
+                else
+                    tv_progress.setText(getResources().getString(R.string.topicInfo_topic_percentText) + " " +progressBar.getProgress()+"% / 100%");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
@@ -127,6 +156,10 @@ public class TopicInfoFragment extends Fragment implements TopicInfoContract.Vie
             }
         });
 
+    }
+
+    private int calcProgress() {
+        return (getTopicState() * 100) / 3;
     }
 
     private Topic makeTopic() {

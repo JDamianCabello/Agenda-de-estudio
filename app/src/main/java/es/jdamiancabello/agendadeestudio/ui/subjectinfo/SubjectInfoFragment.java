@@ -9,12 +9,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,6 +43,7 @@ import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.adapter.TopicAdapter;
 import es.jdamiancabello.agendadeestudio.data.model.Subject;
 import es.jdamiancabello.agendadeestudio.data.model.Topic;
+import es.jdamiancabello.agendadeestudio.ui.dashboard.DashboardActivity;
 
 public class SubjectInfoFragment extends Fragment implements SubjectInfoContract.View {
 
@@ -350,6 +353,9 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
 
     @Override
     public void onDeleted(Topic topic) {
+        if(!stopDelete && topicAux != null)
+            presenter.onConfirmDelete(topicAux);
+
         String topicOrTask;
         if (topic.isTask())
             topicOrTask = getString(R.string.topiclist_task_undotext);
@@ -359,6 +365,9 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
         topicAdapter.removeTopic(topic);
         topicAux = topic;
         Snackbar snackbar = Snackbar.make(getView(), topicOrTask + " " + topic.getName() + "?", Snackbar.LENGTH_LONG);
+        snackbar.setBackgroundTint(ContextCompat.getColor(getContext(),R.color.colorPrimary));
+        snackbar.setActionTextColor(ContextCompat.getColor(getContext(),R.color.colorPrimaryDark));
+        snackbar.setAnchorView(R.id.dashboard_menu);
         snackbar.setAction(getString(R.string.subjectlist_undobuttontext), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -390,7 +399,9 @@ public class SubjectInfoFragment extends Fragment implements SubjectInfoContract
 
     @Override
     public void onNewTopicAdd(Topic newTopic, int newPercent) {
-        Toast.makeText(getContext(), R.string.subjectInfo_toast_topicCreated, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(getContext(), R.string.subjectInfo_toast_topicCreated, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM,0,300);
+        toast.show();
         progressBarPercent.setProgress(newPercent);
         tv_totalPercentComplete.setText(newPercent + "% / 100%");
 

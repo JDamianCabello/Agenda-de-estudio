@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/contextmenu_orderColor"
-        android:title="order by color" />
-    <item
         android:id="@+id/contextmenu_orderExam"
-        android:title="order by exam" />
+        android:title="@string/subjectList_menu_orderDate" />
+    <item
+        android:id="@+id/contextmenu_orderPercent"
+        android:title="@string/subjectList_menu_orderPercent" />
     <item
         android:id="@+id/contextmenu_orderName"
-        android:title="order by name" />
+        android:title="@string/subjectList_menu_orderName" />
 
 
 </menu>

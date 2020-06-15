@@ -19,7 +19,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="100dp"
             android:fontFamily="@font/bold"
-            android:text="Hello There!"
+            android:text="@string/loginFragment_tv_header_hello"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="40sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,10 +80,10 @@
             android:layout_weight="0.5"
             android:background="@drawable/welcome_button"
             android:fontFamily="@font/regular"
+            android:text="@string/loginFragment_loginButton"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="22sp"
-            android:text="Login"
             app:layout_constraintStart_toStartOf="@+id/login_tilPassword"
             app:layout_constraintTop_toBottomOf="@+id/login_mantenerSesion" />
 
@@ -97,7 +97,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/regular"
             android:gravity="end"
-            android:text="Need help?"
+            android:text="@string/loginFragment_tv_needhelp"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/registerBtLogin"
@@ -110,7 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="No cerrar sesión"
+            android:text="@string/loginFragment_switch_dontCloseSesion"
             app:layout_constraintEnd_toEndOf="@+id/login_tilPassword"
             app:layout_constraintTop_toBottomOf="@+id/login_tilPassword" />
 
@@ -121,34 +121,26 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/light"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="32dp"
         android:layout_marginStart="32dp"
-        app:layout_dodgeInsetEdges="bottom"
-        android:text="You are not a member?"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="@font/light"
+        android:text="@string/loginFragment_tv_bot_notMember"
         android:textColor="@color/colorPrimary"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        app:layout_dodgeInsetEdges="bottom" />
 
     <TextView
         android:id="@+id/tvRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/bold"
-        android:text="Register."
         android:layout_gravity="bottom"
-        android:layout_marginBottom="32dp"
         android:layout_marginStart="190dp"
-        app:layout_dodgeInsetEdges="bottom"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="@font/bold"
+        android:text="@string/LoginFragment_tv_Register"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp" />
-
-    <Button
-        android:id="@+id/offlinenotification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|bottom"
-        android:layout_marginBottom="80dp"
-        android:text="Button" />
+        android:textSize="16sp"
+        app:layout_dodgeInsetEdges="bottom" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

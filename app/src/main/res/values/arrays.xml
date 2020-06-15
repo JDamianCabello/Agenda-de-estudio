@@ -1,23 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="exampleSubjectArray">
-        <item>Ejemplo tema 1</item>
-        <item>Ejemplo tema 2</item>
-        <item>Ejemplo tema 3</item>
-        <item>Ejemplo tema 4</item>
-        <item>Ejemplo tema 5</item>
-    </string-array>
-    <string-array name="quantifier">
-        <item>Minutes</item>
-        <item>Hours</item>
-    </string-array>
-    <string-array name="subject_manager_spinnerEntries">
-        <item>Ignored</item>
-        <item>Summarized</item>
-        <item>To review</item>
-        <item>Dominated</item>
-    </string-array>
-
 
     <string name="material_calendar_monday">M</string>
     <string name="material_calendar_tuesday">T</string>

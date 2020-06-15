@@ -85,7 +85,7 @@
     <string name="SubjectInfoAddTaskHint">Add new task or topic...</string>
     <string name="subject_manager_tv_selectIcon">Select subject icon:</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="verifyemail_tv">Please verify your email to continue.</string>
     <string name="verifyemail_code_hint">Verify code</string>
     <string name="verifyemail_verifybutton">Verify</string>
@@ -118,4 +118,24 @@
     <string name="calendarManage_save">Save event</string>
     <string name="calendarManage_dontSave">Go back</string>
     <string name="calendar_manage_title">New event</string>
+    <string name="loginFragment_switch_dontCloseSesion">Don´t close session</string>
+    <string name="loginFragment_tv_bot_notMember">You are not a member?</string>
+    <string name="LoginFragment_tv_Register">Register.</string>
+    <string name="loginFragment_tv_needhelp">Need help?</string>
+    <string name="loginFragment_tv_header_hello">Hello There!</string>
+    <string name="loginFragment_loginButton">Login</string>
+    <string name="welcomeFragment_welcomeText">Welcome!</string>
+    <string name="welcomeFragment_tv_subHeader">Nice to see you again!</string>
+    <string name="calendar_manage_update_title">Update event</string>
+    <string name="calendar_manage_update_button">Update event</string>
+    <string name="topicInfo_btn_UpdateTopic">Update topic</string>
+    <string name="topicInfo_edHint_TopicName">Topic name</string>
+    <string name="topicInfo_topic_percentText">Topic progress:</string>
+    <string name="topicInfo_task_percentText">Task progress:</string>
+    <string name="topicInfo_edHint_taskName">Task name</string>
+    <string name="topicInfo_btn_UpdateTask">Update task</string>
+    <string name="topicInfo_edHint_taskOrTopicName">Task or topic name</string>
+    <string name="subjectList_menu_orderPercent">Order by total progress</string>
+    <string name="subjectList_menu_orderDate">Order by exam date</string>
+    <string name="subjectList_menu_orderName">Order by subject name</string>
 </resources>

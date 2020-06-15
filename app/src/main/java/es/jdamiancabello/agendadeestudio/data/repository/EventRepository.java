@@ -34,9 +34,25 @@ public class EventRepository implements EventDAO.EventDaoListener{
         EventDAO.addEvent(this,event);
     }
 
+    public void updateEvent(EventsRepositoryListener eventsRepositoryListener, Event event) {
+        this.eventsRepositoryListener = eventsRepositoryListener;
+        EventDAO.updateEvent(this,event);
+    }
+
+
+    public void deleteEvent(EventsRepositoryListener eventsRepositoryListener, Event event) {
+        this.eventsRepositoryListener = eventsRepositoryListener;
+        EventDAO.deleteEvent(this,event);
+    }
+
     @Override
     public void onGetData(List<Event> eventList) {
         eventsRepositoryListener.onGetData(eventList);
+    }
+
+    @Override
+    public void onUpdated(Event event) {
+        eventsRepositoryListener.onSuccesUpdated(event);
     }
 
     @Override
@@ -49,10 +65,17 @@ public class EventRepository implements EventDAO.EventDaoListener{
         eventsRepositoryListener.onGetAllEvents(eventList);
     }
 
+    @Override
+    public void onDeleted(Event event) {
+        eventsRepositoryListener.onSuccesDelete(event);
+    }
+
 
     public interface EventsRepositoryListener{
         void onGetData(List<Event> eventList);
         void onSuccessAdded(Event event);
         void onGetAllEvents(List<Event> eventList);
+        void onSuccesUpdated(Event event);
+        void onSuccesDelete(Event event);
     }
 }

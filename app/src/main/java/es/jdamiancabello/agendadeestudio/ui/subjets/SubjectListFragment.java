@@ -11,11 +11,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +28,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PrimitiveIterator;
 
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.adapter.SubjectAdapter;
@@ -43,6 +46,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
     private View loadingView;
     private boolean stopDelete = false;
     private Subject subjectAux;
+    private ImageView noDataImg;
 
     public static SubjectListFragment newInstance() {
         return new SubjectListFragment();
@@ -73,8 +77,8 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
             case R.id.contextmenu_orderName:
                 adapter.sortByName();
                 break;
-            case R.id.contextmenu_orderColor:
-                adapter.sortByColor();
+            case R.id.contextmenu_orderPercent:
+                adapter.sortByPercent();
                 break;
             case R.id.contextmenu_orderExam:
                 adapter.sortByExam();
@@ -94,6 +98,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
         super.onViewCreated(view, savedInstanceState);
         recyclerView= view.findViewById(R.id.rvsubjectlist);
         loadingView = view.findViewById(R.id.loading);
+        noDataImg = view.findViewById(R.id.subjectList_noData);
         adapter = new SubjectAdapter(new SubjectAdapter.onManegeSubjectListener() {
             @Override
             public void onShowSubjectInfo(Subject subject) {
@@ -132,7 +137,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
 
         registerForContextMenu(recyclerView);
 
-        //TODO: swipe to delete
+//        //TODO: swipe to delete
 //        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 //            @Override
 //            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -141,21 +146,13 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
 //
 //            @Override
 //            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-//                Toast.makeText(getContext(), "Swiped", Toast.LENGTH_SHORT).show();
+//
 //            }
 //        });
 //        helper.attachToRecyclerView(recyclerView);
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
 
-    }
-
-    private List<String> getNames(List<Topic> topicsList) {
-        List<String> a = new ArrayList<>();
-
-        for(Topic t : topicsList)
-            a.add(t.getName());
-        return a;
     }
 
     @Override
@@ -194,7 +191,7 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
 
     @Override
     public void noSubjets() {
-        Snackbar.make(getView(),getString(R.string.subjectlist_noSubjects),Snackbar.LENGTH_INDEFINITE).show();
+        noDataImg.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -203,16 +200,15 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
     }
 
     @Override
-    public void onSucessUndo(Subject subject) {
-        adapter.addSubject(subject);
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
     public void startDeleteView(Subject subject) {
+        if(!stopDelete && subjectAux != null)
+            presenter.onDelete(subjectAux);
+
         adapter.removeSubject(subject);
         subjectAux = subject;
         Snackbar snackbar = Snackbar.make(getView(), getString(R.string.subjectlist_undotext) + " " + subject.getSubject_name() + "?", Snackbar.LENGTH_LONG);
+        snackbar.setBackgroundTint(ContextCompat.getColor(getContext(),R.color.colorPrimary));
+        snackbar.setActionTextColor(ContextCompat.getColor(getContext(),R.color.colorPrimaryDark));
         snackbar.setAction(getString(R.string.subjectlist_undobuttontext), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -242,6 +238,14 @@ public class SubjectListFragment extends Fragment implements SubjectListContract
         });
 
         snackbar.show();
+    }
+
+    @Override
+    public void checkEmptyAdapter() {
+        if(adapter.isEmpty())
+            noDataImg.setVisibility(View.VISIBLE);
+        else
+            noDataImg.setVisibility(View.GONE);
     }
 
     @Override

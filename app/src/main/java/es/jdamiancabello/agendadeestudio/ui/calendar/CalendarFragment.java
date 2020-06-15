@@ -55,13 +55,13 @@ public class CalendarFragment extends Fragment implements CalendarContract.View{
     public static final String TAG = "CalendarFragment";
 
     private CalendarView calendarView;
-    private OnFragmentInteractionListener mListener;
     private CalendarPresenter presenter;
     private ImageView noData;
     private RecyclerView todayRecycler;
     private EventAdapter todayAdapter;
     private FloatingActionButton calendarManage;
     private String calendarSelectDate;
+    private Event eventToDelete = null;
 
 
     public static CalendarFragment newInstance() {
@@ -103,19 +103,19 @@ public class CalendarFragment extends Fragment implements CalendarContract.View{
         todayAdapter = new EventAdapter(new EventAdapter.OnManageEventListener() {
             @Override
             public void onShowEventInfo(Event event) {
-
+                makeAddEventAlertDialog(event);
             }
 
             @Override
             public void onDeleteEvent(Event event) {
-
+                presenter.deleteEvent(event);
             }
         });
 
         calendarManage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeAddEventAlertDialog();
+                makeAddEventAlertDialog(null);
             }
         });
 
@@ -126,7 +126,7 @@ public class CalendarFragment extends Fragment implements CalendarContract.View{
         presenter.load();
     }
 
-    private void makeAddEventAlertDialog() {
+    private void makeAddEventAlertDialog(Event modifiedEvent) {
         View calendarManage = getLayoutInflater().inflate(R.layout.calendar_manage_view, null);
 
         EditText eventName = calendarManage.findViewById(R.id.calendar_ed_eventName);
@@ -154,6 +154,17 @@ public class CalendarFragment extends Fragment implements CalendarContract.View{
         EditText eventNotes = calendarManage.findViewById(R.id.calendar_ed_notes);
         CheckBox appnotify = calendarManage.findViewById(R.id.calendar_appnotify);
 
+
+        if(modifiedEvent != null){
+            eventName.setText(modifiedEvent.getEvent_name());
+            eventName.setTextColor(modifiedEvent.getEvent_color());
+            eventResume.setText(modifiedEvent.getEvent_resume());
+            selectedDate.setText(modifiedEvent.getEvent_date());
+            selectIcon.setSelection(getSelectedIcon(modifiedEvent.getEvent_iconId(),iconsList()));
+            eventColor.setSelection(searchColor(modifiedEvent.getEvent_color()));
+            eventNotes.setText(modifiedEvent.getEvent_notes());
+            appnotify.setChecked(modifiedEvent.isAppnotification());
+        }
         selectDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,8 +179,18 @@ public class CalendarFragment extends Fragment implements CalendarContract.View{
             }
         });
 
+
+        String positiveButtonText = "";
         TextView title = new TextView(getContext());
-        title.setText(getResources().getString(R.string.calendar_manage_title));
+        if(modifiedEvent != null) {
+            title.setText(getResources().getString(R.string.calendar_manage_update_title));
+            positiveButtonText = getResources().getString(R.string.calendar_manage_update_button);
+        }
+        else {
+            title.setText(getResources().getString(R.string.calendar_manage_title));
+            positiveButtonText = getResources().getString(R.string.calendarManage_save);
+        }
+
         title.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark,null));
         title.setPadding(10, 10, 10, 10);
         title.setGravity(Gravity.CENTER);
@@ -180,14 +201,21 @@ public class CalendarFragment extends Fragment implements CalendarContract.View{
         AlertDialog alertDialog = new AlertDialog.Builder(getContext(), R.style.calendarAlertBuilder)
                 .setView(calendarManage)
                 .setCustomTitle(title)
-                .setPositiveButton(getResources().getString(R.string.calendarManage_save), new DialogInterface.OnClickListener() {
+                .setPositiveButton(positiveButtonText, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        presenter.addEvent(makeEvent());
+                        if(modifiedEvent != null)
+                            presenter.updateEvent(makeEvent(modifiedEvent));
+                        else
+                            presenter.addEvent(makeEvent(null));
                     }
 
-                    private Event makeEvent() {
-                        Event evenAux = new Event();
+                    private Event makeEvent(Event event) {
+                        Event evenAux;
+                        if(event == null)
+                            evenAux = new Event();
+                        else
+                            evenAux = event;
                         evenAux.setEvent_name(eventName.getText().toString());
                         evenAux.setEvent_resume(eventResume.getText().toString());
                         evenAux.setEvent_date(selectedDate.getText().toString());
@@ -200,7 +228,7 @@ public class CalendarFragment extends Fragment implements CalendarContract.View{
                 })
                 .setNegativeButton(getResources().getString(R.string.calendarManage_dontSave), null)
                 .show();
-        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorPrimaryDark,null));
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorPrimaryDark, null));
         alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.RED);
     }
 
@@ -264,29 +292,20 @@ public class CalendarFragment extends Fragment implements CalendarContract.View{
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
 
     @Override
     public void putEvents(List<Event> eventList) {
-        if(eventList.isEmpty())
-            return;
-
         List<EventDay> events = new ArrayList<>();
+        if(eventList.isEmpty()) {
+            calendarView.setEvents(events);
+            return;
+        }
+
+
         for (Event event: eventList) {
             Date dateAux = new Date();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -324,8 +343,20 @@ public class CalendarFragment extends Fragment implements CalendarContract.View{
         noData.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void updateEvents(Event event) {
+        todayAdapter.replace(event);
+        presenter.load();
+        presenter.getTodayEvents(calendarSelectDate);
+    }
 
-    public interface OnFragmentInteractionListener {
-        void calendar_selected_date();
+    @Override
+    public void deleteEvent(Event event) {
+        todayAdapter.remove(event);
+        if(todayAdapter.isEmpty())
+            noData.setVisibility(View.VISIBLE);
+        else
+            noData.setVisibility(View.GONE);
+        presenter.load();
     }
 }

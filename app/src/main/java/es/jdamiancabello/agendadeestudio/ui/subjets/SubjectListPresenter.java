@@ -32,17 +32,16 @@ public class SubjectListPresenter implements SubjectListContract.Presenter, Subj
     }
 
     @Override
-    public void onSucessUndo(Subject subject) {
-    }
-
-    @Override
     public void onLoaded(List<Subject> subjectList) {
         view.hideProgress();
-        view.refresh((ArrayList<Subject>) subjectList);
+        if(!subjectList.isEmpty())
+            view.refresh((ArrayList<Subject>) subjectList);
+        else
+            view.noSubjets();
     }
 
     @Override
     public void onDeleted() {
-        //Evento que notifica cuando se ha eliminado una asignatura, no se usa en la vista
+        view.checkEmptyAdapter();
     }
 }

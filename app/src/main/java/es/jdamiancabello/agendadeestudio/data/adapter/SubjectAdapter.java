@@ -82,14 +82,18 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
         this.list.sort(new Subject.SortByName());
         this.notifyDataSetChanged();
     }
-    public void sortByColor() {
-        this.list.sort(new Subject.SortByColor());
+    public void sortByPercent() {
+        this.list.sort(new Subject.SortByPercent());
         this.notifyDataSetChanged();
     }
 
     public void sortByExam() {
         this.list.sort(new Subject.SortByExamdate());
         this.notifyDataSetChanged();
+    }
+
+    public boolean isEmpty() {
+        return list.isEmpty();
     }
 
 

@@ -43,7 +43,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@drawable/checkbox_lowpro_custom"
-            android:checked="false"
+            android:checked="true"
             android:gravity="center"
             android:text="Low" />
 
@@ -72,7 +72,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:entries="@array/subject_manager_spinnerEntries"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
         app:layout_constraintStart_toStartOf="@+id/textView16"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />

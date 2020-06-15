@@ -13,14 +13,13 @@ public interface SubjectListContract{
         void hideProgress();
         void noSubjets();
         void refresh(ArrayList<Subject> subjectArrayList);
-        void onSucessUndo(Subject subject);
         void startDeleteView(Subject subject);
+        void checkEmptyAdapter();
     }
 
     interface Presenter{
         void startDelete(Subject subject);
         void load();
         void onDelete(Subject subject);
-        void onSucessUndo(Subject subject);
     }
 }

@@ -62,6 +62,21 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         return todayEventList.size();
     }
 
+    public void replace(Event event) {
+        todayEventList.remove(event);
+        todayEventList.add(event);
+        notifyDataSetChanged();
+    }
+
+    public void remove(Event event) {
+        todayEventList.remove(event);
+        notifyDataSetChanged();
+    }
+
+    public boolean isEmpty() {
+        return todayEventList.isEmpty();
+    }
+
     public interface OnManageEventListener{
         void onShowEventInfo(Event event);
         void onDeleteEvent(Event event);

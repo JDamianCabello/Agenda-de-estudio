@@ -74,15 +74,6 @@ public class LoginFragment extends Fragment implements LoginContract.View{
                 presenter.loginUser(tiedEmail.getText().toString(),tiedPassword.getText().toString(),swMantenerSesion.isChecked());
             }
         });
-
-        noti = view.findViewById(R.id.offlinenotification);
-        noti.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FocusBroadcastReceiver broadcastReceiver = new FocusBroadcastReceiver();
-                broadcastReceiver.onReceive(getContext(), getActivity().getIntent());
-            }
-        });
     }
 
 

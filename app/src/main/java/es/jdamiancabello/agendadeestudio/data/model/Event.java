@@ -3,6 +3,8 @@ package es.jdamiancabello.agendadeestudio.data.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Objects;
+
 public class Event implements Parcelable {
     private int id;
     private String event_name;
@@ -139,5 +141,18 @@ public class Event implements Parcelable {
 
     public void setEvent_notes(String event_notes) {
         this.event_notes = event_notes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return id == event.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

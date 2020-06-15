@@ -1,14 +1,27 @@
 package es.jdamiancabello.agendadeestudio.ui.dashboard;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.Menu;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+
+import com.github.naz013.smoothbottombar.SmoothBottomBar;
+import com.github.naz013.smoothbottombar.Tab;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import es.jdamiancabello.agendadeestudio.R;
 import es.jdamiancabello.agendadeestudio.data.Network.ApiRestClientToken;
@@ -46,12 +59,12 @@ public class DashboardActivity extends AppCompatActivity implements
         NotesListFragment.OnFragmentInteractionListener,
         RegisterFragment.OnFragmentInteractionListener,
         SubjectManagerFragment.OnFragmentInteractionListener,
-        DashborardFragmentV2.OnFragmentInteractionListener,
-        CalendarFragment.OnFragmentInteractionListener,
         AboutMeFragment.OnFragmentInteractionListener,
         TopicInfoFragment.OnfragmentIntercationsListener
         {
     private Toolbar toolbar;
+    private SmoothBottomBar menu;
+    private LinearLayout snackBarViewToShow;
 
 
     private Fragment subjectList;
@@ -67,11 +80,6 @@ public class DashboardActivity extends AppCompatActivity implements
     private RegisterFragment registerFragment;
     private RegisterPresenter registerPresenter;
 
-    private Fragment dashboardFragmentv2;
-
-    private NotesListFragment notesListFragment;
-    private NoteListPresenter noteListPresenter;
-
     private CalendarFragment calendarFragment;
     private CalendarPresenter calendarPresenter;
 
@@ -86,13 +94,55 @@ public class DashboardActivity extends AppCompatActivity implements
             @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fragment);
+        setContentView(R.layout.fragment_dashborard_fragment_v2);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        snackBarViewToShow = findViewById(R.id.mainSnackView);
+        menu = findViewById(R.id.dashboard_menu);
+        menu.setTabs(createBottonMenu());
+
+        menu.setOnTabSelectedListener(new SmoothBottomBar.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(int i) {
+                changeFragment(i);
+            }
+        });
+
         onSuccesLogin();
     }
 
-    private void showWelcome() {
+            public LinearLayout getSnackBarViewToShow() {
+                return snackBarViewToShow;
+            }
+
+            private List<Tab> createBottonMenu() {
+        return new ArrayList<Tab>() {{
+            add(new Tab(R.drawable.ic_baseline_calendar_today, getString(R.string.dashboard_callendar)));
+            add(new Tab(R.drawable.ic_baseline_library_books_24, getString(R.string.dashboard_subjects)));
+            add(new Tab(R.drawable.ic_baseline_work_24, getString(R.string.dashboard_tools)));
+            add(new Tab(R.drawable.ic_help, getString(R.string.help)));
+        }};
+    }
+
+    private void changeFragment(int i) {
+        switch (i){
+            case 0:
+                showCallendar();
+                break;
+            case 1:
+                showSubjects();
+                break;
+            case 2:
+                showTools();
+                break;
+            case 3:
+                showHelpLogin();
+                break;
+        }
+    }
+
+
+            private void showWelcome() {
         startActivity(new Intent(this, WelcomeActivity.class));
         finish();
     }
@@ -121,10 +171,18 @@ public class DashboardActivity extends AppCompatActivity implements
 
     @Override
     public void onSuccesLogin() {
-        dashboardFragmentv2 = DashborardFragmentV2.newInstance();
+        calendarFragment = (CalendarFragment) getSupportFragmentManager().findFragmentByTag(CalendarFragment.TAG);
+
+        if(calendarFragment == null) {
+            calendarFragment = CalendarFragment.newInstance();
+        }
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.content,dashboardFragmentv2,DashborardFragmentV2.TAG);
+        fragmentTransaction.add(R.id.dashboardcontent, calendarFragment, CalendarFragment.TAG);
+
         fragmentTransaction.commit();
+
+        calendarPresenter = new CalendarPresenter(calendarFragment);
+        calendarFragment.setPresenter(calendarPresenter);
     }
 
 
@@ -162,7 +220,7 @@ public class DashboardActivity extends AppCompatActivity implements
         if(getIntent().getBooleanExtra("NOTIFICATION", false))
             fragmentTransaction.replace(R.id.content,subjectManagerFragment,SubjectManagerFragment.TAG);
         else
-            fragmentTransaction.replace(R.id.dashboard_container,subjectManagerFragment,SubjectManagerFragment.TAG);
+            fragmentTransaction.replace(R.id.dashboardcontent,subjectManagerFragment,SubjectManagerFragment.TAG);
 
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
@@ -182,7 +240,7 @@ public class DashboardActivity extends AppCompatActivity implements
 
         subjectInfoFragment = SubjectInfoFragment.newInstance(subjectInfoBundle);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.dashboard_container,subjectInfoFragment,SubjectInfoFragment.TAG);
+        fragmentTransaction.replace(R.id.dashboardcontent,subjectInfoFragment,SubjectInfoFragment.TAG);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
@@ -234,15 +292,14 @@ public class DashboardActivity extends AppCompatActivity implements
         onBackPressed();
     }
 
-            @Override
-    public void dashboardv2FirstLoad(int containerID) {
+    public void showCallendar() {
         calendarFragment = (CalendarFragment) getSupportFragmentManager().findFragmentByTag(CalendarFragment.TAG);
 
         if(calendarFragment == null) {
             calendarFragment = CalendarFragment.newInstance();
         }
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(containerID, calendarFragment, CalendarFragment.TAG);
+        fragmentTransaction.replace(R.id.dashboardcontent, calendarFragment, CalendarFragment.TAG);
 
         fragmentTransaction.commit();
 
@@ -250,74 +307,33 @@ public class DashboardActivity extends AppCompatActivity implements
         calendarFragment.setPresenter(calendarPresenter);
     }
 
-            @Override
-    public void showCallendar(int containerID) {
-        calendarFragment = (CalendarFragment) getSupportFragmentManager().findFragmentByTag(CalendarFragment.TAG);
 
-        if(calendarFragment == null) {
-            calendarFragment = CalendarFragment.newInstance();
-        }
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(containerID, calendarFragment, CalendarFragment.TAG);
 
-        fragmentTransaction.commit();
-
-        calendarPresenter = new CalendarPresenter(calendarFragment);
-        calendarFragment.setPresenter(calendarPresenter);
-    }
-
-    @Override
-    public void showOrganicer(int containerID) {
-        notesListFragment = (NotesListFragment) getSupportFragmentManager().findFragmentByTag(NotesListFragment.TAG);
-
-        if(notesListFragment == null){
-            notesListFragment = NotesListFragment.newInstance();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(containerID,notesListFragment,NotesListFragment.TAG)
-                    .addToBackStack(null).commit();
-        }
-
-        noteListPresenter = new NoteListPresenter(notesListFragment);
-        notesListFragment.setPresenter(noteListPresenter);
-    }
-
-    @Override
-    public void showToday(int containerID) {
-
-    }
-
-    @Override
-    public void showTopics(int containerID) {
-
-    }
-
-            @Override
-    public void showSubjects(int containerID) {
+    public void showSubjects() {
         subjectList = getSupportFragmentManager().findFragmentByTag(SubjectListFragment.TAG);
         if (subjectList==null) {
             subjectList = SubjectListFragment.newInstance();
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(containerID, subjectList, SubjectListFragment.TAG);
+        fragmentTransaction.replace(R.id.dashboardcontent, subjectList, SubjectListFragment.TAG);
         fragmentTransaction.commit();
 
         subjectListPresenter = new SubjectListPresenter((SubjectListContract.View) subjectList);
         ((SubjectListContract.View) subjectList).setPresenter(subjectListPresenter);
     }
 
-    @Override
-    public void showTools(int containerID) {
+    public void showTools() {
         stopWatchFragment = StopWatchFragment.newInstance();
 
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.dashboard_container,stopWatchFragment,StopWatchFragment.TAG)
+                .replace(R.id.dashboardcontent,stopWatchFragment,StopWatchFragment.TAG)
                 .commit();
     }
 
-    @Override
-    public void showHelp(int dashboard_container) {
+
+    public void showHelpLogin() {
 
         aboutMeFragment = getSupportFragmentManager().findFragmentByTag(AboutMeFragment.TAG);
 
@@ -326,13 +342,8 @@ public class DashboardActivity extends AppCompatActivity implements
 
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(dashboard_container,aboutMeFragment,AboutMeFragment.TAG);
+        fragmentTransaction.replace(R.id.dashboardcontent,aboutMeFragment,AboutMeFragment.TAG);
         fragmentTransaction.commit();
-    }
-
-            @Override
-    public void calendar_selected_date() {
-
     }
 
     @Override
@@ -349,7 +360,7 @@ public class DashboardActivity extends AppCompatActivity implements
 
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.dashboard_container,topicInfoFragment,TopicInfoFragment.TAG);
+        fragmentTransaction.replace(R.id.dashboardcontent,topicInfoFragment,TopicInfoFragment.TAG);
         fragmentTransaction.addToBackStack(SubjectInfoFragment.TAG);
         fragmentTransaction.commit();
 

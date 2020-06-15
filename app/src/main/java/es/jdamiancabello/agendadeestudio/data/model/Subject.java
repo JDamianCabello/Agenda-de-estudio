@@ -129,10 +129,10 @@ public class Subject implements Parcelable{
         }
     }
 
-    public static class SortByColor implements Comparator<Subject> {
+    public static class SortByPercent implements Comparator<Subject> {
         @Override
         public int compare(Subject o1, Subject o2) {
-            return o1.getColor() - o2.getColor();
+            return  Integer.compare(o1.getPercent(),o2.getPercent());
         }
     }
 

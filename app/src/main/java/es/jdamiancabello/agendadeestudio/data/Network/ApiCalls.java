@@ -9,6 +9,8 @@ import es.jdamiancabello.agendadeestudio.data.model.api_model.email.EmailResendR
 import es.jdamiancabello.agendadeestudio.data.model.api_model.email.EmailVerifyCodeResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.event.DayEventsListResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.event.EventAddResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.event.EventDeleteResponse;
+import es.jdamiancabello.agendadeestudio.data.model.api_model.event.EventUpdateResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.subject.SubjectAddResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.subject.SubjectDeletedResponse;
 import es.jdamiancabello.agendadeestudio.data.model.api_model.subject.SubjectListResponse;
@@ -109,7 +111,7 @@ public interface ApiCalls {
     Call<DayEventsListResponse> getNotifications();
 
     @FormUrlEncoded
-    @POST("event/")
+    @POST("event")
     Call<EventAddResponse> addEvent(
             @Field("event_name") String event_name,
             @Field("event_resume") String event_resume,
@@ -119,6 +121,24 @@ public interface ApiCalls {
             @Field("event_iconId") int event_iconId,
             @Field("appnotification") boolean appnotification,
             @Field("event_notes") String event_notes);
+
+    @FormUrlEncoded
+    @PUT("event/{eventId}")
+    Call<EventUpdateResponse> updateEvent(
+            @Path("eventId") int eventId,
+            @Field("event_name") String event_name,
+            @Field("event_resume") String event_resume,
+            @Field("event_date") String event_date,
+            @Field("idSubject") int idSubject,
+            @Field("event_color") int event_color,
+            @Field("event_iconId") int event_iconId,
+            @Field("appnotification") boolean appnotification,
+            @Field("event_notes") String event_notes);
+
+
+    @DELETE("event/{eventId}")
+    Call<EventDeleteResponse> deleteEvent(
+            @Path("eventId") int eventId);
 }
 
 
